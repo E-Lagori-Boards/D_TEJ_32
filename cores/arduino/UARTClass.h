@@ -21,7 +21,7 @@
 
 #include "platform.h"
 #include "HardwareSerial.h"
-#include "/home/himanshu/snap/arduino/61/.arduino15/packages/sifive/hardware/riscv/1.0.2/freedom-e-sdk/bsp/include/sifive/devices/uart.h"
+#include "uart.h"
 
 class UARTClass : public HardwareSerial
 {

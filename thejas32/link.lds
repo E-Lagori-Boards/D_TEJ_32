@@ -4,7 +4,7 @@ ENTRY( _start )
 
 MEMORY
 {
-  ram (wxa!ri) : ORIGIN = 0x200000, LENGTH = 64K
+  ram (wxa!ri) : ORIGIN = 0x200000, LENGTH = 256K
 }
 
 PHDRS
@@ -16,7 +16,7 @@ PHDRS
 
 SECTIONS
 {
-  __stack_size = DEFINED(__stack_size) ? __stack_size : 2K;
+  __stack_size = 2K;
 
   .init           :
   {
@@ -156,6 +156,7 @@ SECTIONS
   . = ALIGN(8);
   PROVIDE( _end = . );
   PROVIDE( end = . );
+
 
   .stack ORIGIN(ram) + LENGTH(ram) - __stack_size :
   {

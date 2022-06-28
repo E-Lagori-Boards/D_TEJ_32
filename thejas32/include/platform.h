@@ -7,14 +7,7 @@
 #define MCAUSE_INT         0x80000000
 #define MCAUSE_CAUSE       0x7FFFFFFF
 
-#include "sifive/const.h"
-#include "sifive/devices/aon.h"
-#include "sifive/devices/clint.h"
-#include "sifive/devices/gpio.h"
-#include "sifive/devices/plic.h"
-#include "sifive/devices/pwm.h"
-#include "sifive/devices/spi.h"
-#include "sifive/devices/uart.h"
+
 
 /****************************************************************************
  * Platform definitions
@@ -28,25 +21,25 @@
 // #define	UART_REG_LCR 		0x0C	//UART Line control register
 // #define	UART_REG_LSR 		0x14	//UART Line status register
 
-#define TRAPVEC_TABLE_BASE_ADDR _AC(0x00001010,UL)
-#define CLINT_BASE_ADDR _AC(0x02000000,UL)
-#define PLIC_BASE_ADDR _AC(0x0C000000,UL)
-#define AON_BASE_ADDR _AC(0x10000000,UL)
-#define GPIO_BASE_ADDR _AC(0x10012000,UL)
-#define UART0_BASE_ADDR _AC(0x10000100,UL)
-#define SPI0_BASE_ADDR _AC(0x10000600,UL)
-#define PWM0_BASE_ADDR _AC(0x10015000,UL)
-#define UART1_BASE_ADDR _AC(0x10000200,UL)
+#define TRAPVEC_TABLE_BASE_ADDR 0x00001010
+#define CLINT_BASE_ADDR 0x02000000
+#define PLIC_BASE_ADDR 0x0C000000
+#define AON_BASE_ADDR 0x10000000
+#define GPIO_BASE_ADDR 0x10012000
+#define UART0_BASE_ADDR 0x10000100
+#define SPI0_BASE_ADDR 0x10000600
+#define PWM0_BASE_ADDR 0x10015000
+#define UART1_BASE_ADDR 0x10000200
 #define SPI1_BASE_ADDR  0x10000700
-#define PWM1_BASE_ADDR _AC(0x10025000,UL)
-#define SPI2_BASE_ADDR _AC(0x10200100,UL)
-#define PWM2_BASE_ADDR _AC(0x10035000,UL)
-#define SPI0_MMAP_ADDR _AC(0x20000000,UL)
-#define MEM_BASE_ADDR _AC(0x80000000,UL)
-#define UART2_BASE_ADDR _AC(0x10000300,UL)
+#define PWM1_BASE_ADDR 0x10025000
+#define SPI2_BASE_ADDR 0x10200100
+#define PWM2_BASE_ADDR 0x10035000
+#define SPI0_MMAP_ADDR 0x20000000
+#define MEM_BASE_ADDR 0x80000000
+#define UART2_BASE_ADDR 0x10000300
 
 // IOF Mappings
-#define IOF0_SPI1_MASK          _AC(0x000007FC,UL)
+#define IOF0_SPI1_MASK          0x000007FC
 #define SPI11_NUM_SS     (4)
 #define IOF_SPI1_SS0          (2u)
 #define IOF_SPI1_SS1          (8u)
@@ -60,7 +53,7 @@
 #define IOF_SPI1_DQ2          (6u)
 #define IOF_SPI1_DQ3          (7u)
 
-#define IOF0_SPI2_MASK          _AC(0xFC000000,UL)
+#define IOF0_SPI2_MASK          0xFC000000
 #define SPI2_NUM_SS       (1)
 #define IOF_SPI2_SS0          (26u)
 #define IOF_SPI2_MOSI         (27u)
@@ -71,17 +64,17 @@
 #define IOF_SPI2_DQ2          (30u)
 #define IOF_SPI2_DQ3          (31u)
 
-#define IOF0_UART0_MASK         _AC(0x00030000, UL)
+#define IOF0_UART0_MASK         0x00030000, UL)
 #define IOF_UART0_RX   (16u)
 #define IOF_UART0_TX   (17u)
 
-#define IOF0_UART1_MASK         _AC(0x03000000, UL)
+#define IOF0_UART1_MASK         0x03000000, UL)
 #define IOF_UART1_RX (24u)
 #define IOF_UART1_TX (25u)
 
-#define IOF1_PWM0_MASK          _AC(0x0000000F, UL)
-#define IOF1_PWM1_MASK          _AC(0x00780000, UL)
-#define IOF1_PWM2_MASK          _AC(0x00003C00, UL)
+#define IOF1_PWM0_MASK          0x0000000F, UL)
+#define IOF1_PWM1_MASK          0x00780000, UL)
+#define IOF1_PWM2_MASK          0x00003C00, UL)
 // New
 #define UART_LSR_DR			    (1)			//Data Ready
 #define UART_LSR_THRE			(1 << 5)    //Transmitter Holding Register
@@ -130,7 +123,7 @@
 #define PLIC_NUM_PRIORITIES 7
 
 #define HAS_BOARD_BUTTONS
-#include "hifive1.h"
+
 
 unsigned long get_timer_freq(void);
 uint64_t get_timer_value(void);
