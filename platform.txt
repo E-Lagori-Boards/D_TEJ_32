@@ -1,5 +1,5 @@
-name= SiFive Freedom E300 Boards
-version=1.0.1
+name= C-DAC Aries Boards
+version=2.0.0
 
 # Compile variables
 # ----------------------
