@@ -82,7 +82,7 @@ void pinMode(uint32_t pin, uint32_t mode)
 void digitalWrite(uint32_t pin, uint32_t val)
 {
 	unsigned char gpio_number = 0;
-    unsigned short dir_data = 0;
+        unsigned short dir_data = 0;
 	unsigned short bit_position = 0;
 	volatile unsigned short *gpio_0_dir_addr = (volatile unsigned short *)(GPIO_BASE_ADDR +0x40000) ; // GPIO 0 direction register.
 	volatile unsigned short *gpio_1_dir_addr = (volatile unsigned short *)(GPI1_BASE_ADDR +0x40000) ; // GPIO 1 direction register.
