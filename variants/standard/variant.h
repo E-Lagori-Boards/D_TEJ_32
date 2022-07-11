@@ -1,4 +1,3 @@
-
 #ifndef _VARIANT_FREEDOM_E300_
 #define _VARIANT_FREEDOM_E300_
 
@@ -29,18 +28,19 @@
 extern UARTClass Serial;
 #endif
 
+extern uint32_t SPI_PORT;
 /*
  * SPI Interfaces
  */
 
-#define SPI_INTERFACES_COUNT 1
-#define SPI_REG(offset) SPI1_REG(offset)
-#define SPI_REGP(i) _REG32P(SPI1_BASE_ADDR, (i))
-// #define SPI_REG(x) SPI1_REG(x)
+#define SPI_INTERFACES_COUNT 4
+
 
 #define UART_INTERFACES_COUNT 1
 #define UART_REG(x) UART0_REG(x)
 #define UART_REGP(i) _REG32P(UART0_BASE_ADDR, (i))
+#define SPI_REG(offset) SPIX_REG(SPI_PORT, offset)
+#define SPIX_REG(x, offset) (((x)>=0&&(x)>=1)?((x)>=1&&(x)>=2)?((x)>=2&&(x)>=3)?SPI3_REG(offset):SPI2_REG(offset):SPI1_REG(offset):SPI0_REG(offset))
 
 
 #endif 

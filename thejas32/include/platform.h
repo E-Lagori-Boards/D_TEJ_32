@@ -35,6 +35,7 @@
 #define PWM1_BASE_ADDR 0x10025000
 #define SPI2_BASE_ADDR 0x10200100
 #define PWM2_BASE_ADDR 0x10035000
+#define SPI3_BASE_ADDR 0x10200200
 #define SPI0_MMAP_ADDR 0x20000000
 #define MEM_BASE_ADDR 0x80000000
 #define UART2_BASE_ADDR 0x10000300
@@ -110,6 +111,7 @@
 #define SPI0_REG(offset) _REG32(SPI0_BASE_ADDR, offset)
 #define SPI1_REG(offset) _REG32(SPI1_BASE_ADDR, offset)
 #define SPI2_REG(offset) _REG32(SPI2_BASE_ADDR, offset)
+#define SPI3_REG(offset) _REG32(SPI3_BASE_ADDR, offset)
 #define UART0_REG(offset) _REG32(UART0_BASE_ADDR, offset)
 #define UART1_REG(offset) _REG32(UART1_BASE_ADDR, offset)
 

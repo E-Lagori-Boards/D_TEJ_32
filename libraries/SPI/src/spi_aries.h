@@ -1,10 +1,40 @@
 #ifndef __VEGA_SPI_H_
 #define __VEGA_SPI_H_
 
+/**
+ @file spi_aries.h
+ @brief header file for SPI driver
+ @detail 
+ */
+/***************************************************
+ * Module name: spi_aries.h
+ *
+ * Copyright 2020 Company CDAC(T).
+ * All Rights Reserved.
+ *
+ *  The information contained herein is confidential
+ * property of Company. The user, copying, transfer or
+ * disclosure of such information is prohibited except
+ * by express written agreement with Company.
+ *
+ *
+ * Module Description:
+ * SPI registers and function declarations
+ *
+ ***************************************************/
+
+/*  Include section
+ *
+ ***************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include "spi_aries.h"
-#include "/home/himanshu/snap/arduino/61/.arduino15/packages/sifive/hardware/riscv/1.0.2/freedom-e-sdk/bsp/env/freedom-e300-arty/platform.h"
+#include "platform.h"
+
+/*  Define section
+ *
+ *
+ ***************************************************/
 // SPIs
 #define SPI0                        0
 #define SPI1                        1
@@ -19,13 +49,12 @@
 
 // Fields
 #define SPIM_CR_DBITS(x)            (((x) & 0xf) << 9)      // Bits per transfer
-#define SPIM_CR_CSAAT(x)            (((x) & 0x1) << 8)      // Chip Select Active After Transfer
+#define SPIM_CR_CSAAT               (0x1 << 8)              // Chip Select Active After Transfer
 #define SPIM_CR_SPTIE(x)            (((x) & 0x1) << 7)      // SPI Transmit Interrupt Enable
-#define SPIM_CR_SPRIE(x)            (((x) & 0x1) << 6)      // SPI Receive Interrupt Enable
-#define SPIM_CR_CPOL(x)             (((x) & 0x1) << 5)      // Clock Polarity
-#define SPIM_CR_CPHA(x)             (((x) & 0x1) << 4)      // Clock Phase
+#define SPIM_CR_SPRIE(x)            (((x) & 0x1) << 6)      // SPI Receive Interrupt Enable      
 
-#define SPIM_CR_SCKMODE(x)          (((x) & 0x3) << 4)
+#define SPIM_CLK_CONFI_MODE(x)      (((x) & 0x3) << 4)      // SPI Clock configuration Modes
+#define SPIM_SCK_MODE               (0x3 << 4)
 
 #define SPIM_CR_LSBMSB(x)           (((x) & 0x1) << 3)      // This bit selects LSB/MSB first data transfer format.
 #define SPIM_CR_PS(x)               (((x) & 0x1) << 2)      // Fixed peripheral-0  Variable peripheral-1
@@ -47,7 +76,6 @@
 #define SPIM_RDR_CS0(x)             (((x) & 0x1) << 16)
 #define SPIM_RDR_CS1(x)             (((x) & 0x1) << 17)
 #define SPI_RDR_CSMODE(x)           (((x) & 0x3) << 16)
-// #define SPI_RDR_CSMODE              (SPIM_TDR_CS0(x) && SPIM_TDR_CS1(x))
 
 // Data transfer to slave
 #define SPIM_TDR_DATA(x)            ((x) & 0xff)
@@ -72,21 +100,6 @@
 #define FIXED_PERIPHERAL            0
 #define VARIABLE_PERIPHERAL         1
 
-#define REGISTER_NOT_EMPTY          0
-#define REGISTER_EMPTY              1
-
-#define RECEPTION_NOT_COMPLETED     0
-#define NEW_DATA_AVAILABLE          1
-
-#define NO_OVERRUN_ERROR            0
-#define OVERRUN_ERROR               1
-
-#define TRANSMIT_IDLE               0
-#define TRANSMIT_BUSY               1
-
-// #define SPI_BASE_ADDR(i) (((i) == 0 || (i) == 1) ? 0x10000600UL : 0x10000700UL)  //0x10200100UL
-// #define SPI_REG(i) (*((volatile SPIregType *)(SPI_BASE_ADDR(i) + (0x100 * (i % 2)))))
-
 #define SPI_CSMODE_AUTO             0
 #define SPI_CSMODE_HOLD             2
 #define SPI_CSMODE_OFF              3
@@ -98,9 +111,25 @@
 #define SPI_PROTO_D                 1
 #define SPI_PROTO_Q                 2
 
-//For multiple bytes transfer
-#define READ_EEPROM                 0x03     // Read Array
+// Data Bits Per Transfer
+#define DBITS_8                     0
+#define DBITS_9                     1
+#define DBITS_10                    2
+#define DBITS_11                    3
+#define DBITS_12                    4
+#define DBITS_13                    5
+#define DBITS_14                    6
+#define DBITS_15                    7
+#define DBITS_16                    8
 
 
-#endif
 
+/*  Function declaration section
+ *
+ *
+ ***************************************************/
+void SPI_Transmit(u_int8_t bData);
+uint16_t SPI_Receive(void);
+
+
+#endif   /* __VEGA_SPI_H_ */
