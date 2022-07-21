@@ -69,11 +69,14 @@ __BEGIN_DECLS
 
 
 #define ON_LED			0
-#define OFF_LED			1
+#define OFF_LED		1
 
 
 #define ON			1
 #define OFF			0
+
+#define HIGH			1
+#define LOW			0
 
 
 /************************************************************************************************/
