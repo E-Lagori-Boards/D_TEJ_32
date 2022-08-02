@@ -1,322 +1,272 @@
-/*
- * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
- * Copyright (c) 2014 by Paul Stoffregen <paul@pjrc.com> (Transaction API)
- * SPI Master library for arduino.
- *
- * This file is free software; you can redistribute it and/or modify
- * it under the terms of either the GNU General Public License version 2
- * or the GNU Lesser General Public License version 2.1, both as
- * published by the Free Software Foundation.
+/***************************************************************************
+ * Project                               :  MDP
+ * Name of the file                      :  SPI.cpp
+ * Brief Description of file             :  Driver to control the spi device.
+ * Name of Author                        :  Himanshu Kishor Diwane
+ * Email ID                              :  kishor.dh@cdac.in
+
+ Copyright (C) 2020  CDAC(T). All rights reserved.
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ ***************************************************************************/
+
+/**
+ @file SPI.cpp
+ @brief Contains routines for different SPI funtions 
+ @detail 
  */
 
+/*  Include section
+ *
+ ***************************************************/
 #include "spi_aries.h" 
 #include "SPI.h"
 
 
+/*  Global variable section
+ *
+ ***************************************************/
+uint32_t SPI_PORT; 
+
+
+/** @fn SPIClass::SPIClass(uint32_t _id) : id(_id)
+ @brief Initialize SPI Port.
+ @details This function initialise the SPI port.
+ @warning
+ @param[in]  unsigned int _id: This parameter sets SPI Port.
+ '0' = SPI PORT 0, '1' = SPI PORT 1, '2' = SPI PORT 2, '3' = SPI PORT 3 
+ @param[Out] No output parameter
+ */
 SPIClass::SPIClass(uint32_t _id) :
-  id(_id)
-{
-	// Empty
-} 
+  id(_id) {
 
+  SPI_PORT = id;
+}
+
+
+/** @fn void SPIClass::begin()
+ @brief Initialize SPI controller.
+ @details Initialise SPI with the default setting.
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
 void SPIClass::begin() {
-  
-  // GPIO_REG(GPIO_IOF_SEL) &= ~SPI_IOF_MASK;
-  // GPIO_REG(GPIO_IOF_EN)  |= SPI_IOF_MASK;
 
-  //setClockDivider(F_CPU/1000000);
-  // setDataMode(SPI_MODE0);
-  // setBitOrder(MSBFIRST);
-
-  //************************************************START ADDING**********************************************
-  
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_DBITS(8) |
-  SPIM_CR_CSAAT(LOW) | 
+  SPI_REG(SPIM_CR) = SPIM_CR_DBITS(DBITS_8)  | 
   SPIM_CR_SPTIE(SPI_INTERRUPT_DISABLE) |
   SPIM_CR_SPRIE(SPI_INTERRUPT_DISABLE) |
-  SPIM_CR_CPOL(0) |
-  SPIM_CR_CPHA(0) |
-  SPIM_CR_PS(FIXED_PERIPHERAL) |
+  SPIM_CLK_CONFI_MODE(SPI_MODE0) |
   SPIM_CR_LSBMSB(SPI_MSB_FIRST) |
-  SPIM_CR_SCKMODE(SPI_CSMODE_AUTO);
-}
-/*
-// specifies chip select pin to attach to hardware SPI interface
-void SPIClass::begin(uint8_t _pin) {
-  	
-        // enable CS pin for selected channel/pin
-        uint32_t iof_mask = digitalPinToBitMask(_pin);
-        GPIO_REG(GPIO_IOF_SEL)  &= ~iof_mask;
-        GPIO_REG(GPIO_IOF_EN)   |=  iof_mask;
-
-	// Default speed set to ~1Mhz
-	//setClockDivider(_pin, F_CPU/1000000);
-	setDataMode(_pin, SPI_MODE0);
-	setBitOrder(_pin, MSBFIRST);
-
-	this->begin();
-
+  SPIM_CR_PS(FIXED_PERIPHERAL) |
+  SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT;
 }
 
-void SPIClass::usingInterrupt(uint8_t interruptNumber)
-{
-}
 
-// start an SPI transaction using specified SPIsettings
-void SPIClass::beginTransaction(SPISettings settings)
-{
-  // before starting a transaction, set SPI peripheral to desired mode
+/** @fn void SPIClass::begin(uint32_t _bits, uint8_t _sckmode, uint8_t _bitorder)
+ @brief Initialize SPI controller.
+ @details Initialise SPI with the customized setting.
+ @warning
+ @param[in]  unsigned int _bits:  Bits per transfer
+  --------------------------------------
+ | 	DBITS   		|  	Bits per transfer  |
+ ---------------------------------------
+ |  0000	     	|	          8	         |
+ |  0001	     	|	          9		       |
+ |  0010        |	          10		     |
+ |  0011		    |	          11	    	 |
+ |	0100		    |	          12		     |
+ |	0101		    |	          13    		 |
+ |	0110		    |	          14    		 |
+ |	0111		    |	          15		     |
+ |	1000		    |	          16	       |
+ ---------------------------------------
+ unsigned char _sckmode: SPI Clock configuration Modes
+ -------------------------------------------------
+ | SPI-mode   |  CPOL(bit - 5)	|  CPHA(bit - 4) |
+ -------------------------------------------------
+ |   0	      |	       0		    |	      0	       |
+ |   1	      |	       0		    |	      1	       |
+ |   2        |	       1		    |	      0	       |
+ |   3	      |	       1		    |		    1        |
+ -------------------------------------------------
+ unsigned char _bitorder: LSB/MSB First. This parameter sets LSB/MSB first data transfer format.
+  ‘0’ = MSB first transfer format, ‘1’ = LSB first transfer format
+ @param[Out] No output parameter
+ */
+uint32_t SPIClass::begin(uint32_t _bits, uint8_t _sckmode, uint8_t _bitorder) {
 
-  SPI_REG(SPI_REG_FMT) = SPI_FMT_PROTO(SPI_PROTO_S) |
-    SPI_FMT_ENDIAN((settings.border == LSBFIRST) ? SPI_ENDIAN_LSB : SPI_ENDIAN_MSB) |
-    SPI_FMT_DIR(SPI_DIR_RX) |
-    SPI_FMT_LEN(8);
+  uint32_t CR_VALUE = SPIM_CR_DBITS(_bits) | 
+  SPIM_CR_SPTIE(SPI_INTERRUPT_DISABLE) |
+  SPIM_CR_SPRIE(SPI_INTERRUPT_DISABLE) |
+  SPIM_CLK_CONFI_MODE(_sckmode) |
+  SPIM_CR_LSBMSB(_bitorder) |
+  SPIM_CR_PS(FIXED_PERIPHERAL) |
+  SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT;
   
-  SPI_REG(SPI_REG_SCKDIV)  = settings.sckdiv;
+  SPI_REG(SPIM_CR) = CR_VALUE;
 
-  SPI_REG(SPI_REG_SCKMODE) = settings.sckmode;
-
-  // We Don't control CS, so this setting doesn't matter.
-  //SPI_REG(SPI_REG_CSDEF)   = 0xFFFF;
-
+  return CR_VALUE;
 }
 
 
-// start an SPI transaction using specified CS pin and SPIsettings
-void SPIClass::beginTransaction(uint8_t pin, SPISettings settings)
-{
+/** @fn void SPIClass::beginTransaction(SPISettings settings)
+ @brief Begin SPI transaction.
+ @details Initializes the SPI bus using the defined SPISettings.
+ @warning
+ @param[in]  SPISettings settings: the chosen settings according to SPISettings.
+ @param[Out] No output parameter
+ */
+void SPIClass::beginTransaction(SPISettings settings) {
+
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_LSBMSB((settings.border == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
+  SPIM_CR_DBITS(DBITS_8) | SPIM_CLK_CONFI_MODE(settings.sckmode);
   
-  // before starting a transaction, set SPI peripheral to desired mode
-  SPI_REG(SPI_REG_CSID)   = SS_PIN_TO_CS_ID(pin); 
-  SPI_REG(SPI_REG_CSMODE) = SPI_CSMODE_HOLD;
-
-  // There is no way here to change the CS polarity.
-  SPI_REG(SPI_REG_CSDEF)   = 0xFFFF;
-
-  this->beginTransaction(settings);
-
+  SPI_REG(SPIM_BRR) = SPIM_BRR_VALUE(settings.sckdiv);
 }
-
-void SPIClass::endTransaction(void) {
-  SPI_REG(SPI_REG_CSMODE) = SPI_CSMODE_AUTO;
-}
-
-void SPIClass::end(uint8_t _pin) {
-  GPIO_REG(GPIO_IOF_EN)  &= ~digitalPinToBitMask(_pin);    
-}
-
-void SPIClass::end() {
-  GPIO_REG(GPIO_IOF_EN)  &= ~SPI_IOF_MASK;
-}
-
-void SPIClass::setBitOrder(BitOrder _bitOrder) {
-  SPI_REG(SPI_REG_FMT) = SPI_FMT_PROTO(SPI_PROTO_S) |
-    SPI_FMT_ENDIAN((_bitOrder == LSBFIRST) ? SPI_ENDIAN_LSB : SPI_ENDIAN_MSB) |
-    SPI_FMT_DIR(SPI_DIR_RX) |
-    SPI_FMT_LEN(8);
-}
-
-void SPIClass::setBitOrder(uint8_t _pin, BitOrder _bitOrder) {
-	uint32_t ch = SS_PIN_TO_CS_ID(_pin);
-	bitOrder[ch] = _bitOrder;
-	// This gets used later?
-}
-
-// ***********************************START********************************
-// void SPIClass::setDataMode(uint8_t _mode) {
-//   SPI_REG(SPI_REG_SCKMODE) = _mode;
-// }
-void SPIClass::setDataMode(uint8_t _mode) {
-  SPI_REG(SPIM_SR) |
-  SPIM_CR_SCKMODE(_mode);
-}
-// ************************************END********************************
-
-void SPIClass::setDataMode(uint8_t _pin, uint8_t _mode) {
-	uint32_t ch = SS_PIN_TO_CS_ID(_pin);
-	mode[ch] = _mode;
-	// This gets used later?
-}
-
-void SPIClass::setClockDivider(uint8_t _divider) {
-  SPI_REG(SPI_REG_SCKDIV) = _divider;
-}
-
-void SPIClass::setClockDivider(uint8_t _pin, uint8_t _divider) {
-  uint32_t ch = SS_PIN_TO_CS_ID(_pin);
-  divider[ch] = _divider;
-}
-*/
-
-// ***************************START*****************************
-
-// byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
-
-//   // SPI_Write(spi, _channel, _data);
-//   while (SPI_REG(SPI_REG_TXFIFO) & SPI_TXFIFO_FULL) ;
-//   SPI_REG(SPI_REG_TXFIFO) = _data;
-  
-//   // return SPI_Read(spi);
-//   volatile int32_t x;
-//   while ((x = SPI_REG(SPI_REG_RXFIFO)) & SPI_RXFIFO_EMPTY);
-//   return x & 0xFF;
-  
-//   if (_mode == SPI_LAST) {
-//     SPI_REG(SPI_REG_CSMODE) = SPI_CSMODE_AUTO;
-//   }
-  
-// }
-
-// byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
-
-//   // SPI_Write(spi, _channel, _data);
-//   volatile unsigned int *spi_sr_reg = (volatile unsigned int*) 0x10000704;
-//   volatile unsigned int *spi1_tdr_reg = (volatile unsigned int*) 0x1000070C;
-//   volatile unsigned int *spi1_rdr_reg = (volatile unsigned int*) 0x10000710;
-
-//   while (!(*spi_sr_reg & 0x80)) ; // Check Tx Hold empty bit is set or not. If not wait here.
-//   *spi1_tdr_reg = _data;
-  
-//   // return SPI_Read(spi);
-//   volatile int32_t bRxData; 
-
-//   while (!(*spi_sr_reg & 0x40));
-//   bRxData = *spi1_rdr_reg;   // Read SPI data reg value.
-//   return bRxData & 0xFF;
-// }
-
-byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
  
-  //volatile unsigned int *spi_sr_reg = SPI_REGP(SPIM_SR);
 
-  // SPI_Write(spi, _channel, _data);
+/** @fn void SPIClass::endTransaction(void)
+ @brief End of SPI transaction
+ @details Stop SPI transaction using the SPI bus
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
+void SPIClass::endTransaction(void) {
+  // Empty
+}
+
+
+/** @fn void SPIClass::setBitOrder(BitOrder _bitOrder)
+ @brief Set bit order.
+ @details Sets the order of the bits shifted out of and into the SPI bus, 
+ either LSBFIRST (least-significant bit first) or MSBFIRST (most-significant bit first).
+ @warning
+ @param[in]  BitOrder _bitOrder: This parameter sety the bit order
+ ‘0’ = MSB first, ‘1’ = LSB first
+ @param[Out] No output parameter
+ */
+void SPIClass::setBitOrder(BitOrder _bitOrder) {
+
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_LSBMSB((_bitOrder == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
+  SPIM_CR_DBITS(DBITS_8);
+}
+
+
+/** @fn void SPIClass::setDataMode(uint8_t _mode) 
+ @brief Set data mode
+ @details Sets the SPI data mode. That is, clock polarity and phase. 
+ @warning
+ @param[in]  unsigned char _mode: SPI Clock configuration Modes
+ Mode: SPI_MODE0, SPI_MODE1, SPI_MODE2, SPI_MODE3
+ @param[Out] No output parameter
+*/
+void SPIClass::setDataMode(uint8_t _mode) {
+
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CLK_CONFI_MODE(_mode);
+}
+
+
+/** @fn void SPIClass::setClockDivider(uint8_t _divider) 
+ @brief Set the baud frequency divider value to SPI controller baud register.
+ @details 
+ -------------------------------
+ | 	BAUD  |  	CLk freq Divider |
+ -------------------------------
+ |   0	  |	        4		       |
+ |   1	  |	        8		       |
+ |   2    |	        16	    	 |
+ |   3		|	        32	    	 |
+ |	 4		|	        64    		 |
+ |	 5		|	        128		     |
+ |	 6		|	        256		     |
+ |	 7		|	        512		     |
+ |	 8		|	        1024	     |
+ |	 9		|	        2048	     |
+ | 10-15	|	      reserved 	   |
+ -------------------------------
+ @warning 
+ @param[in]  unsigned char _divider: The baud frequency divisor value.
+ @param[Out] No output parameter 
+ */
+void SPIClass::setClockDivider(uint8_t _divider) {
+
+  SPI_REG(SPIM_BRR) = SPIM_BRR_VALUE(_divider);  // Set the baud frequency divider value
+}
+
+
+/** @fn void SPIClass::end()
+ @brief Disables the SPI bus 
+ @details 
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
+void SPIClass::end() {
+  // Empty
+}
+
+
+/** @fn byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode)
+ @brief  Transfer single byte data.
+ @details SPI transfer is based on a simultaneous send and receive: 
+ It tranfers single byte data and receive it in receive data register. It returns the data receive. 
+ @warning 
+ @param[in] unsigned char _data: the byte to send out over the bus, 
+ SPITransferMode _mode: This parameter set the mode of transfer.
+ @param[Out] No output parameter. 
+ */
+byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
+
+  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
   while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
   SPI_REG(SPIM_TDR) = _data;
   
-  // return SPI_Read(spi);
   volatile int32_t bRxData; 
 
   while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA));
   bRxData = SPI_REG(SPIM_RDR);   // Read SPI data reg value.
+
   return bRxData & 0xFF;
 }
-//************************END*****************************************
 
 
-// byte SPIClass::transfer(byte _pin, uint8_t _data, SPITransferMode _mode) {
-
-//   // No need to do anything with the pin, because that was already
-//   // set up earlier.
-//   return this->transfer(_data, _mode);
-// }
-/*
-uint16_t SPIClass::transfer16(byte _pin, uint16_t _data, SPITransferMode _mode) {
-	union { uint16_t val; struct { uint8_t lsb; uint8_t msb; }; } t;
-	uint32_t ch = SS_PIN_TO_CS_ID(_pin);
-
-	t.val = _data;
-
-	if (bitOrder[ch] == LSBFIRST) {
-		t.lsb = transfer(_pin, t.lsb, SPI_CONTINUE);
-		t.msb = transfer(_pin, t.msb, _mode);
-	} else {
-		t.msb = transfer(_pin, t.msb, SPI_CONTINUE);
-		t.lsb = transfer(_pin, t.lsb, _mode);
-	}
-
-	return t.val;
-}
-*/
-//***********************************START*************************************************
-// void SPIClass::transfer(byte _pin, void *_buf, size_t _count, SPITransferMode _mode) {
-  
-//   if (_count == 0)
-//     return;
-  
-//   uint8_t *buffer = (uint8_t *)_buf;
-//   if (_count == 1) {
-//     *buffer = transfer(_pin, *buffer, _mode);
-//     return;
-//   }
-
-//   // Send the first byte
-//   while (SPI_REG(SPI_REG_TXFIFO) < 0) ;
-//   SPI_REG(SPI_REG_TXFIFO) = *buffer;
-
-//   volatile int32_t x;
-//   uint8_t r,d;
-//   while (_count > 1) {
-//     // Prepare next byte
-//     d = *(buffer+1);
-//     // Read transferred byte and send next one straight away
-//     while ((x = (SPI_REG(SPI_REG_RXFIFO)) & SPI_RXFIFO_EMPTY))
-//       ;
-//     r = x & 0xFF;
-//     while (SPI_REG(SPI_REG_TXFIFO) & SPI_TXFIFO_FULL);
-//     SPI_REG(SPI_REG_TXFIFO) = d;
-
-// 		// Save read byte
-// 		*buffer = r;
-// 		buffer++;
-// 		_count--;
-// 	}
-
-// 	// Receive the last transferred byte
-//   while ((x = (SPI_REG(SPI_REG_RXFIFO)) & SPI_RXFIFO_EMPTY))
-//     ;
-//   r = x & 0xFF;
-//   *buffer = r;
-// }
-
-// void SPIClass::transfer(byte _pin, void *_buf, size_t _count, SPITransferMode _mode) {
-//   if (_count == 0)
-//     return;
-  
-//   uint8_t *buffer = (uint8_t *)_buf;
-//   if (_count == 1) {
-//     *buffer = transfer(_pin, *buffer, _mode);
-//     return;
-//   }
-
-//   // Send the first byte
-//   while (SPI_REG(SPIM_TDR) < 0) ;
-//   SPI_REG(SPIM_TDR) = *buffer;
-
-//   volatile int32_t x;
-//   uint8_t r,d;
-//   while (_count > 1) {
-//     // Prepare next byte
-//     d = *(buffer+1);
-//     // Read transferred byte and send next one straight away
-//     while ((x = (SPI_REG(SPIM_SR)) & SPI_RXNEW_DATA))
-//       ;
-//     r = x & 0xFF;
-//     while (SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY);
-//     SPI_REG(SPIM_TDR) = d;
-
-// 		// Save read byte
-// 		*buffer = r;
-// 		buffer++;
-// 		_count--;
-// 	}
-
-// 	// Receive the last transferred byte
-//   while ((x = (SPI_REG(SPIM_SR)) & SPI_RXNEW_DATA))
-//     ;
-//   r = x & 0xFF;
-//   *buffer = r;
-// }
-
-//*******************************************************NEW*********************************************************
-
+/** @fn void SPI_Transmit(u_int8_t bData)
+ @brief  Write data.
+ @details Writes data (8 bits) to transmit data register of SPI controller.
+ @warning 
+ @param[in] unsigned short bData: The data to be written to tx data register.
+ @param[Out] No output parameter. 
+ */
 void SPI_Transmit(u_int8_t bData) {
-	while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY));	// Check Tx Hold empty bit is set or not. If not wait here.
-	SPI_REG(SPIM_TDR) = bData;	// Write the data (can be a command or actual data to be written to spi device)
-	//__asm__ __volatile__ ("fence");
 
+  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB) ;// Check if SPI controller is busy.
+	while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ;	// Check Tx Hold empty bit is set or not. If not wait here.
+	SPI_REG(SPIM_TDR) = bData;	// Write the data (can be a command or actual data to be written to spi device)
 	return;
 }
 
+
+/** @fn uint16_t SPI_Receive(void)
+ @brief  Read data.
+ @details Read data (8 bits) received in Read data register of SPI controller.
+ @warning 
+ @param[in] No input parameter.
+ @param[Out] No output parameter. 
+ */
 uint16_t SPI_Receive(void) {
   
 	uint16_t bRxData;
@@ -324,51 +274,87 @@ uint16_t SPI_Receive(void) {
 	while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA))
 		;	//  Waiting for RX complete bit to set.
 	bRxData = SPI_REG(SPIM_RDR);				//  Read data.
-	return bRxData & 0xFF;
+	return bRxData;
 }
 
 
-void SPIClass::transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode)
-{
-  // Multiple bytes transfer
+/** @fn void SPIClass::transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode)
+ @brief  Transfer multiple bytes data.
+ @details SPI transfer is based on a simultaneous send and receive: 
+ It tranfers Multiple bytes data and receive it in receive data register.
+ @warning 
+ @param[in] unsigned char *_buf: the address of data buffer to send out over the bus,
+ unsigned long _count: The length of data (in bytes) 
+ SPITransferMode _mode: This parameter set the mode of transfer.
+ @param[Out] No output parameter. 
+ */
+void SPIClass::transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode) { 
 
-  size_t temp = _count;
+  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	      // Check if SPI controller is busy.
 
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	                      // Check if SPI controller is busy.
-	SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_CSAAT(HIGH); // Setting CSAAT bit high.
-
-  // Data Write
-  while (temp)
-  {
-    SPI_Transmit(*_buf);
-    temp--;
-    _buf++;
-  }
-  
-  // Data Read
   while (_count)
   {
+    SPI_Transmit(*_buf);
     *_buf = SPI_Receive(); 
     _buf++;
     _count--; 
   }
-  
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_CSAAT(LOW); // Setting CSAAT bit low.
 }
 
-//*******************************************************END*********************************************************
 
-//**************************************END**************************************
+/** @fn void SPIClass::spiSlaveSelect(void)
+ @brief Set CSAAT pin high
+ @details This function sets the Chip Select Active After Transfer high,
+ When this bit is set, the chip select line remains active low until transfer to another peripheral is required
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
+void SPIClass::spiSlaveSelect(void) {
+  
+  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	       // Check if SPI controller is busy.
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_CSAAT; // Setting CSAAT bit high.
+}
 
+
+/** @fn void SPIClass::spiSlaveDeselect(void)
+ @brief Set CSAAT pin low
+ @details This function sets the Chip Select Active After Transfer low,
+ When this bit is reset, the chip select line remains active high.
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
+void SPIClass::spiSlaveDeselect(void) {
+
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) & ~SPIM_CR_CSAAT; // Setting CSAAT bit low.
+}
+
+
+/** @fn void SPIClass::attachInterrupt(void)
+ @brief 
+ @details 
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
 void SPIClass::attachInterrupt(void) {
 	// Should be enableInterrupt()
 }
 
+
+/** @fn void SPIClass::detachInterrupt(void)
+ @brief 
+ @details 
+ @warning
+ @param[in]  No input parameter
+ @param[Out] No output parameter
+ */
 void SPIClass::detachInterrupt(void) {
 	// Should be disableInterrupt()
 }
 
-#if SPI_INTERFACES_COUNT > 0
-SPIClass SPI(1);
-#endif
 
+#if SPI_INTERFACES_COUNT > 0
+SPIClass SPI(3);
+#endif

@@ -39,8 +39,8 @@ __BEGIN_DECLS
 #define DISPLAY 0x1
 
 enum BitOrder {
-	LSBFIRST = 0,
-	MSBFIRST = 1
+	MSBFIRST = 0,
+	LSBFIRST = 1
 };
 
 //      LOW 0

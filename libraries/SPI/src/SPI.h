@@ -1,16 +1,28 @@
-/*
- * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
- * Copyright (c) 2014 by Paul Stoffregen <paul@pjrc.com> (Transaction API)
- * SPI Master library for arduino.
- *
- * This file is free software; you can redistribute it and/or modify
- * it under the terms of either the GNU General Public License version 2
- * or the GNU Lesser General Public License version 2.1, both as
- * published by the Free Software Foundation.
- */
-
 #ifndef _SPI_H_INCLUDED
 #define _SPI_H_INCLUDED
+
+
+/**
+ @file SPI.h
+ @brief header file for SPI driver
+ @detail 
+ */
+/***************************************************
+ * Module name: SPI.h
+ *
+ * Copyright 2020 Company CDAC(T).
+ * All Rights Reserved.
+ *
+ *  The information contained herein is confidential
+ * property of Company. The user, copying, transfer or
+ * disclosure of such information is prohibited except
+ * by express written agreement with Company.
+ *
+ *
+ * Module Description:
+ * SPI registers and function declarations
+ *
+ ***************************************************/
 
 #include "variant.h"
 #include <stdio.h>
@@ -61,13 +73,29 @@ private:
 		init_AlwaysInline(clock, bitOrder, dataMode);
 	}
 	void init_AlwaysInline(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) __attribute__((__always_inline__)) {
-		if (clock < (F_CPU/512)) {
-			sckdiv = 255;
-		} else if (clock >= (F_CPU / 2)) {
-			sckdiv = 0;
-		} else {
-			sckdiv = (F_CPU / (2*clock)) - 1;
-		}
+		if (clock >= F_CPU / 4) {
+        sckdiv = 0;
+      } else if (clock >= F_CPU / 8) {
+        sckdiv = 1;
+      } else if (clock >= F_CPU / 16) {
+        sckdiv = 2;
+      } else if (clock >= F_CPU / 32) {
+        sckdiv = 3;
+      } else if (clock >= F_CPU / 64) {
+        sckdiv = 4;
+      } else if (clock >= F_CPU / 128) {
+        sckdiv = 5;
+      } else if (clock >= F_CPU / 256) {
+        sckdiv = 6;
+      } else if (clock >= F_CPU / 512) {
+        sckdiv = 7;
+      } else if (clock >= F_CPU / 1024) {
+        sckdiv = 8;
+      } else if (clock >= F_CPU / 2048) {
+        sckdiv = 9;
+      } else {
+        sckdiv = 0;
+	  }
                 sckmode = dataMode;
                 csid = 0;
                 csdef = 0xFFFF;
@@ -93,36 +121,37 @@ private:
 };
 
 
-
 class SPIClass {
   public:
 	SPIClass(uint32_t _id);
 
 	// Transfer functions where the hardware controls the SS line
-	byte transfer(byte _pin, uint8_t _data, SPITransferMode _mode = SPI_LAST);
-	uint16_t transfer16(byte _pin, uint16_t _data, SPITransferMode _mode = SPI_LAST);
-	void transfer(byte _pin, void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
-	void transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
-
+	// byte transfer(byte _pin, uint8_t _data, SPITransferMode _mode = SPI_LAST);
+	// uint16_t transfer16(byte _pin, uint16_t _data, SPITransferMode _mode = SPI_LAST);
+	// void transfer(byte _pin, void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
+	// void transfer(void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
 	// Transfer functions where the user controls the SS line
 	byte transfer(uint8_t _data, SPITransferMode _mode = SPI_LAST);
-	//void transfer(void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
+	void transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
 
 	// Transaction Functions
 	void usingInterrupt(uint8_t interruptNumber);
 	void beginTransaction(SPISettings settings);
 	void beginTransaction(uint8_t pin, SPISettings settings);
 	void endTransaction(void);
+	void spiSlaveDeselect(void);
+ 	void spiSlaveSelect(void);
 
 	// SPI Configuration methods
 	void attachInterrupt(void);
 	void detachInterrupt(void);
 
+	//void spiselect(uint32_t _spix);
 	void begin(void);
+	uint32_t begin(uint32_t _bits, uint8_t _mode, uint8_t _msblsb);
 	void end(void);
 
 	// Attach/Detach pin to/from SPI controller
-	void begin(uint8_t _pin);
 	void end(uint8_t _pin);
 
 	// These methods sets a parameter on a single pin
@@ -136,7 +165,7 @@ class SPIClass {
 	void setClockDivider(uint8_t _div);
 
   private:
-	uint32_t id;
+	volatile uint32_t id;
 	// These are for specific pins.
 	BitOrder bitOrder[4+1];
 	uint32_t divider[4+1];
@@ -147,9 +176,9 @@ class SPIClass {
 	uint32_t interruptMask[4];
 };
 
-//#if SPI_INTERFACES_COUNT > 0
+#if SPI_INTERFACES_COUNT > 0
 extern SPIClass SPI;
-//#endif
+#endif
 
 #endif // _SPI_H_INCLUDED
 
