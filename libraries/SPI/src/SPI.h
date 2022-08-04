@@ -133,6 +133,7 @@ class SPIClass {
 	// Transfer functions where the user controls the SS line
 	byte transfer(uint8_t _data, SPITransferMode _mode = SPI_LAST);
 	void transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
+	uint16_t transfer16(uint16_t _data, SPITransferMode _mode = SPI_LAST);
 
 	// Transaction Functions
 	void usingInterrupt(uint8_t interruptNumber);

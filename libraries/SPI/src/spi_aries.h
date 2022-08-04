@@ -28,7 +28,6 @@
  ***************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include "spi_aries.h"
 #include "platform.h"
 
 /*  Define section
@@ -120,7 +119,21 @@
 #define DBITS_13                    5
 #define DBITS_14                    6
 #define DBITS_15                    7
-#define DBITS_16                    8
+#define DBITS_16                    0x8
+
+// Baudrate
+#define SPI_BAUD_CFD_4        		0
+#define SPI_BAUD_CFD_8        		1 
+#define SPI_BAUD_CFD_16        		2 
+#define SPI_BAUD_CFD_32        		3
+#define SPI_BAUD_CFD_64        		4
+#define SPI_BAUD_CFD_128        	5 
+#define SPI_BAUD_CFD_256       		6
+#define SPI_BAUD_CFD_512        	7 
+#define SPI_BAUD_CFD_1024        	8 
+#define SPI_BAUD_CFD_2048        	9
+
+#define SPI_CLOCK_DIV4  0
 
 
 

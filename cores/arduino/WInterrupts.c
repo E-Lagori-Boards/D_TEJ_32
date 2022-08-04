@@ -24,26 +24,26 @@
 
 // This includes all interrupts, like Watchdog Timer and
 // Real-Time Clock, not just external interrupts.
-static voidFuncPtr callbacksInt[6];
+// static voidFuncPtr callbacksInt[6];  ////////////////////////////////////////// warning: 'callbacksInt' defined but not used [-Wunused-variable]
 
 
-/* Configure I/O interrupt sources */
-static void __initialize()
-{
-  // Clear out all the callback registers
-  memset(callbacksInt, 0, sizeof(callbacksInt));
+/* Configure I/O interrupt sources */   ////////////////////////////////////////// warning: '__initialize' defined but not used [-Wunused-function]
+// static void __initialize()
+// {
+//   // Clear out all the callback registers
+//   memset(callbacksInt, 0, sizeof(callbacksInt));
 
-  // PLIC Registers are not eset in general. Clear
-  // them out.
- /* PLIC_init(&g_plic,
-	    PLIC_BASE_ADDR,
-	    PLIC_NUM_INTERRUPTS,
-	    PLIC_NUM_PRIORITIES);*/
+//   // PLIC Registers are not eset in general. Clear
+//   // them out.
+//  /* PLIC_init(&g_plic,
+// 	    PLIC_BASE_ADDR,
+// 	    PLIC_NUM_INTERRUPTS,
+// 	    PLIC_NUM_PRIORITIES);*/
 
-  // Set the global PLIC interrupt.
-  set_csr(mie, MIP_MEIP);
+//   // Set the global PLIC interrupt.
+//   set_csr(mie, MIP_MEIP);
 
-}
+// }
 
 /*
  * \brief Specifies a named Interrupt Service Routine (ISR) to call when an interrupt occurs.
@@ -78,6 +78,7 @@ void handle_m_time_interrupt() {
   
 }
 
-uintptr_t handle_trap(uintptr_t mcause, uintptr_t epc)
-{
-}
+// uintptr_t handle_trap(uintptr_t mcause, uintptr_t epc)  /////////////////////////////// Cause warnings
+// {
+  
+// }
