@@ -71,7 +71,7 @@ void SPIClass::begin() {
   SPIM_CLK_CONFI_MODE(SPI_MODE0) |
   SPIM_CR_LSBMSB(SPI_MSB_FIRST) |
   SPIM_CR_PS(FIXED_PERIPHERAL) |
-  SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT;
+  (SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT);
 }
 
 
@@ -114,7 +114,7 @@ uint32_t SPIClass::begin(uint32_t _bits, uint8_t _sckmode, uint8_t _bitorder) {
   SPIM_CLK_CONFI_MODE(_sckmode) |
   SPIM_CR_LSBMSB(_bitorder) |
   SPIM_CR_PS(FIXED_PERIPHERAL) |
-  SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT;
+  (SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT);
   
   SPI_REG(SPIM_CR) = CR_VALUE;
 
@@ -253,8 +253,9 @@ byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
  */
 void SPI_Transmit(u_int8_t bData) {
 
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB) ;// Check if SPI controller is busy.
-	while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ;	// Check Tx Hold empty bit is set or not. If not wait here.
+  while(SPI_REG(SPIM_SR) & SPIM_SR_TXB)
+    ;// Check if SPI controller is busy.
+	while(!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ;	// Check Tx Hold empty bit is set or not. If not wait here.
 	SPI_REG(SPIM_TDR) = bData;	// Write the data (can be a command or actual data to be written to spi device)
 	return;
 }
@@ -355,6 +356,24 @@ void SPIClass::detachInterrupt(void) {
 }
 
 
+
+uint16_t SPIClass::transfer16(uint16_t _data, SPITransferMode _mode) {
+
+  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_DBITS(DBITS_16);
+  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
+  while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
+  SPI_REG(SPIM_TDR) = _data;
+
+  volatile uint16_t bRxData; 
+
+  while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA));
+  bRxData = SPI_REG(SPIM_RDR);   // Read SPI data reg value.
+
+  return bRxData;
+}
+
+
+
 #if SPI_INTERFACES_COUNT > 0
-SPIClass SPI(3);
+SPIClass SPI(0);
 #endif
