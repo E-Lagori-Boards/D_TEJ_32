@@ -42,5 +42,7 @@ extern uint32_t SPI_PORT;
 #define SPI_REG(offset) SPIX_REG(SPI_PORT, offset)
 #define SPIX_REG(x, offset) (((x)>=0&&(x)>=1)?((x)>=1&&(x)>=2)?((x)>=2&&(x)>=3)?SPI3_REG(offset):SPI2_REG(offset):SPI1_REG(offset):SPI0_REG(offset))
 
+#define IIC_REG(offset) IIC0_REG(offset)
+#define IIC_REGP(i) _REG32P(IIC0_BASE_ADDR, (i))
 
 #endif 

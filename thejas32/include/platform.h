@@ -26,10 +26,12 @@
 #define PLIC_BASE_ADDR 0x0C000000
 #define AON_BASE_ADDR 0x10000000
 #define GPIO_BASE_ADDR 0x10080000
+#define IIC0_BASE_ADDR 0x10000800
 #define UART0_BASE_ADDR 0x10000100
 #define SPI0_BASE_ADDR 0x10000600
 #define PWM0_BASE_ADDR 0x10015000
 #define GPI1_BASE_ADDR 0x10180000
+#define IIC1_BASE_ADDR 0x10000900
 #define UART1_BASE_ADDR 0x10000200
 #define SPI1_BASE_ADDR  0x10000700
 #define PWM1_BASE_ADDR 0x10025000
@@ -98,10 +100,13 @@
 
 // Helper functions
 #define _REG32(p, i) (*((volatile unsigned int *) (p+ i)))
+#define _REG8(p, i) (*((volatile unsigned char *) (p+ i)))
 #define _REG32P(p, i) ((volatile unsigned int *) (p + i))
 #define AON_REG(offset) _REG32(AON_BASE_ADDR, offset)
 #define CLINT_REG(offset) _REG32(CLINT_BASE_ADDR, offset)
 #define GPIO_REG(offset) _REG32(GPIO_BASE_ADDR, offset)
+#define IIC0_REG(offset) _REG8(IIC0_BASE_ADDR, offset)
+#define IIC1_REG(offset) _REG8(IIC1_BASE_ADDR, offset)
 #define OTP_REG(offset)  _REG32(OTP_BASE_ADDR, offset)
 #define PLIC_REG(offset) _REG32(PLIC_BASE_ADDR, offset)
 #define PRCI_REG(offset) _REG32(PRCI_BASE_ADDR, offset)
