@@ -1,11 +1,6 @@
-openocd.name=VEGA OpenOCD
-openocd.communication=usb
-openocd.program.params.verbose=-v
-openocd.program.params.quiet=-q
-openocd.program.tool=openocd
+vegaxmodem.name=VEGA XMODEM
+vegaxmodem.communication=serial
+vegaxmodem.program.tool=vegaxmodem
+vegaxmodem.program.params.quiet=
 
-manual_openocd.name=Manual VEGA OpenOCD
-manual_openocd.communication=usb
-manual_openocd.program.params.verbose=-v
-manual_openocd.program.params.quiet=-q
-manual_openocd.program.tool=manual_openocd
+

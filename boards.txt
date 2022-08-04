@@ -1,4 +1,3 @@
-# For HiFive1, allow Clock Frequency selection
 
 menu.clksrc=CPU Clock Frequency
 menu.toolsloc=Tool Install Location
@@ -25,9 +24,9 @@ aries_devkit.build.board=ARIES_DEVKIT
 aries_devkit.build.boardenv=aries
 aries_devkit.build.sdata.size=4096
 #This selects the tool from "programmers.txt"
-aries_devkit.program.tool=openocd
-aries_devkit.upload.tool=openocd
+aries_devkit.program.tool=vegaxmodem
+aries_devkit.upload.tool=vegaxmodem
 # Limit is the 128MB Flash. Assume half is used for something else.
 aries_devkit.upload.maximum_size=268435456
 aries_devkit.build.ldscript={compiler.sdk.path}/link.lds
-aries_devkit.build.openocdcfg=freedom-e300-arty-devkit.cfg
+
