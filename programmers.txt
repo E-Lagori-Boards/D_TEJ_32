@@ -1,6 +1,6 @@
 vegaxmodem.name=VEGA XMODEM
 vegaxmodem.communication=serial
 vegaxmodem.program.tool=vegaxmodem
+vegaxmodem.program.params.verbose=
 vegaxmodem.program.params.quiet=
-
 
