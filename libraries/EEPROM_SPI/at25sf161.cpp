@@ -40,6 +40,9 @@
 SPIEeprom EEPROM;
 extern SPIClass SPI;
 
+SPIClass SPI_EEPROM(3);
+
+
 
 /** 
  * @fn uint8_t *SPIEeprom::at25sf161Begin() 
@@ -51,15 +54,8 @@ extern SPIClass SPI;
 uint8_t *SPIEeprom::at25sf161Begin() {
 
 	static unsigned char devID[3];
-	SPI_REG(SPIM_CR) = SPIM_CR_DBITS(DBITS_8)  | 
-	SPIM_CR_SPTIE(SPI_INTERRUPT_DISABLE) |
-	SPIM_CR_SPRIE(SPI_INTERRUPT_DISABLE) |
-	SPIM_CLK_CONFI_MODE(SPI_MODE3) |
-	SPIM_CR_LSBMSB(SPI_MSB_FIRST) |
-	SPIM_CR_PS(FIXED_PERIPHERAL) |
-	SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT;
-	
-	//SPI_PORT = 3;
+
+	SPI.begin(DBITS_8, SPI_MODE3, SPI_MSB_FIRST);
 	SPI.setClockDivider(0);
 	SPI.spiSlaveSelect();
 	SPI.transfer(0x9F);

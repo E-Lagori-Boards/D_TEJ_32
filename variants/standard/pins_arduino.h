@@ -11,6 +11,6 @@
 #define LED_BUILTIN PIN_LED
 
 //NINA
-#define NINA_GPIO0  (1) //connected to gpio1 of aries
-#define NINA_RESETN (27u)
-#define NINA_ACK    (28u)
+#define NINA_GPIO0  (13) //connected to GPIO13 of aries
+#define NINA_RESETN (27u)  //Not using
+#define NINA_ACK    (28u)   //Not using
