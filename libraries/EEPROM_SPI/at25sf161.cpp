@@ -40,8 +40,6 @@
 SPIEeprom EEPROM;
 extern SPIClass SPI;
 
-SPIClass SPI_EEPROM(3);
-
 
 
 /** 

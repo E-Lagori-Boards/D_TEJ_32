@@ -332,31 +332,6 @@ void SPIClass::spiSlaveDeselect(void) {
 }
 
 
-/** @fn void SPIClass::attachInterrupt(void)
- @brief 
- @details 
- @warning
- @param[in]  No input parameter
- @param[Out] No output parameter
- */
-void SPIClass::attachInterrupt(void) {
-	// Should be enableInterrupt()
-}
-
-
-/** @fn void SPIClass::detachInterrupt(void)
- @brief 
- @details 
- @warning
- @param[in]  No input parameter
- @param[Out] No output parameter
- */
-void SPIClass::detachInterrupt(void) {
-	// Should be disableInterrupt()
-}
-
-
-
 uint16_t SPIClass::transfer16(uint16_t _data, SPITransferMode _mode) {
 
   SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_DBITS(DBITS_16);

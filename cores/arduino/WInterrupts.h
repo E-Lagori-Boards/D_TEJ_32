@@ -29,8 +29,15 @@ __BEGIN_DECLS
 //#define FALLING 3
 // #define RISING 4
 
+typedef void (*fp)(void); //Declares a type of a void function that accepts an void
+
 #define DEFAULT 1
 #define EXTERNAL 0
+#define MAXIMUM_INTR_COUNT 32
+
+#define RAW_INTRUPPT 		            (*(volatile unsigned long*)0x20010000)
+#define MACHINE_INT_ENABLE 		      (*(volatile unsigned long*)0x20010008)
+#define MACHINE_INT_STATUS 	        (*(volatile unsigned long*)0x20010010)
 
 #define digitalPinToInterrupt(P) (INT_GPIO_BASE + variant_pin_map[P].bit_pos) 
 
@@ -41,12 +48,14 @@ __BEGIN_DECLS
  *        Other interrupt numbers are available, see platform.h.
  *        Replaces any previous function that was attached to the interrupt.
  */
-void attachInterrupt(uint32_t intnum, voidFuncPtr callback, uint32_t mode);
-
+// void attachInterrupt(uint32_t intnum, voidFuncPtr callback, uint32_t mode);
+void attachInterrupt(uint8_t intr_number, void (*irq_handler)(), uint32_t mode);
 /*
  * \brief Turns off the given interrupt.
  */
-void detachInterrupt(uint32_t intnum);
+// void detachInterrupt(uint32_t intnum);
+void detachInterrupt(uint32_t intr_number); 
+void interrupt_handler(void);
 
 __END_DECLS
 
