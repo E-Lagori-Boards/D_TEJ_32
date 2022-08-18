@@ -75,8 +75,8 @@ __BEGIN_DECLS
 // #define ON			1
 // #define OFF			0
 
-#define HIGH			1
-#define LOW			0
+// #define HIGH			1
+// #define LOW			0
 
 
 /************************************************************************************************/

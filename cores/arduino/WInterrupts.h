@@ -39,7 +39,7 @@ typedef void (*fp)(void); //Declares a type of a void function that accepts an v
 #define MACHINE_INT_ENABLE 		      (*(volatile unsigned long*)0x20010008)
 #define MACHINE_INT_STATUS 	        (*(volatile unsigned long*)0x20010010)
 
-#define digitalPinToInterrupt(P) (INT_GPIO_BASE + variant_pin_map[P].bit_pos) 
+// #define digitalPinToInterrupt(P) (INT_GPIO_BASE + variant_pin_map[P].bit_pos) 
 
   typedef void (*voidFuncPtr)(void);
 

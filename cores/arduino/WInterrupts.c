@@ -28,31 +28,6 @@ fp sw_irq_function; //Software IRQ Function pointer.
 extern volatile unsigned long INTERRUPT_Handler_0;
 extern volatile unsigned long trap_entry;
 
-
-
-// This includes all interrupts, like Watchdog Timer and
-// Real-Time Clock, not just external interrupts.
-// static voidFuncPtr callbacksInt[6];  ////////////////////////////////////////// warning: 'callbacksInt' defined but not used [-Wunused-variable]
-
-
-/* Configure I/O interrupt sources */   ////////////////////////////////////////// warning: '__initialize' defined but not used [-Wunused-function]
-// static void __initialize()
-// {
-//   // Clear out all the callback registers
-//   memset(callbacksInt, 0, sizeof(callbacksInt));
-
-//   // PLIC Registers are not eset in general. Clear
-//   // them out.
-//  /* PLIC_init(&g_plic,
-// 	    PLIC_BASE_ADDR,
-// 	    PLIC_NUM_INTERRUPTS,
-// 	    PLIC_NUM_PRIORITIES);*/
-
-//   // Set the global PLIC interrupt.
-//   set_csr(mie, MIP_MEIP);
-
-// }
-
 /*
  * \brief Specifies a named Interrupt Service Routine (ISR) to call when an interrupt occurs.
  *        Replaces any previous function that was attached to the interrupt.
@@ -70,31 +45,6 @@ void attachInterrupt(uint8_t intr_number, void (*irq_handler)(), uint32_t mode) 
   irq_table[intr_number] = irq_handler;
 }
 
-/*
- * \brief Turns off the given interrupt.
- */
-void detachInterrupt(uint32_t intr_number) {
-	// Should be disableInterrupt()
-  MACHINE_INT_ENABLE |= ((unsigned long)0 << intr_number);
-}
-  
-
-/*Entry Point for PLIC Interrupt Handler*/
-void handle_m_ext_interrupt(){
-  
-}
-
-/* TODO: Entry Point for Timer Interrupt Handler*/
-void handle_m_time_interrupt() {
-
-  // Does nothing for now.
-  
-}
-
-// uintptr_t handle_trap(uintptr_t mcause, uintptr_t epc)  /////////////////////////////// Cause warnings
-// {
-  
-// }
 
 void interrupt_handler(void) {
 
