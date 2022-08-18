@@ -23,24 +23,6 @@
 
 #include "Stream.h"
 
-// class HardwareSerial : public Stream
-// {
-//   public:
-
-// //HardwareSerial();
-// //virtual ~HardwareSerial() = 0;
-
-//     virtual void begin(unsigned long);
-//     // virtual void end();
-//     // virtual int available(void) = 0;
-//     // virtual int peek(void) = 0;
-//     virtual int read(void) = 0;
-//     // virtual void flush(void) = 0;
-//     virtual size_t write(uint8_t) = 0;
-//     using Print::write; // pull in write(str) and write(buf, size) from Print
-//     virtual operator bool() = 0;
-// };
-
 class HardwareSerial : public Stream
 {
   public:
@@ -50,11 +32,7 @@ class HardwareSerial : public Stream
   
     virtual void begin(unsigned long) {};
     virtual void begin(unsigned long baudrate, uint16_t config) {};
-    //virtual void end() {};
-    //virtual int available(void) = 0;
-    //virtual int peek(void) = 0;
     virtual int read(void) = 0;
-    //virtual void flush(void) = 0;
     virtual size_t write(uint8_t) = 0;
     using Print::write; // pull in write(str) and write(buf, size) from Print
     virtual operator bool() = 0;

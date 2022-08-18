@@ -27,10 +27,7 @@
 /*  Include section
  *
  ***************************************************/
-#include<stdio.h>
-#include<stdlib.h>
-#include"variant.h"
-#include"platform.h"
+#include "SPI.h"
 
 /*  Define section
  *

@@ -31,8 +31,6 @@
  *
  ***************************************************/
 #include "at25sf161.h"
-#include "spi_aries.h"
-#include "SPI.h"
 
 /*  Global variable section
  *

@@ -86,26 +86,11 @@ typedef uint32_t pin_size_t;
 typedef uint8_t pin_size_t;
 #endif
 
-// void pinMode(pin_size_t pinNumber, PinMode pinMode);
-// void digitalWrite(pin_size_t pinNumber, PinStatus status);
-// PinStatus digitalRead(pin_size_t pinNumber);
-// int analogRead(pin_size_t pinNumber);
-// void analogReference(uint8_t mode);
-// void analogWrite(pin_size_t pinNumber, int value);
-
 unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long);
-// void delayMicroseconds(unsigned int us);
-// unsigned long pulseIn(pin_size_t pin, uint8_t state, unsigned long timeout);
 unsigned long pulseInLong(pin_size_t pin, uint8_t state, unsigned long timeout);
 
-// void shiftOut(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder, uint8_t val);
-// uint8_t shiftIn(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder);
-
-// void attachInterrupt(pin_size_t interruptNumber, voidFuncPtr callback, PinStatus mode);
-// void attachInterruptParam(pin_size_t interruptNumber, voidFuncPtrParam callback, PinStatus mode, void* param);
-// void detachInterrupt(pin_size_t interruptNumber);
 
 void setup(void);
 void loop(void);

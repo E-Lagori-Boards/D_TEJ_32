@@ -31,7 +31,6 @@
 /*  Include section
  *
  ***************************************************/
-#include "spi_aries.h" 
 #include "SPI.h"
 
 
@@ -347,8 +346,7 @@ uint16_t SPIClass::transfer16(uint16_t _data, SPITransferMode _mode) {
   return bRxData;
 }
 
-
-
+// Default SPI port 0
 #if SPI_INTERFACES_COUNT > 0
 SPIClass SPI(0);
 #endif

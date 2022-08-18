@@ -1,12 +1,12 @@
 #ifndef _SPI_H_INCLUDED
 #define _SPI_H_INCLUDED
 
-
 /**
  @file SPI.h
  @brief header file for SPI driver
  @detail 
  */
+
 /***************************************************
  * Module name: SPI.h
  *
@@ -26,31 +26,107 @@
 
 #include "variant.h"
 #include <stdio.h>
-#include "spi_aries.h"
+#include "platform.h"
 
-// SPI_HAS_TRANSACTION means SPI has
-//   - beginTransaction()
-//   - endTransaction()
-//   - usingInterrupt()
-//   - SPISetting(clock, bitOrder, dataMode)
-#define SPI_HAS_TRANSACTION 1
 
-// SPI_HAS_EXTENDED_CS_PIN_HANDLING means SPI has automatic 
-// CS pin handling and provides the following methods:
-//   - begin(pin)
-//   - end(pin)
-//   - setBitOrder(pin, bitorder)
-//   - setDataMode(pin, datamode)
-//   - setClockDivider(pin, clockdiv)
-//   - transfer(pin, data, SPI_LAST/SPI_CONTINUE)
-//   - beginTransaction(pin, SPISettings settings)
-//     (if transactions are available)
-#define SPI_HAS_EXTENDED_CS_PIN_HANDLING 1
+// SPI Ports
+#define SPI0                        0
+#define SPI1                        1
+#define SPI2                        2
+#define SPI3 						3
 
+// SPI Modes
 #define SPI_MODE0 0x00
 #define SPI_MODE1 0x01
 #define SPI_MODE2 0x02
 #define SPI_MODE3 0x03
+
+// Register Fields
+#define SPIM_CR_DBITS(x)            (((x) & 0xf) << 9)      // Bits per transfer
+#define SPIM_CR_CSAAT               (0x1 << 8)              // Chip Select Active After Transfer
+#define SPIM_CR_SPTIE(x)            (((x) & 0x1) << 7)      // SPI Transmit Interrupt Enable
+#define SPIM_CR_SPRIE(x)            (((x) & 0x1) << 6)      // SPI Receive Interrupt Enable      
+
+#define SPIM_CLK_CONFI_MODE(x)      (((x) & 0x3) << 4)      // SPI Clock configuration Modes
+#define SPIM_SCK_MODE               (0x3 << 4)
+
+#define SPIM_CR_LSBMSB(x)           (((x) & 0x1) << 3)      // This bit selects LSB/MSB first data transfer format.
+#define SPIM_CR_PS(x)               (((x) & 0x1) << 2)      // Fixed peripheral-0  Variable peripheral-1
+#define SPIM_CR_PCS(x)              ((x) & 0x3)             // Peripheral Chip select
+
+#define SPIM_SR_TXE                 (1 << 7)                // Transmit data register empty
+#define SPIM_SR_RXC                 (1 << 6)                // SPI Receive Complete
+#define SPIM_SR_OVERR               (1 << 5)                // Overrun Error
+#define SPIM_SR_TXB                 (1 << 4)                // Transmitter busy
+#define SPIM_SR_TXINT               (1 << 3)                // Transmit hold register empty interrupt
+#define SPIM_SR_RXINT               (1 << 2)                // Receive complete interrupt
+
+#define SPIM_BRR_VALUE(x)           (((x) & 0xf) << 4)      // Baud rate register value
+
+#define SPIM_TDR_CS0(x)             (((x) & 0x1) << 16)     // Slave Select bits in variable peripheral mode
+#define SPIM_TDR_CS1(x)             (((x) & 0x1) << 17)
+#define SPI_TDR_CSMODE(x)           (((x) & 0x3) << 16)
+
+#define SPIM_RDR_CS0(x)             (((x) & 0x1) << 16)
+#define SPIM_RDR_CS1(x)             (((x) & 0x1) << 17)
+#define SPI_RDR_CSMODE(x)           (((x) & 0x3) << 16)
+
+// Data transfer to slave
+#define SPIM_TDR_DATA(x)            ((x) & 0xff)
+
+// Data receive from slave
+#define SPIM_RDR_DATA(x)            ((x) & 0xff)
+
+// Status register
+#define SPI_TXFIFO_FULL             (1 << 7)   
+#define SPI_TXFIFO_EMPTY            (1 << 7)
+
+#define SPI_RXNEW_DATA              (1 << 6)
+#define SPI_NOTRXNEW_DATA           (1 << 6)
+
+// Values
+#define SPI_MSB_FIRST               0
+#define SPI_LSB_FIRST               1
+
+#define SPI_INTERRUPT_DISABLE       0
+#define SPI_INTERRUPT_ENABLE        1
+
+#define FIXED_PERIPHERAL            0
+#define VARIABLE_PERIPHERAL         1
+
+#define SPI_CSMODE_AUTO             0
+#define SPI_CSMODE_HOLD             2
+#define SPI_CSMODE_OFF              3
+
+#define SPI_DIR_RX                  0
+#define SPI_DIR_TX                  1
+
+#define SPI_PROTO_S                 0
+#define SPI_PROTO_D                 1
+#define SPI_PROTO_Q                 2
+
+// Data Bits Per Transfer
+#define DBITS_8                     0
+#define DBITS_9                     1
+#define DBITS_10                    2
+#define DBITS_11                    3
+#define DBITS_12                    4
+#define DBITS_13                    5
+#define DBITS_14                    6
+#define DBITS_15                    7
+#define DBITS_16                    0x8
+
+// Baudrate
+#define SPI_BAUD_CFD_4        		0
+#define SPI_BAUD_CFD_8        		1 
+#define SPI_BAUD_CFD_16        		2 
+#define SPI_BAUD_CFD_32        		3
+#define SPI_BAUD_CFD_64        		4
+#define SPI_BAUD_CFD_128        	5 
+#define SPI_BAUD_CFD_256       		6
+#define SPI_BAUD_CFD_512        	7 
+#define SPI_BAUD_CFD_1024        	8 
+#define SPI_BAUD_CFD_2048        	9
 
 
 enum SPITransferMode {
@@ -109,14 +185,6 @@ private:
         uint8_t   csmode;  // chip select mode (0 = auto, 1 = CS toggles with frame)
         BitOrder  border;  // bit ordering : 0 = LSB first, 1 = MSB first (common case)
 
-        // to read/write data over SPI interface, use next two FIFO ports 
-        //   txdata = when read, bit 31 signals full.  write data to xmit
-        //   rxdata = bit 31 signals empty, otherwise data in bits [7:0] is valid
-
-        // currently unused SPI control registers:
-        //   interrupt related : txmark, rxmark, ie, ip, plus non PIO mode stuff
-        //   delay0,1 : behavior of cs @ frame start, end, between frames
-
 	friend class SPIClass;
 };
 
@@ -125,12 +193,7 @@ class SPIClass {
   public:
 	SPIClass(uint32_t _id);
 
-	// Transfer functions where the hardware controls the SS line
-	// byte transfer(byte _pin, uint8_t _data, SPITransferMode _mode = SPI_LAST);
-	// uint16_t transfer16(byte _pin, uint16_t _data, SPITransferMode _mode = SPI_LAST);
-	// void transfer(byte _pin, void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
-	// void transfer(void *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
-	// Transfer functions where the user controls the SS line
+	// Transfer Function
 	byte transfer(uint8_t _data, SPITransferMode _mode = SPI_LAST);
 	void transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode = SPI_LAST);
 	uint16_t transfer16(uint16_t _data, SPITransferMode _mode = SPI_LAST);
@@ -138,27 +201,16 @@ class SPIClass {
 	// Transaction Functions
 	void usingInterrupt(uint8_t interruptNumber);
 	void beginTransaction(SPISettings settings);
-	void beginTransaction(uint8_t pin, SPISettings settings);
 	void endTransaction(void);
 	void spiSlaveDeselect(void);
  	void spiSlaveSelect(void);
 
-	// SPI Configuration methods
-	void attachInterrupt(void);
-	void detachInterrupt(void);
-
-	//void spiselect(uint32_t _spix);
+	// SPI Initialization Functions
 	void begin(void);
 	uint32_t begin(uint32_t _bits, uint8_t _mode, uint8_t _msblsb);
-	void end(void);
 
 	// Attach/Detach pin to/from SPI controller
-	void end(uint8_t _pin);
-
-	// These methods sets a parameter on a single pin
-	void setBitOrder(uint8_t _pin, BitOrder);
-	void setDataMode(uint8_t _pin, uint8_t);
-	void setClockDivider(uint8_t _pin, uint8_t);
+	void end(void);
 
 	// These methods sets the same parameters, but globally.
 	void setBitOrder(BitOrder _order);
@@ -176,6 +228,9 @@ class SPIClass {
 	uint8_t interruptSave;    // temp storage, to restore state
 	uint32_t interruptMask[4];
 };
+
+void SPI_Transmit(u_int8_t bData);
+uint16_t SPI_Receive(void);
 
 #if SPI_INTERFACES_COUNT > 0
 extern SPIClass SPI;

@@ -7,9 +7,9 @@ void setup() {
   // put your setup code here, to run once:
   static unsigned char *arr;
                       
-  Serial.begin(115200); // initializing the serial port at 115200 baud rate
+  SPIClass SPI(3);              // initialize the SPI port-3 
 
-  arr = EEPROM.at25sf161Begin();                                // initialize the SPI port-3 
+  arr = EEPROM.at25sf161Begin();                                
   Serial.print("[INFO] eeprom ");
   Serial.print(arr[0], HEX);
   Serial.print(":");
