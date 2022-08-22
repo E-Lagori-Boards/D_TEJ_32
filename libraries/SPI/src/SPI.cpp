@@ -34,12 +34,6 @@
 #include "SPI.h"
 
 
-/*  Global variable section
- *
- ***************************************************/
-uint32_t SPI_PORT; 
-
-
 /** @fn SPIClass::SPIClass(uint32_t _id) : id(_id)
  @brief Initialize SPI Port.
  @details This function initialise the SPI port.
@@ -50,8 +44,7 @@ uint32_t SPI_PORT;
  */
 SPIClass::SPIClass(uint32_t _id) :
   id(_id) {
-
-  SPI_PORT = id;
+  // Empty
 }
 
 
@@ -345,8 +338,3 @@ uint16_t SPIClass::transfer16(uint16_t _data, SPITransferMode _mode) {
 
   return bRxData;
 }
-
-// Default SPI port 0
-#if SPI_INTERFACES_COUNT > 0
-SPIClass SPI(0);
-#endif

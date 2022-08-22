@@ -39,7 +39,6 @@ SPIEeprom EEPROM;
 extern SPIClass SPI;
 
 
-
 /** 
  * @fn uint8_t *SPIEeprom::at25sf161Begin() 
  * @brief To initialize the at25sf161 eeprom.

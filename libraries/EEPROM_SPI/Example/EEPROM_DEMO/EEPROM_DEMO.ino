@@ -2,12 +2,11 @@
 #include<at25sf161.h>
 
 int ret;
+SPIClass SPI(3);              // initialize the SPI port-3 
 
 void setup() {
   // put your setup code here, to run once:
   static unsigned char *arr;
-                      
-  SPIClass SPI(3);              // initialize the SPI port-3 
 
   arr = EEPROM.at25sf161Begin();                                
   Serial.print("[INFO] eeprom ");

@@ -158,10 +158,10 @@ SECTIONS
   PROVIDE( end = . );
 
 
-  .stack ORIGIN(ram) + LENGTH(ram) - __stack_size :
+  /*.stack ORIGIN(ram) + LENGTH(ram) - __stack_size :
   {
     PROVIDE( _heap_end = . );
     . = __stack_size;
     PROVIDE( _sp = . );
-  } >ram AT>ram :ram
+  } >ram AT>ram :ram*/
 }
