@@ -216,6 +216,8 @@ class SPIClass {
 	void setBitOrder(BitOrder _order);
 	void setDataMode(uint8_t _mode);
 	void setClockDivider(uint8_t _div);
+	uint16_t SPI_Receive(void);
+	void SPI_Transmit(u_int8_t bData);
 
   private:
 	volatile uint32_t id;
@@ -229,12 +231,7 @@ class SPIClass {
 	uint32_t interruptMask[4];
 };
 
-void SPI_Transmit(u_int8_t bData);
-uint16_t SPI_Receive(void);
-
-#if SPI_INTERFACES_COUNT > 0
 extern SPIClass SPI;
-#endif
 
 #endif // _SPI_H_INCLUDED
 

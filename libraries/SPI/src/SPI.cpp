@@ -57,7 +57,7 @@ SPIClass::SPIClass(uint32_t _id) :
  */
 void SPIClass::begin() {
 
-  SPI_REG(SPIM_CR) = SPIM_CR_DBITS(DBITS_8)  | 
+  SPI_REG(id, SPIM_CR) = SPIM_CR_DBITS(DBITS_8)  | 
   SPIM_CR_SPTIE(SPI_INTERRUPT_DISABLE) |
   SPIM_CR_SPRIE(SPI_INTERRUPT_DISABLE) |
   SPIM_CLK_CONFI_MODE(SPI_MODE0) |
@@ -108,7 +108,7 @@ uint32_t SPIClass::begin(uint32_t _bits, uint8_t _sckmode, uint8_t _bitorder) {
   SPIM_CR_PS(FIXED_PERIPHERAL) |
   (SPIM_CR_PCS(0) & ~SPIM_CR_CSAAT);
   
-  SPI_REG(SPIM_CR) = CR_VALUE;
+  SPI_REG(id, SPIM_CR) = CR_VALUE;
 
   return CR_VALUE;
 }
@@ -123,10 +123,10 @@ uint32_t SPIClass::begin(uint32_t _bits, uint8_t _sckmode, uint8_t _bitorder) {
  */
 void SPIClass::beginTransaction(SPISettings settings) {
 
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_LSBMSB((settings.border == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) | SPIM_CR_LSBMSB((settings.border == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
   SPIM_CR_DBITS(DBITS_8) | SPIM_CLK_CONFI_MODE(settings.sckmode);
   
-  SPI_REG(SPIM_BRR) = SPIM_BRR_VALUE(settings.sckdiv);
+  SPI_REG(id, SPIM_BRR) = SPIM_BRR_VALUE(settings.sckdiv);
 }
  
 
@@ -153,7 +153,7 @@ void SPIClass::endTransaction(void) {
  */
 void SPIClass::setBitOrder(BitOrder _bitOrder) {
 
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_LSBMSB((_bitOrder == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) | SPIM_CR_LSBMSB((_bitOrder == LSBFIRST) ? SPI_LSB_FIRST : SPI_MSB_FIRST) |
   SPIM_CR_DBITS(DBITS_8);
 }
 
@@ -168,7 +168,7 @@ void SPIClass::setBitOrder(BitOrder _bitOrder) {
 */
 void SPIClass::setDataMode(uint8_t _mode) {
 
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CLK_CONFI_MODE(_mode);
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) | SPIM_CLK_CONFI_MODE(_mode);
 }
 
 
@@ -196,7 +196,7 @@ void SPIClass::setDataMode(uint8_t _mode) {
  */
 void SPIClass::setClockDivider(uint8_t _divider) {
 
-  SPI_REG(SPIM_BRR) = SPIM_BRR_VALUE(_divider);  // Set the baud frequency divider value
+  SPI_REG(id, SPIM_BRR) = SPIM_BRR_VALUE(_divider);  // Set the baud frequency divider value
 }
 
 
@@ -223,14 +223,14 @@ void SPIClass::end() {
  */
 byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
 
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
-  while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
-  SPI_REG(SPIM_TDR) = _data;
+  while (SPI_REG(id, SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
+  while (!(SPI_REG(id, SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
+  SPI_REG(id, SPIM_TDR) = _data;
   
   volatile int32_t bRxData; 
 
-  while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA));
-  bRxData = SPI_REG(SPIM_RDR);   // Read SPI data reg value.
+  while (!(SPI_REG(id, SPIM_SR) & SPI_RXNEW_DATA));
+  bRxData = SPI_REG(id, SPIM_RDR);   // Read SPI data reg value.
 
   return bRxData & 0xFF;
 }
@@ -243,12 +243,12 @@ byte SPIClass::transfer(uint8_t _data, SPITransferMode _mode) {
  @param[in] unsigned short bData: The data to be written to tx data register.
  @param[Out] No output parameter. 
  */
-void SPI_Transmit(u_int8_t bData) {
+void SPIClass::SPI_Transmit(u_int8_t bData) {
 
-  while(SPI_REG(SPIM_SR) & SPIM_SR_TXB)
+  while(SPI_REG(id, SPIM_SR) & SPIM_SR_TXB)
     ;// Check if SPI controller is busy.
-	while(!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ;	// Check Tx Hold empty bit is set or not. If not wait here.
-	SPI_REG(SPIM_TDR) = bData;	// Write the data (can be a command or actual data to be written to spi device)
+	while(!(SPI_REG(id, SPIM_SR) & SPI_TXFIFO_EMPTY)) ;	// Check Tx Hold empty bit is set or not. If not wait here.
+	SPI_REG(id, SPIM_TDR) = bData;	// Write the data (can be a command or actual data to be written to spi device)
 	return;
 }
 
@@ -260,13 +260,13 @@ void SPI_Transmit(u_int8_t bData) {
  @param[in] No input parameter.
  @param[Out] No output parameter. 
  */
-uint16_t SPI_Receive(void) {
+uint16_t SPIClass::SPI_Receive(void) {
   
 	uint16_t bRxData;
 
-	while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA))
+	while (!(SPI_REG(id, SPIM_SR) & SPI_RXNEW_DATA))
 		;	//  Waiting for RX complete bit to set.
-	bRxData = SPI_REG(SPIM_RDR);				//  Read data.
+	bRxData = SPI_REG(id, SPIM_RDR);				//  Read data.
 	return bRxData;
 }
 
@@ -283,7 +283,7 @@ uint16_t SPI_Receive(void) {
  */
 void SPIClass::transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode) { 
 
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	      // Check if SPI controller is busy.
+  while (SPI_REG(id, SPIM_SR) & SPIM_SR_TXB);	      // Check if SPI controller is busy.
 
   while (_count)
   {
@@ -305,8 +305,8 @@ void SPIClass::transfer(uint8_t *_buf, size_t _count, SPITransferMode _mode) {
  */
 void SPIClass::spiSlaveSelect(void) {
   
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	       // Check if SPI controller is busy.
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_CSAAT; // Setting CSAAT bit high.
+  while (SPI_REG(id, SPIM_SR) & SPIM_SR_TXB);	       // Check if SPI controller is busy.
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) | SPIM_CR_CSAAT; // Setting CSAAT bit high.
 }
 
 
@@ -320,21 +320,21 @@ void SPIClass::spiSlaveSelect(void) {
  */
 void SPIClass::spiSlaveDeselect(void) {
 
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) & ~SPIM_CR_CSAAT; // Setting CSAAT bit low.
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) & ~SPIM_CR_CSAAT; // Setting CSAAT bit low.
 }
 
 
 uint16_t SPIClass::transfer16(uint16_t _data, SPITransferMode _mode) {
 
-  SPI_REG(SPIM_CR) = SPI_REG(SPIM_CR) | SPIM_CR_DBITS(DBITS_16);
-  while (SPI_REG(SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
-  while (!(SPI_REG(SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
-  SPI_REG(SPIM_TDR) = _data;
+  SPI_REG(id, SPIM_CR) = SPI_REG(id, SPIM_CR) | SPIM_CR_DBITS(DBITS_16);
+  while (SPI_REG(id, SPIM_SR) & SPIM_SR_TXB);	         // Check if SPI controller is busy.
+  while (!(SPI_REG(id, SPIM_SR) & SPI_TXFIFO_EMPTY)) ; // Check Tx Hold empty bit is set or not. If not wait here.
+  SPI_REG(id, SPIM_TDR) = _data;
 
   volatile uint16_t bRxData; 
 
-  while (!(SPI_REG(SPIM_SR) & SPI_RXNEW_DATA));
-  bRxData = SPI_REG(SPIM_RDR);   // Read SPI data reg value.
+  while (!(SPI_REG(id, SPIM_SR) & SPI_RXNEW_DATA));
+  bRxData = SPI_REG(id, SPIM_RDR);   // Read SPI data reg value.
 
   return bRxData;
 }
