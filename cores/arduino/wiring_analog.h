@@ -21,62 +21,35 @@
 
 __BEGIN_DECLS
 
+#define ADS1015_REG_CONFIG_OS_SINGLE (0x8000)       // Write: Set to start a single-conversion
 
-typedef enum _eAnalogReference
-{
-  AR_DEFAULT,
-} eAnalogReference ;
+#define ADS1015_REG_POINTER_CONFIG (0x01)           //Configuration
+#define ADS1015_REG_POINTER_CONVERT (0x00)          // Conversion
+
+#define ADS1015_REG_CONFIG_PGA_4_096V (0x0200)      // +/-4.096V range = Gain 1
+
+#define ADS1015_REG_CONFIG_MUX_SINGLE_0 (0x4000)    // Single-ended AIN0
+#define ADS1015_REG_CONFIG_MUX_SINGLE_1 (0x5000)    // Single-ended AIN1
+#define ADS1015_REG_CONFIG_MUX_SINGLE_2 (0x6000)    // Single-ended AIN2
+#define ADS1015_REG_CONFIG_MUX_SINGLE_3 (0x7000)    // Single-ended AIN3
+
+#define ADS1015_REG_CONFIG_CQUE_NONE  (0x0003)      // Disable the comparator and put ALERT/RDY in high state (default)
+#define ADS1015_REG_CONFIG_CLAT_NONLAT (0x0000)     // Non-latching comparator (default)
+#define ADS1015_REG_CONFIG_CPOL_ACTVLOW (0x0000)    // ALERT/RDY pin is low when active (default)
+#define ADS1015_REG_CONFIG_CMODE_TRAD (0x0000)      // Traditional comparator with hysteresis (default)
+#define ADS1015_REG_CONFIG_DR_1600SPS (0x0080)      // 1600 samples per second (default)
+#define ADS1015_REG_CONFIG_DR_3300SPS (0x00C0)      // 3300 samples per second
+#define ADS1015_REG_CONFIG_MODE_SINGLE (0x0100)     // Power-down single-shot mode (default)
+
+#define BIT_SHIFT 4
+#define ADS1015_CONVERSIONDELAY (1)
+#define ADS1015_ADDRESS (0x48)
 
 
-/*
- * \brief Configures the reference voltage used for analog input (i.e. the value used as the top of the input range).
- * This function is kept only for compatibility with existing AVR based API.
- *
- * \param ulMmode Should be set to AR_DEFAULT.
- */
-extern void analogReference( eAnalogReference ulMode ) ;
+// Function declarations
 
-/*
- * \brief Writes an analog value (PWM wave) to a pin.
- *
- * \param ulPin
- * \param ulValue
- */
-extern void analogWrite( uint32_t ulPin, uint32_t ulValue ) ;
-
-/*
- * \brief Reads the value from the specified analog pin.
- *
- * \param ulPin
- *
- * \return Read value from selected pin, if no error.
- */
-extern uint32_t analogRead( uint32_t ulPin ) ;
-
-/*
- * \brief Set the resolution of analogRead return values. Default is 10 bits (range from 0 to 1023).
- *
- * \param res
- */
-extern void analogReadResolution(int res);
-
-/*
- * \brief Set the resolution of analogWrite parameters. Default is 8 bits (range from 0 to 255).
- *
- * \param res
- */
-extern void analogWriteResolution(int res);
-
-/*
- * \brief Set the frequency of analogWrite PWM output. Default is 980 Hz (range from 20 to 25000).
- *
- * \param res
- */
-extern void analogWriteFrequency(int freq);
-
-extern void analogWritePhase(uint32_t pin, uint32_t phase);
-
-extern void analogOutputInit( void ) ;
+void analogWrite(uint32_t pin, uint32_t ulValue);
+uint32_t analogRead(uint32_t pin);
 
 __END_DECLS
 

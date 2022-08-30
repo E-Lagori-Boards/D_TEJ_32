@@ -1,5 +1,6 @@
-#ifndef _VARIANT_FREEDOM_E300_
-#define _VARIANT_FREEDOM_E300_
+#ifndef _VARIANT_VEGA_
+#define _VARIANT_VEGA_
+
 
 #include <stdint.h>
 #include <stdio.h>
@@ -25,13 +26,6 @@ extern UARTClass Serial;
 extern UARTClass uart;
 #endif
 
-/*
- * SPI Interfaces
- */
-
-#define SPI_INTERFACES_COUNT 4
-#define IIC_INTERFACES_COUNT 2
-#define UART_INTERFACES_COUNT 3
 
 #define SPI_REG(id, offset) ((id==0)?SPI0_REG(offset):(id==1)?SPI1_REG(offset):(id==2)?SPI2_REG(offset):SPI3_REG(offset))
 
@@ -39,6 +33,4 @@ extern UARTClass uart;
 
 #define UART_REG(id, offset) ((id==0)?UART0_REG(offset):(id==1)?UART1_REG(offset):(id==2)?UART2_REG(offset):UART0_REG(offset))
 
-//#define IIC_REG(offset) IIC8_REG(offset)
-//#define IIC_REGP(i) _REG32P(IIC0_BASE_ADDR, (i))
 #endif
