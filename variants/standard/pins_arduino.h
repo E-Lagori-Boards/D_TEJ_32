@@ -14,3 +14,6 @@
 #define NINA_GPIO0  (13) //connected to GPIO13 of aries
 #define NINA_RESETN (27u)  //Not using
 #define NINA_ACK    (28u)   //Not using
+
+#define SS 1
+#define SS_FLASHMEM 1

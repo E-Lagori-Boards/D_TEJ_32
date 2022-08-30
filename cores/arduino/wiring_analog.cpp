@@ -2,44 +2,10 @@
 #include "wiring_analog.h"
 #include "platform.h"
 #include "pwm.h"
+#include "Wire.h"
 
-extern PWMClass PWM;
-
-__BEGIN_DECLS
-
-static int _readResolution = 10;
-static int _writeResolution = 8;
-
-// static uint8_t pwm_enabled[5];
-// static int8_t pwm_enabled_pin[5];
-
-void analogReadResolution(int res) {
-	_readResolution = res;
-}
-
-void analogWriteResolution(int res) {
-	_writeResolution = res;
-}
-
-void analogWritePhase(uint32_t pin, uint32_t phase)
-{
-  int8_t pwm_num;
-  
-  if(pin >= variant_pin_map_size)
-    return;
-
-  pwm_num = variant_pin_map[pin].pwm_num;
-  if(pwm_num > (uint8_t)variant_pwm_size)
-    {
-      //TODO -- Not sure what this function is supposed to
-      //        do exactly
-    }
-}
-
-void analogOutputInit( void )
-{
-
-}
+// extern PWMClass PWM;
+// extern TwoWire Wire;
 
 
 void analogWrite(uint32_t pin, uint32_t ulValue)
@@ -50,10 +16,73 @@ void analogWrite(uint32_t pin, uint32_t ulValue)
   PWM.PWMC_Enable(pin);
 }
 
-// FE300 Does not have analog inputs
-uint32_t analogRead(uint32_t pin)
-{
-  return 0;
+
+
+static void writeRegister(uint8_t address, uint8_t reg, uint16_t value) {
+
+	Wire.beginTransmission(address);
+	Wire.write((uint8_t) reg);
+	Wire.write((uint8_t) (value >> 8));
+	Wire.write((uint8_t) (value & 0xFF));
+	Wire.endTransmission(TRUE);
 }
 
-__END_DECLS
+static uint16_t readRegister(uint8_t address, uint8_t reg) {
+
+	Wire.beginTransmission(address);
+	Wire.write(reg);
+	Wire.endTransmission(TRUE);
+	Wire.requestFrom(address, (uint8_t) 2);	//true
+	return (Wire.read() << 8 | Wire.read());
+}
+
+uint32_t analogRead(uint32_t pin)
+{
+	Wire.begin(); //need to check
+	if (pin > 3) {	//channel=pin
+		return 1;
+	}
+
+	// Start with default values
+	uint16_t config = ADS1015_REG_CONFIG_CQUE_NONE |// Disable the comparator (default val)
+			ADS1015_REG_CONFIG_CLAT_NONLAT |  // Non-latching (default val)
+			ADS1015_REG_CONFIG_CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
+			ADS1015_REG_CONFIG_CMODE_TRAD | // Traditional comparator (default val)
+			ADS1015_REG_CONFIG_DR_3300SPS |	  // 3300 samples per second
+			ADS1015_REG_CONFIG_MODE_SINGLE;	  // Single-shot mode (default)
+
+	// Set PGA/voltage range
+	config |= ADS1015_REG_CONFIG_PGA_4_096V;
+
+	// Set single-ended input channel
+	switch (pin) {
+	case (0):
+		config |= ADS1015_REG_CONFIG_MUX_SINGLE_0;
+		break;
+	case (1):
+		config |= ADS1015_REG_CONFIG_MUX_SINGLE_1;
+		break;
+	case (2):
+		config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
+		break;
+	case (3):
+		config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
+		break;
+	}
+
+	// Set 'start single-conversion' bit
+	config |= ADS1015_REG_CONFIG_OS_SINGLE;
+
+	// Write config register to the ADC
+	writeRegister(ADS1015_ADDRESS, ADS1015_REG_POINTER_CONFIG, config);
+
+	// Wait for the conversion to complete
+	delayMicroseconds(ADS1015_CONVERSIONDELAY);
+
+	// Read the conversion results
+	// Shift 12-bit results right 4 bits for the ADS1015
+	return readRegister(ADS1015_ADDRESS, ADS1015_REG_POINTER_CONVERT)>> BIT_SHIFT;
+
+	//return 0;
+}
+

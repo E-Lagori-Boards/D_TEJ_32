@@ -128,6 +128,17 @@
 #define SPI_BAUD_CFD_1024        	8 
 #define SPI_BAUD_CFD_2048        	9
 
+#define SPI_CLOCK_DIV4 				0
+#define SPI_CLOCK_DIV8        		1 
+#define SPI_CLOCK_DIV16        		2 
+#define SPI_CLOCK_DIV32        		3
+#define SPI_CLOCK_DIV64        		4
+#define SPI_CLOCK_DIV128        	5 
+#define SPI_CLOCK_DIV256       		6
+#define SPI_CLOCK_DIV512        	7 
+#define SPI_CLOCK_DIV1024        	8 
+#define SPI_CLOCK_DIV2048        	9
+
 
 enum SPITransferMode {
 	SPI_CONTINUE,
