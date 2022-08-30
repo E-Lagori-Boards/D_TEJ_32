@@ -61,5 +61,5 @@ protected:
 	volatile uint8_t sio_rxbuf_tail;
 	char sio_rxbuf[SIO_RXBUFSIZE];
 };
-
+extern UARTClass Serial;
 #endif // _UART_CLASS_

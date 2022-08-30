@@ -140,7 +140,7 @@ public:
 	virtual size_t write(const uint8_t*, size_t);
 	virtual int available(void);
 	virtual int read(void);
-	virtual int peek(void);
+	//virtual int peek(void);
 	virtual void flush(void);
 	void onReceive(void (*)(int));
 	void onRequest(void (*)(void));

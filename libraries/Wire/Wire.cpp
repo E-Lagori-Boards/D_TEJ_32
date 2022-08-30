@@ -377,9 +377,9 @@ int TwoWire::read(void) {
 	return value;
 }
 
-int TwoWire::peek(void) {
+/*int TwoWire::peek(void) {
 
-}
+}*/
 
 void TwoWire::flush(void) {
 // XXX: to be implemented.
@@ -401,4 +401,4 @@ void TwoWire::onRequest(void (*function)(void)) {
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
-TwoWire Wire = TwoWire(0);
+//TwoWire Wire = TwoWire(0);

@@ -22,12 +22,12 @@
 
 __BEGIN_DECLS
 
-// #define HIGH 1
-// #define LOW  0
+ #define HIGH 1
+ #define LOW  0
 
-// #define INPUT 0x0
-// #define OUTPUT 0x1
-// #define INPUT_PULLUP 0x2
+ #define INPUT 0x0
+ #define OUTPUT 0x1
+ //#define INPUT_PULLUP 0x2
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
@@ -68,8 +68,8 @@ enum BitOrder {
 #define max(a,b) ((a)>(b)?(a):(b))
 #endif // max
 //////////////////////////////////////////////////////////////////////////
-#undef min
-#undef max
+//#undef min
+//#undef max
 //////////////////////////////////////////////////////////////////////////
 #define abs(x) ((x)>0?(x):-(x))
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
