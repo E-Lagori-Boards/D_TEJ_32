@@ -1,20 +1,24 @@
-/*
- Copyright (c) 2011 Arduino.  All right reserved.
-
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
-
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- See the GNU Lesser General Public License for more details.
-
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+/**
+ @file UARTClass.h
+ @brief header file for UART driver
+ @detail
  */
+/***************************************************
+ * Module name: UARTClass.h
+ *
+ * Copyright 2020 Company CDAC(T).
+ * All Rights Reserved.
+ *
+ *  The information contained herein is confidential
+ * property of Company. The user, copying, transfer or
+ * disclosure of such information is prohibited except
+ * by express written agreement with Company.
+ *
+ *
+ * Module Description:
+ * UART registers and function declarations
+ *
+ ***************************************************/
 
 #ifndef _UART_CLASS_
 #define _UART_CLASS_
@@ -55,7 +59,7 @@ protected:
 		SIO_RXBUFSIZE = (1 << 3), SIO_RXBUFMASK = (SIO_RXBUFSIZE - 1)
 	};
 
-	volatile uint8_t *serbase;  // base address of SIO register for port
+	//volatile uint8_t *serbase;  // base address of SIO register for port
 //    volatile uint8_t  tx_xoff;  // bit 7 set = disable Xoff/Xon flow control
 	volatile uint8_t sio_rxbuf_head;
 	volatile uint8_t sio_rxbuf_tail;

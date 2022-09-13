@@ -45,6 +45,10 @@ __BEGIN_DECLS
 #define ADS1015_CONVERSIONDELAY (1)
 #define ADS1015_ADDRESS (0x48)
 
+#define A0 0
+#define A1 1
+#define A2 2
+#define A3 3
 
 // Function declarations
 

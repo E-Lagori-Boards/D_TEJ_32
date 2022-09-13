@@ -1,11 +1,25 @@
-/*
- * https://www.engineersgarage.com/adxl345-accelerometer-arduino-i2c/
+/**
+ @file ADXL345_accelerometer.ino
+ @brief contains routines for I2C Wire ADXL345 interface
+ @detail Includes software functions declarations to initialize,configure, write and read ADXL345 over I2C interface
+
+ * Reference arduino code: https://www.engineersgarage.com/Wire345-accelerometer-arduino-i2c/
+ * Refrence aries board: https://vegaprocessors.in/blog/interfacing-adxl345-digital-accelerometer-to-thejas-soc/
  * ADXL345 accelerometer sensor
  * Device address -0x50
- */
-
+ * Connections:
+ * ADXL345     Aries Board
+ * 3V3      -   3.3V
+ * GND      -   GND
+ * SDA      -   SDA1
+ * SCL      -   SCL1
+ * For connecting to port 0 (SCL 0 and SDA0) of aries board use the default variable TwoWire Wire(0) instead of TwoWire Wire(1);
+ * .
+ **/
 
 #include <Wire.h>
+
+TwoWire Wire(0);
 
 void setup() {
 Serial.begin(115200);

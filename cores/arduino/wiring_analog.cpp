@@ -2,6 +2,7 @@
 #include "wiring_analog.h"
 #include "platform.h"
 #include "pwm.h"
+#include "utility/twi.h"
 #include "Wire.h"
 
 // extern PWMClass PWM;
@@ -85,4 +86,3 @@ uint32_t analogRead(uint32_t pin)
 
 	//return 0;
 }
-

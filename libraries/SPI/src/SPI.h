@@ -30,10 +30,10 @@
 
 
 // SPI Ports
-#define SPI0                        0
-#define SPI1                        1
-#define SPI2                        2
-#define SPI3 						3
+#define SPI0                        (SPI0_BASE_ADDR)
+#define SPI1                        (SPI1_BASE_ADDR)
+#define SPI2                        (SPI2_BASE_ADDR)
+#define SPI3 						(SPI3_BASE_ADDR)
 
 // SPI Modes
 #define SPI_MODE0 0x00
@@ -127,17 +127,6 @@
 #define SPI_BAUD_CFD_512        	7 
 #define SPI_BAUD_CFD_1024        	8 
 #define SPI_BAUD_CFD_2048        	9
-
-#define SPI_CLOCK_DIV4 				0
-#define SPI_CLOCK_DIV8        		1 
-#define SPI_CLOCK_DIV16        		2 
-#define SPI_CLOCK_DIV32        		3
-#define SPI_CLOCK_DIV64        		4
-#define SPI_CLOCK_DIV128        	5 
-#define SPI_CLOCK_DIV256       		6
-#define SPI_CLOCK_DIV512        	7 
-#define SPI_CLOCK_DIV1024        	8 
-#define SPI_CLOCK_DIV2048        	9
 
 
 enum SPITransferMode {

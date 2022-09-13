@@ -1,11 +1,28 @@
-/*
- * rtc example code of DS1307RTC library
- * rtc device address= 0x77 &0x68
- */
+/**
+ @file rtc_ReadTest.ino
+ @brief contains routines for I2C Wire RTC interface
+ @detail Includes software functions declarations to initialize,configure, write and read RTC over I2C interface
+
+ * Reference for arduino code: https://www.engineersgarage.com/Wire345-accelerometer-arduino-i2c/
+ * Reference for aries board: https://vegaprocessors.in/blog/rtc-with-aries-v2-board/
+ * ADXL345 accelerometer sensor
+ * Device address -0x77 & 0x68
+ * Connections:
+ * ADXL345     Aries Board
+ * 3V3      -   3.3V
+ * GND      -   GND
+ * SDA      -   SDA1
+ * SCL      -   SCL1
+ * For connecting to port 0 (SCL0 and SDA0) of aries board use the default variable TwoWire Wire(0) instead of TwoWire Wire(1);
+ * .
+ **/
+
 
 #include <Wire.h>
 #include <TimeLib.h>
 #include <DS1307RTC.h>
+
+TwoWire Wire(1);
 
 void setup() {
   Serial.begin(115200);

@@ -41,4 +41,13 @@ typedef uint32_t prog_uint32_t;
 #define pgm_read_dword_far(addr) pgm_read_dword(addr)
 #define pgm_read_float_far(addr) pgm_read_float(addr)
 
+
+
+//new
+#define pgm_read_ptr(addr) (*(void *const *)(addr))
+
+#define pgm_read_ptr_near(addr) pgm_read_ptr(addr)
+
+#define pgm_read_ptr_far(addr) pgm_read_ptr(addr)
+
 #endif

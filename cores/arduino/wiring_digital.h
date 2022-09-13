@@ -62,13 +62,19 @@ __BEGIN_DECLS
 #define PIN_30			30
 #define PIN_31			31
 
+#define PIN_A0			A0
+#define PIN_A1			A1
+#define PIN_A2			A2
+#define PIN_A3			A3
+
+
 #define GPIO_0			0
 #define GPIO_1			1
 #define GPIO_2			2
 #define GPIO_3			3
 
 
-#define ON_LED			0
+#define ON_LED		0
 #define OFF_LED		1
 
 

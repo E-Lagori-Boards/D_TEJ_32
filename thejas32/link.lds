@@ -17,6 +17,8 @@ PHDRS
 SECTIONS
 {
   __stack_size = 2K;
+  __heap_size = 2K;
+  
 
   .init           :
   {
@@ -156,12 +158,14 @@ SECTIONS
   . = ALIGN(8);
   PROVIDE( _end = . );
   PROVIDE( end = . );
-
-
-  /*.stack ORIGIN(ram) + LENGTH(ram) - __stack_size :
+  
+  .heap :
   {
-    PROVIDE( _heap_end = . );
-    . = __stack_size;
-    PROVIDE( _sp = . );
-  } >ram AT>ram :ram*/
+    PROVIDE( _heap_end = (. + __heap_size));
+  } >ram AT>ram :ram
+
+  .stack :
+  {
+    PROVIDE( _sp = (. + __heap_size + __stack_size));
+  } >ram AT>ram :ram
 }

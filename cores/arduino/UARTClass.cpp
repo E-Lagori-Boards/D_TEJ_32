@@ -58,7 +58,6 @@ UARTClass Serial(0);
 UARTClass::UARTClass(uint32_t _id) :
 		id(_id) {
 
-	//id = id;
 }
 
 /** @fn int UARTClass::sio_probe_rx()
@@ -151,6 +150,7 @@ int UARTClass::sio_putchar(char c) {
 	while ((UART_REG(id, UART_REG_LSR) & UART_LSR_THRE) != UART_LSR_THRE)
 		;	//waiting for THRE to be empty
 	UART_REG(id,UART_REG_DR) = c;
+	__asm__ __volatile__ ("fence");
 	return 0;
 }
 

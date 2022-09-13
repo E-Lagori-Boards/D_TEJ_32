@@ -23,10 +23,10 @@
 #include <string.h>
 
 
-fp irq_table[64]; //Array of Function pointer.
+volatile fp irq_table[64]; //Array of Function pointer.
 fp sw_irq_function; //Software IRQ Function pointer.
-extern volatile unsigned long INTERRUPT_Handler_0;
-extern volatile unsigned long trap_entry;
+extern volatile unsigned int INTERRUPT_Handler_0;
+extern volatile unsigned int trap_entry;
 
 /*
  * \brief Specifies a named Interrupt Service Routine (ISR) to call when an interrupt occurs.
@@ -38,7 +38,7 @@ void attachInterrupt(uint8_t intr_number, void (*irq_handler)(), uint32_t mode) 
   set_csr(mie, MIP_MEIP);			// Set MEIE bit in MIE register for Machine External Intr.
   set_csr(mstatus, MSTATUS_MIE);		// Set global machine intr bit (3rd bit) in MSTATUS register.
   write_csr(mtvec,(uint32_t)&INTERRUPT_Handler_0);		// Set MTVEC register with vector address.
-  MACHINE_INT_ENABLE |= ((unsigned long)1 << intr_number);	// Enable interrupt for peripheral in interrupt controller.
+  MACHINE_INT_ENABLE |= ((unsigned int)1 << intr_number);	// Enable interrupt for peripheral in interrupt controller.
 	__asm__ __volatile__ ("fence");
   
   // *************************Register IRQ Handler*************************** //
@@ -64,11 +64,11 @@ void interrupt_handler(void) {
 			sw_irq_function(); // Invoke the peripheral handler as function pointer.	
 		} else {
 		
-			unsigned long intr_status = MACHINE_INT_STATUS; // Read interrupt status register.
+			unsigned int intr_status = MACHINE_INT_STATUS; // Read interrupt status register.
 
-			for(unsigned long i = 0; i < MAXIMUM_INTR_COUNT ; i++)  /*MAXIMUM_INTR_COUNT*/
+			for(unsigned int i = 0; i < MAXIMUM_INTR_COUNT ; i++)  /*MAXIMUM_INTR_COUNT*/
 			{
-				if ((intr_status >> i) & (unsigned long)1){			
+				if ((intr_status >> i) & (unsigned int)1){
 					irq_table[i]();// Invoke the peripheral handler as function pointer.			
 				}
 			}

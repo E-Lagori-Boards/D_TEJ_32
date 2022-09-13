@@ -6,9 +6,10 @@
 
 _start:
 	la gp, _gp
-	#la sp, _sp
-############################################
-   la  tp, _end + 63
+	la sp, _sp
+
+/*############################################
+  la  tp, _end + 63
   and tp, tp, -64
 
 #Initialize flag for waiting till core 0 completes program download
@@ -26,8 +27,7 @@ _start:
   sll sp, sp, STKSHIFT
   add sp, sp, tp
 
-#######################################
-
+#######################################*/
 
 	/* Load data section */
 	la a0, _data_lma
