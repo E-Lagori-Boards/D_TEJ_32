@@ -7,7 +7,7 @@
 #define PGM_P  const char *
 #define PSTR(str) (str)
 
-#define _SFR_BYTE(n) (n)
+// #define _SFR_BYTE(n) (n)
 
 typedef void prog_void;
 typedef char prog_char;
@@ -40,14 +40,8 @@ typedef uint32_t prog_uint32_t;
 #define pgm_read_word_far(addr) pgm_read_word(addr)
 #define pgm_read_dword_far(addr) pgm_read_dword(addr)
 #define pgm_read_float_far(addr) pgm_read_float(addr)
-
-
-
-//new
 #define pgm_read_ptr(addr) (*(void *const *)(addr))
-
 #define pgm_read_ptr_near(addr) pgm_read_ptr(addr)
-
 #define pgm_read_ptr_far(addr) pgm_read_ptr(addr)
 
 #endif

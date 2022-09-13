@@ -26,7 +26,7 @@ __BEGIN_DECLS
 //      LOW 0
 //      HIGH 1
 // #define CHANGE 2
-//#define FALLING 3
+#define FALLING 3
 // #define RISING 4
 
 typedef void (*fp)(void); //Declares a type of a void function that accepts an void
