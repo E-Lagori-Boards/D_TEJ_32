@@ -40,6 +40,7 @@
 #define WRITE_ENABLE                0x06
 #define WRITE_EEPROM                0x02
 #define CHIP_ERASE                  0x60
+#define BLOCK_ERASE                 0x20
 #define READ_STATUS_1               0x05
 
 
@@ -50,6 +51,7 @@ class SPIEeprom {
     void at25sf161ReadEeprom(unsigned char *readBuf, unsigned long length, unsigned int eepromAddress);
     void at25sf161WriteEeprom(unsigned char *writeBuf, unsigned long length, unsigned int eepromAddress);
     int at25sf161ChipErase(void);
+    int at25sf161blockErase4k(int addr);
 };
 
 /*  Function declaration section
@@ -59,6 +61,6 @@ class SPIEeprom {
 void at25sf161BusyWait(void);
 
 
-extern SPIEeprom EEPROM;
+extern SPIEeprom SPI_EEPROM;
 
 #endif  /* __AT25SF161_H_ */

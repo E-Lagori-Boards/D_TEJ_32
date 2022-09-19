@@ -23,15 +23,22 @@
 #ifndef _UART_CLASS_
 #define _UART_CLASS_
 
+/*  Include section
+ *
+ *
+ ***************************************************/
+
 #include "platform.h"
 #include "HardwareSerial.h"
 #include "uart.h"
 
+/*  Function declaration section
+ *
+ ***************************************************/
+
 class UARTClass: public HardwareSerial {
 public:
 	UARTClass(uint32_t _id);
-	//UARTClass(uint32_t base = UART0_BASE_ADDR ) : serbase(reinterpret_cast<uint8_t*>(base)) {}
-
 	void begin(unsigned long dwBaudRate);
 	//void end(void);
 	int available(void);
@@ -42,13 +49,13 @@ public:
 	size_t write(const uint8_t c);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
 
+private:
+	volatile uint32_t id;
 	operator bool() {
 		return (true);
 	}
 	; // UART always active
 
-private:
-	volatile uint32_t id;
 protected:
 	// int sio_probe_rx();
 	int sio_getchar(int c);
@@ -65,5 +72,10 @@ protected:
 	volatile uint8_t sio_rxbuf_tail;
 	char sio_rxbuf[SIO_RXBUFSIZE];
 };
+
+#if UART_INTERFACES_COUNT > 0
+extern UARTClass uart;
+#endif
+
 extern UARTClass Serial;
 #endif // _UART_CLASS_

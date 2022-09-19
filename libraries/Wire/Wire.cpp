@@ -1,7 +1,7 @@
 /***************************************************************************
  * Project                               :  MDP
  * Name of the file                      :  Wire.cpp
- * Brief Description of file             :  Driver to control the i2c device.
+ * Brief Description of file             :  Driver to control the I2C device.
  * Name of Author                        :  Mydhily M R
  * Email ID                              :  mydhily37@gmail.com
 

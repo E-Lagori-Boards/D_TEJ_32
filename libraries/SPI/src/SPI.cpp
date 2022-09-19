@@ -34,6 +34,9 @@
 #include "SPI.h"
 
 
+SPIClass SPI(0);
+
+
 /** @fn SPIClass::SPIClass(uint32_t _id) : id(_id)
  @brief Initialize SPI Port.
  @details This function initialise the SPI port.

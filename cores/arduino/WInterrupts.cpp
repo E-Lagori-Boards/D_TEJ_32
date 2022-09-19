@@ -19,12 +19,13 @@
 #include "Arduino.h"
 #include "wiring_private.h"
 #include "encoding.h"
+#include "UARTClass.h"
+
 
 #include <string.h>
 
-
-fp irq_table[64]; //Array of Function pointer.
-fp sw_irq_function; //Software IRQ Function pointer.
+volatile fp irq_table[64]; //Array of Function pointer.
+volatile fp sw_irq_function; //Software IRQ Function pointer.
 extern volatile unsigned long INTERRUPT_Handler_0;
 extern volatile unsigned long trap_entry;
 
@@ -49,7 +50,7 @@ void attachInterrupt(uint8_t intr_number, void (*irq_handler)(), uint32_t mode) 
 void interrupt_handler(void) {
 
 	void (*func_ptr)();
-	int mcause_val = 0, trap_type=0;
+	unsigned int mcause_val = 0, trap_type=0;
 
   trap_type = (read_csr(mcause) >> 31);
 
@@ -64,12 +65,20 @@ void interrupt_handler(void) {
 			sw_irq_function(); // Invoke the peripheral handler as function pointer.	
 		} else {
 		
-			unsigned long intr_status = MACHINE_INT_STATUS; // Read interrupt status register.
+			unsigned int intr_status = MACHINE_INT_STATUS; // Read interrupt status register.
 
-			for(unsigned long i = 0; i < MAXIMUM_INTR_COUNT ; i++)  /*MAXIMUM_INTR_COUNT*/
+			//Serial.println("intr_status:");
+			//Serial.print(intr_status, 16);
+
+
+			for(unsigned int i = 0; i < MAXIMUM_INTR_COUNT ; i++)  /*MAXIMUM_INTR_COUNT*/
 			{
-				if ((intr_status >> i) & (unsigned long)1){			
-					irq_table[i]();// Invoke the peripheral handler as function pointer.			
+				if ((intr_status >> i) & (unsigned int)1){
+					irq_table[i]();// Invoke the peripheral handler as function pointer.
+					//Serial.println("i");
+					//Serial.print(i);
+					//Serial.print("\n");
+					return;
 				}
 			}
 		}

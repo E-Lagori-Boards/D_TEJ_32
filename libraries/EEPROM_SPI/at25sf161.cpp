@@ -2,7 +2,7 @@
 * Module name                           :  at25sf161.cpp
 * Name of Author                        :  Himanshu Kishor Diwane, C-DAC
 * Email ID  (Report any bugs)           :  kishor.dh@cdac.in
-* Module Description                    :  AT25SF161 SPI Flash Library
+* Module Description                    :  AT25SF161 SPI_3 Flash Library
 
   Copyright (C) 2020  CDAC(T). All rights reserved.
 
@@ -23,7 +23,7 @@
 
 /**
  @file at25sf161.cpp
- @brief AT25SF161 SPI Flash Library 
+ @brief AT25SF161 SPI_3 Flash Library
  @detail 
  */
 
@@ -35,8 +35,8 @@
 /*  Global variable section
  *
  ***************************************************/
-SPIEeprom EEPROM;
-extern SPIClass SPI;
+SPIEeprom SPI_EEPROM;
+SPIClass SPI_3(3);
 
 
 /** 
@@ -50,16 +50,15 @@ uint8_t *SPIEeprom::at25sf161Begin() {
 
 	static unsigned char devID[3];
 
-	SPI.begin(DBITS_8, SPI_MODE3, SPI_MSB_FIRST);
-	SPI.setClockDivider(0);
-	SPI.spiSlaveSelect();
-	SPI.transfer(0x9F);
-	SPI.transfer(devID, 3);
-	SPI.spiSlaveDeselect();
+	SPI_3.begin(DBITS_8, SPI_MODE3, SPI_MSB_FIRST);
+	SPI_3.setClockDivider(0);
+	SPI_3.spiSlaveSelect();
+	SPI_3.transfer(0x9F);
+	SPI_3.transfer(devID, 3);
+	SPI_3.spiSlaveDeselect();
 
 	return devID;
 }
-
 
 /** 
  * @fn void SPIEeprom::at25sf161ReadEeprom(unsigned char *readBuf, unsigned long length, unsigned int eepromAddress)
@@ -78,13 +77,13 @@ void SPIEeprom::at25sf161ReadEeprom(unsigned char *readBuf, unsigned long length
 	cmdBuf[3] = (eepromAddress)&0xFF;		  // address bits  0-7
 
 
-    SPI.spiSlaveSelect();
+    SPI_3.spiSlaveSelect();
 
 	// eeprom read command.
-	SPI.transfer(cmdBuf, 4);
+	SPI_3.transfer(cmdBuf, 4);
 	// reading data.
-	SPI.transfer(readBuf, length);
-	SPI.spiSlaveDeselect();
+	SPI_3.transfer(readBuf, length);
+	SPI_3.spiSlaveDeselect();
 }
 
 
@@ -107,9 +106,9 @@ void SPIEeprom::at25sf161WriteEeprom(unsigned char *writeBuf, unsigned long leng
 
 	cmdBuf[0] = WRITE_ENABLE;
 
-	SPI.spiSlaveSelect();					// Setting CSAAT bit high.
-	SPI.transfer(cmdBuf, 1);
-	SPI.spiSlaveDeselect();					// Setting CSAAT bit low
+	SPI_3.spiSlaveSelect();					// Setting CSAAT bit high.
+	SPI_3.transfer(cmdBuf, 1);
+	SPI_3.spiSlaveDeselect();					// Setting CSAAT bit low
 
 	
 	cmdBuf[0] = WRITE_EEPROM;				  // write command.
@@ -117,12 +116,12 @@ void SPIEeprom::at25sf161WriteEeprom(unsigned char *writeBuf, unsigned long leng
 	cmdBuf[2] = (eepromAddress >> 8) & 0xFF;  // address bits  8-15
 	cmdBuf[3] = (eepromAddress)&0xFF;		  // address bits  0-7
 
-    SPI.spiSlaveSelect();					// Setting CSAAT bit high.
+    SPI_3.spiSlaveSelect();					// Setting CSAAT bit high.
 	// eeprom read command.
-	SPI.transfer(cmdBuf, 4);
+	SPI_3.transfer(cmdBuf, 4);
 	// reading data.
-	SPI.transfer(writeBuf, length);  
-	SPI.spiSlaveDeselect();					// Setting CSAAT bit low.
+	SPI_3.transfer(writeBuf, length);
+	SPI_3.spiSlaveDeselect();					// Setting CSAAT bit low.
 	at25sf161BusyWait();
 }
 
@@ -138,16 +137,47 @@ int SPIEeprom::at25sf161ChipErase(void) {
 
 	static unsigned char opcode;
 
-	SPI.spiSlaveSelect();					// Setting CSAAT bit high.
+	SPI_3.spiSlaveSelect();					// Setting CSAAT bit high.
 	opcode = WRITE_ENABLE;
-	SPI.transfer(&opcode, 1);
-	SPI.spiSlaveDeselect();					// Setting CSAAT bit low.
+	SPI_3.transfer(&opcode, 1);
+	SPI_3.spiSlaveDeselect();					// Setting CSAAT bit low.
 
-	SPI.spiSlaveSelect();
+	SPI_3.spiSlaveSelect();
 	opcode = CHIP_ERASE;
-	SPI.transfer(&opcode, 1);
-	SPI.spiSlaveDeselect();
+	SPI_3.transfer(&opcode, 1);
+	SPI_3.spiSlaveDeselect();
 	
+	at25sf161BusyWait();
+	return 1;
+}
+
+/**
+ * @fn int SPIEeprom::at25sf161blockErase4k(void)
+ * @brief For erasing a block of at25sf161 eeprom
+ * @details
+ * @param[in] No output parameter
+ * @param[Out] No output parameter
+*/
+int SPIEeprom::at25sf161blockErase4k(int addr) {
+
+	static unsigned char opcode;
+
+	SPI_3.spiSlaveSelect();					// Setting CSAAT bit high.
+	opcode = WRITE_ENABLE;
+	SPI_3.transfer(&opcode, 1);
+	SPI_3.spiSlaveDeselect();					// Setting CSAAT bit low.
+
+	SPI_3.spiSlaveSelect();
+	opcode = BLOCK_ERASE;
+	SPI_3.transfer(&opcode, 1);
+	opcode = (addr >> 16) & 0xff;
+	SPI_3.transfer(&opcode, 1);
+	opcode = (addr >> 8) & 0xff;
+	SPI_3.transfer(&opcode, 1);
+	opcode = (addr) & 0xff;
+	SPI_3.transfer(&opcode, 1);
+	SPI_3.spiSlaveDeselect();
+
 	at25sf161BusyWait();
 	return 1;
 }
@@ -163,10 +193,10 @@ int SPIEeprom::at25sf161ChipErase(void) {
 void at25sf161BusyWait(void) {
 	
 	static unsigned char status;
-	SPI.spiSlaveSelect();
+	SPI_3.spiSlaveSelect();
 	do{
-		SPI.transfer(READ_STATUS_1);
-		SPI.transfer(&status, 1);
+		SPI_3.transfer(READ_STATUS_1);
+		SPI_3.transfer(&status, 1);
 	}while(status & EEPROM_BUSY);
-	SPI.spiSlaveDeselect();
+	SPI_3.spiSlaveDeselect();
 }

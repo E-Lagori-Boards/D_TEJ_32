@@ -60,26 +60,6 @@ UARTClass::UARTClass(uint32_t _id) :
 
 }
 
-/** @fn int UARTClass::sio_probe_rx()
- @brief receive.
- @details
- @warning
- @param[in]  No input parameter
- @param[Out] No output parameter
- @return
- */
-/*
- int UARTClass::sio_probe_rx() //receive
- {
- if (UART_REG(UART_LSR_DR >= 0)) {
- sio_rxbuf[sio_rxbuf_head++] = UART_REG_DR;
- sio_rxbuf_head &= SIO_RXBUFMASK; //sio_rxbuf_head= sio_rxbuf_head & SIO_RXBUFMASK(7)//msb
- return (1);
- }
- return (0);
- }
- */
-
 /** @fn void UARTClass::sio_setbaud(int bauds)
  @brief set baud rate for uart
  @details Calculate Divisor(Divisor = Input frequency / (Baud rate X 16) )
@@ -168,14 +148,7 @@ int UARTClass::available(void) {
 		return 1;
 	else
 		return 0;
-	//sio_probe_rx();
-	//return (!(sio_rxbuf_head == sio_rxbuf_tail));
 }
-
-/*
- sio_probe_rx();
- return (!(sio_rxbuf_head == sio_rxbuf_tail));
- }*/
 
 /** @fn int UARTClass::availableForWrite(void)
  @brief number of bytes available for writing
@@ -197,14 +170,21 @@ int UARTClass::available(void) {
 
 /** @fn int UARTClass::read(void)
  @brief read data from uart
- @details
+ @details 1 byte character reception
  @warning
  @param[in]  No input parameter
  @param[Out] No output parameter
- @return void function
+ @return int function
  */
 int UARTClass::read(void) {
-	return (sio_getchar(1));
+
+	if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
+		return -1; //No data
+	}
+
+	int c = UART_REG(id, UART_REG_DR);
+	return c;
+
 }
 
 /** @fn size_t UARTClass::write(const uint8_t uc_data)

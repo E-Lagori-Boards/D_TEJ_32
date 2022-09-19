@@ -1,6 +1,3 @@
-#ifndef TwoWire_h
-#define TwoWire_h
-
 /**
  @file Wire.h
  @brief header file for I2C driver
@@ -19,12 +16,23 @@
  *
  *
  * Module Description:
- * I2CI registers and function declarations
+ * I2C registers and function declarations
  *
  ***************************************************/
+#ifndef TwoWire_h
+#define TwoWire_h
 
+/*  Include section
+ *
+ *
+ ***************************************************/
 #include <inttypes.h>
 #include "Arduino.h"
+
+/*  Defines section
+ *
+ *
+ ***************************************************/
 
 #define BUFFER_LENGTH 16	//Fifo depth
 
@@ -94,6 +102,10 @@
 #define  OTHER_ERROR	(4)
 #define  TIME_OUT		(5)
 /*********************************************************************************************/
+
+/*  Function declaration section
+ *
+ ***************************************************/
 
 extern "C" void i2c0_isr(void);
 
