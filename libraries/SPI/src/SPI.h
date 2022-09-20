@@ -30,10 +30,10 @@
 
 
 // SPI Ports
-#define SPI0                        (*SPI0_BASE_ADDR)
-#define SPI1                        (*SPI1_BASE_ADDR)
-#define SPI2                        (*SPI2_BASE_ADDR)
-#define SPI3 						(*SPI3_BASE_ADDR)
+#define SPI0       (*(SPIClass *) SPI0_BASE_ADDR)                
+#define SPI1       (*(SPIClass *) SPI1_BASE_ADDR)          
+#define SPI2       (*(SPIClass *) SPI2_BASE_ADDR)     
+#define SPI3 	   (*(SPIClass *) SPI3_BASE_ADDR) 
 
 // SPI Modes
 #define SPI_MODE0 					0x00

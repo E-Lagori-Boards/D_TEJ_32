@@ -37,6 +37,8 @@
 
 #include <avr/io.h>
 
+#define  __DOXYGEN__ 1
+
 #if !E2END && !defined(__DOXYGEN__) && !defined(__COMPILING_AVR_LIBC__)
 # warning "Device does not have EEPROM available."
 #else

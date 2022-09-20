@@ -29,100 +29,70 @@
 #include "platform.h"
 #include "encoding.h"
 
+unsigned long clock_count;
 
 
-// Efficient divide routines provided by Bruce Hoult on forums.sifive.com
+unsigned long millis() {
+  static uint8_t count;
+  unsigned long current_clock_count;
 
-int_inverse f_cpu_1000_inv;
-int_inverse f_cpu_1000000_inv;
+  count = count + 1;
 
-void calc_inv(uint32_t n, int_inverse * res){
-  uint32_t one = ~0;
-  uint32_t d = one/n;
-  uint32_t r = one%n + 1;
-  if (r >= n) ++d;
-  if (d == 0) --d;
-  uint32_t shift = 0;
-  while ((d & 0x80000000) == 0){
-    d <<= 1;
-    ++shift;
+  if(count <= 1)
+  {
+    clock_count = read_csr(mcycle);
+    return ((clock_count * 0.0135)/1000);
   }
-  res->n = n;
-  res->mult = d;
-  res->shift = shift;
-}
-
-inline uint32_t divide32_using_inverse(uint32_t n, int_inverse *inv){
-
- uint32_t d =  (uint32_t)(((uint64_t)n * inv->mult) >> 32);
-   d >>= inv->shift;
-  if (n - d*inv->n >= inv->n) ++d;
-  return d;
-}
-
-// Almost full-range 64/32 divide.
-// If divisor-1 has i bits, then the answer is exact for n of up to 64-i bits
-// e.g. for divisors up to a million, n can have up to 45 bits
-// On RV32IM with divide32_using_inverse inlines this uses 5 multiplies,
-// 33 instructions, zero branches, 3 loads, 0 stores.
-uint64_t divide64_using_inverse(uint64_t n, int_inverse *inv){
-  uint32_t preshift = (31 - inv->shift) & 31;
-  uint64_t d = (uint64_t)divide32_using_inverse(n >> preshift, inv) << preshift;
-  uint32_t r = n - d * inv->n;
-  d += divide32_using_inverse(r, inv);
-  return d;
+  else
+  {
+    current_clock_count = read_csr(mcycle);
+    return (((current_clock_count - clock_count) * 0.0135)/1000);
+  }
 }
 
 
-uint32_t
-millis()
-{
-  uint64_t x;
-  rdmcycle(&x);
-  x = divide64_using_inverse(x, &f_cpu_1000_inv);
-  return((uint32_t) (x & 0xFFFFFFFF));
-}
+unsigned long micros(void) {
 
-uint32_t 
-micros(void)
-{
-  uint64_t x;
-  rdmcycle(&x);
-  // For Power-of-two MHz F_CPU,
-  // this compiles into a simple shift,
-  // and is faster than the general solution.
-#if F_CPU==16000000
-  x = x / (F_CPU / 1000000);
-#else
-#if  F_CPU==256000000
-  x = x / (F_CPU / 1000000);
-#else
-  x = divide64_using_inverse(x, &f_cpu_1000000_inv);
-#endif
-#endif
-  return((uint32_t) (x & 0xFFFFFFFF));
+  static uint8_t count;
+  unsigned long current_clock_count = 0;
+
+  count = count + 1;
+
+  if(count <= 1)
+  {
+    clock_count = read_csr(mcycle);
+    return (clock_count * 0.0135);
+  }
+  else
+  {
+    current_clock_count = read_csr(mcycle);
+    return ((current_clock_count - clock_count) * 0.0135);
+  }
 }
 
 
-void
-delay(uint32_t dwMs)
-{
-  uint64_t current, later;
-  rdmcycle(&current);
-  later = current + dwMs * (F_CPU/1000);
-  if (later > current) // usual case
-    {
-      while (later > current) {
-	rdmcycle(&current);
-      }
-    }
-  else // wrap. Though this is unlikely to be hit w/ 64-bit mcycle
-    {
-      while (later < current) {
-	rdmcycle(&current);
-      }
-      while (current < later) {
-	rdmcycle(&current);
-      }
-    }
+void delay(unsigned long  ms) {
+
+  unsigned long  cycle_count, current_cycle, target_cycle;
+
+  cycle_count = ms * SYS_FREQ * 1000 * 1.85;
+
+  current_cycle = read_csr(mcycle);
+  target_cycle = current_cycle + cycle_count;
+
+  while ((read_csr(mcycle) < target_cycle))
+    ;
+}
+
+void delayMicroseconds(unsigned long us) {
+
+  unsigned int cycle_count, current_cycle, target_cycle;
+
+  cycle_count = us * SYS_FREQ * 1.85;
+
+  current_cycle = read_csr(mcycle);
+  target_cycle = current_cycle + cycle_count;
+
+  while ((read_csr(mcycle) < target_cycle))
+    ;
 }
