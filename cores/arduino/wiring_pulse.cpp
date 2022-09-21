@@ -27,26 +27,13 @@
 extern uint32_t
 pulseIn(uint32_t pin, bool state, uint32_t timeout)
 {
-	uint32_t numloops = 0;
-	uint32_t maxloops = microsecondsToClockCycles(timeout) / 16;
-	uint32_t start, end;
-	
-	// wait for any previous pulse to end
-	while (digitalRead(pin) == state)
-		if (numloops++ == maxloops)
-			return 0;
-	
-	// wait for the pulse to start
-	while (digitalRead(pin) != state)
-		if (numloops++ == maxloops)
-			return 0;
-	
-	// wait for the pulse to stop
-	start = micros();
-	while (digitalRead(pin) == state)
-		if (numloops++ == maxloops)
-			return 0;
-	end  = micros();
+	uint32_t start_time=0, end_time=0;
+	unsigned long total_time=0;
+	while(digitalRead(pin)!=state);
+	start_time =  read_csr(mcycle);
+	while(digitalRead(pin)==state);
+	end_time =  read_csr(mcycle);	
 
-	return (end - start);
+	total_time = (end_time - start_time)*0.0135;
+	return total_time;
 }
