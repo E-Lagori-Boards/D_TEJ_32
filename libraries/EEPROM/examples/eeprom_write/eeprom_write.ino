@@ -7,6 +7,8 @@
  */
 
 #include <EEPROM.h>
+#include <Wire.h>
+
 
 /** the current address in the EEPROM (i.e. which byte we're going to write to next) **/
 int addr = 0;
