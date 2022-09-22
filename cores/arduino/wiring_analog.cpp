@@ -37,7 +37,7 @@ static uint16_t readRegister(uint8_t address, uint8_t reg) {
 	return (Wire.read() << 8 | Wire.read());
 }
 
-uint32_t analogRead(uint32_t pin)
+float analogRead(uint32_t pin)
 {
 	Wire.begin(); //need to check
 	if (pin > 3) {	//channel=pin
@@ -82,7 +82,9 @@ uint32_t analogRead(uint32_t pin)
 
 	// Read the conversion results
 	// Shift 12-bit results right 4 bits for the ADS1015
-	return readRegister(ADS1015_ADDRESS, ADS1015_REG_POINTER_CONVERT)>> BIT_SHIFT;
+	float resolution = 0.002;
+	uint16_t adc_value = readRegister(ADS1015_ADDRESS, ADS1015_REG_POINTER_CONVERT)>> BIT_SHIFT;
+	return (adc_value*resolution);
 
 	//return 0;
 }

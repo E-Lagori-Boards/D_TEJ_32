@@ -1,4 +1,6 @@
-#define PIN 2  // connect SIG pin of touch sensor to aries GPIO-0
+#define PIN 2  // connect SIG pin of touch sensor to aries GPIO-2
+
+#define GREEN 22
 
 void setup() {
   pinMode(PIN, INPUT);
@@ -7,7 +9,12 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(PIN) == HIGH)
+  if (digitalRead(PIN) == HIGH){
     Serial.println("Sensor is touched");
-  delay(500);
+
+    digitalWrite(GREEN, LOW);
+    delay(50);
+    digitalWrite(GREEN, HIGH);
+  }
+  delay(20);
 }

@@ -34,7 +34,7 @@
 #include "SPI.h"
 
 
-SPIClass SPI(0);
+// SPIClass SPI(0);
 
 
 /** @fn SPIClass::SPIClass(uint32_t _id) : id(_id)
