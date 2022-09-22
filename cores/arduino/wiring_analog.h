@@ -53,7 +53,7 @@ __BEGIN_DECLS
 // Function declarations
 
 void analogWrite(uint32_t pin, uint32_t ulValue);
-uint32_t analogRead(uint32_t pin);
+float analogRead(uint32_t pin);
 
 __END_DECLS
 
