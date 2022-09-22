@@ -3,7 +3,7 @@
 
 TwoWire Wire(8);
 
-const int ledPin = 22; // digital pin 5 
+const int ledPin = 22; // Green LED is internally connected to GPIO-22 
 const int ldrPin = A0; // analog pin 0
 
 void setup() { //  Void setup function will only run once, after each powerup or reset of the Arduino board.

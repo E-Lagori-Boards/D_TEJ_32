@@ -1,6 +1,7 @@
-// Program to exercise the MD_MAX72XX library
-//
-// Uses most of the functions in the library
+/* 
+ *  Library Name : MD_MAX72XX
+ *  Library Version : 3.3.0
+ */
 #include <MD_MAX72xx.h>
 
 // Turn on debug statements to the serial output
@@ -21,13 +22,22 @@
 // Define the number of devices we have in the chain and the hardware interface
 // NOTE: These pin numbers will probably not work with your hardware and may
 // need to be adapted
-#define HARDWARE_TYPE MD_MAX72XX::PAROLA_HW
-#define MAX_DEVICES	11
+#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
+#define MAX_DEVICES	1
 
-#define CLK_PIN   13  // or SCK
-#define DATA_PIN  11  // or MOSI
-#define CS_PIN    10  // or SS
+#define CLK_PIN   13  // not requied
+#define DATA_PIN  11  // not requied
+#define CS_PIN    10  // CS pin to GPIO-10
 SPIClass SPI(0);
+/*
+ * PINS CONNECTION
+ * MAX72XX - ARIES
+ * VCC     - 5V
+ * GND     - GND
+ * DIN     - MOSI0
+ * CS      - GPIO-10
+ * CLK     - SCLK0
+ */
 // SPI hardware interface
 MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
 // Specific SPI hardware interface
@@ -586,7 +596,7 @@ void setup()
   mx.begin();
 
 #if  DEBUG
-  Serial.begin(57600);
+  Serial.begin(115200);
 #endif
   PRINTS("\n[MD_MAX72XX Test & Demo]");
 //  scrollText("MD_MAX72xx Test  ");

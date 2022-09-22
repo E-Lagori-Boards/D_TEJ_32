@@ -1,7 +1,5 @@
-int IRSensor = 0; // connect ir sensor to arduino pin 2
-int LED = 22; // conect Led to arduino pin 13
-
-
+int IRSensor = 0; // connect OUT pin of IR sensor to aries GPIO-0
+int LED = 22; // Green color LED is internally connected to GPIO-22
 
 void setup() 
 {

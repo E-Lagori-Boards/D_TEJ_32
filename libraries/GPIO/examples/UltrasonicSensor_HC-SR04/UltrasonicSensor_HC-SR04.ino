@@ -1,13 +1,13 @@
 // ---------------------------------------------------------------- //
-// Arduino Ultrasoninc Sensor HC-SR04
-// Re-writed by Arbi Abdul Jabbaar
+// Ultrasoninc Sensor HC-SR04
 // Using Arduino IDE 1.8.7
 // Using HC-SR04 Module
-// Tested on 17 September 2019
 // ---------------------------------------------------------------- //
 
-#define echoPin 1 // attach pin D1 Arduino to pin Echo of HC-SR04
-#define trigPin 0 //attach pin D2 Arduino to pin Trig of HC-SR04
+// connect VCC to 5V
+
+#define echoPin 1 // attach pin GPIO-1 Aries to pin Echo of HC-SR04
+#define trigPin 0 //attach pin GPIO-1 Aries to pin Trig of HC-SR04
 
 // defines variables
 long duration; // variable for the duration of sound wave travel
@@ -36,5 +36,5 @@ void loop() {
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
-  delay(2000);
+  delay(100);
 }
