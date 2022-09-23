@@ -49,20 +49,23 @@ int send_string(char * str)
 void receive_string(char * str)
 
 {
+  int data;
+  char char_data;
 
-  char data;
-
-
+  
   while (1) {
 
-    data = MyBlue.read();
+    do{
+      data = MyBlue.read();
+    }while(data == -1);
 
-    *str = data;
+  char_data = (char)data;
+    
+    *str = char_data;
 
     str++;
 
-    if (data == '\n') {
-
+    if (char_data == '\n') {
       *str = '\r';
 
       break;
@@ -83,7 +86,7 @@ void setup()
 void loop()
 {
 
-  char str[100] = {0,};
+  static char str[100] = {0,};
 
   memset(str, 0, sizeof(str));
 
