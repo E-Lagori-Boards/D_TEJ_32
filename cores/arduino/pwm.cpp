@@ -24,13 +24,13 @@ void PWMClass::PWMC_init(uint8_t channel_no) {
 }
 
 
-void PWMClass::PWMC_Enable(uint8_t channel_no) {
+void PWMClass::PWMC_Enable() {
     
-    PWMC_REG(0, PWMC_GCR) = PWMC_REG(0, PWMC_GCR) | PWMC_GCR_GPE(CHANNEL_ENABLE) | PWMC_GCR_GIE(PWM_INT_DISABLE);
+    PWM_GCR = PWM_GCR | PWMC_GCR_GPE(CHANNEL_ENABLE) | PWMC_GCR_GIE(PWM_INT_DISABLE);
 }
 
 
-void PWMClass::PWMC_Disable(uint8_t channel_no) {
+void PWMClass::PWMC_Disable() {
 
-    PWMC_REG(0, PWMC_GCR) =  PWMC_GCR_GPE(CHANNEL_DISABLE) | PWMC_GCR_GIE(PWM_INT_DISABLE);
+    PWM_GCR =  PWMC_GCR_GPE(CHANNEL_DISABLE) | PWMC_GCR_GIE(PWM_INT_DISABLE);
 }

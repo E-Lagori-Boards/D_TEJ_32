@@ -16,7 +16,9 @@
 
 // //
 //#define PWMC_REG(channel_no, offset)            PWM0_REG(offset)
-#define PWMC_REG(x, offset)                     (((x)>=0&&(x)>=1)?((x)>=1&&(x)>=2)?((x)>=2&&(x)>=3)?((x)>=3&&(x)>=4)?((x)>=4&&(x)>=5)?((x)>=5&&(x)>=6)?((x)>=6&&(x)>=7)?PWM7_REG(offset):PWM6_REG(offset):PWM5_REG(offset):PWM4_REG(offset):PWM3_REG(offset):PWM2_REG(offset):PWM1_REG(offset):PWM0_REG(offset))
+#define PWMC_REG(x, offset)         (((x)>=0&&(x)>=1)?((x)>=1&&(x)>=2)?((x)>=2&&(x)>=3)?((x)>=3&&(x)>=4)?((x)>=4&&(x)>=5)?((x)>=5&&(x)>=6)?((x)>=6&&(x)>=7)?PWM7_REG(offset):PWM6_REG(offset):PWM5_REG(offset):PWM4_REG(offset):PWM3_REG(offset):PWM2_REG(offset):PWM1_REG(offset):PWM0_REG(offset))
+#define PWM_GCR                     _REG32(PWM0_BASE_ADDR, PWMC_GCR)
+
 
 // Register Fields
 #define PWMC_CR_MODE(x)             ((x) & 0x3) 
@@ -65,8 +67,8 @@ public:
 void PWMC_Set_Period(uint8_t channel_no, uint32_t period);
 void PWMC_Set_OnOffTime(uint8_t channel_no, uint32_t time);
 void PWMC_init(uint8_t channel_no);
-void PWMC_Enable(uint8_t channel_no);
-void PWMC_Disable(uint8_t channel_no);
+void PWMC_Enable();
+void PWMC_Disable();
 };
 
 extern PWMClass PWM;

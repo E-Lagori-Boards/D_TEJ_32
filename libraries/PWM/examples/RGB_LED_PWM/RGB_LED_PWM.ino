@@ -17,15 +17,15 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
    for(i = 0; i < 400; i++){
-    analogWrite(RED_LED, i);
-    analogWrite(YELLOW_LED, i);
-    analogWrite(GREEN_LED, i);
+    analogWrite(RED_LED, i*2000);
+    analogWrite(YELLOW_LED, i*2000);
+    analogWrite(GREEN_LED, i*2000);
     delay(10);
   }
   for(i = 400; i > 0; i--){
-    analogWrite(RED_LED, i);
-    analogWrite(YELLOW_LED, i);
-    analogWrite(GREEN_LED, i);
+    analogWrite(RED_LED, i*2000);
+    analogWrite(YELLOW_LED, i*2000);
+    analogWrite(GREEN_LED, i*2000);
     delay(10);
   }
 }

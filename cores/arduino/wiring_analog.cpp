@@ -5,16 +5,13 @@
 #include "utility/twi.h"
 #include "Wire.h"
 
-// extern PWMClass PWM;
-// extern TwoWire Wire;
-
 
 void analogWrite(uint32_t pin, uint32_t ulValue)
 {
-  //PWM.PWMC_Set_Period(pin, 800000);
-  PWM.PWMC_Set_OnOffTime(pin, ulValue*2000);
+//   PWM.PWMC_Set_Period(pin, 800000);
+  PWM.PWMC_Set_OnOffTime(pin, ulValue);
   PWM.PWMC_init(pin);
-  PWM.PWMC_Enable(pin);
+  PWM.PWMC_Enable();
 }
 
 
