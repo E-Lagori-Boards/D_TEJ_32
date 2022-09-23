@@ -1,5 +1,12 @@
+/*
+* SERVO MOTOR
+* BLOG Link : https://vegaprocessors.in/blog/servo-motors-with-aries-v2-board/
+*/
+
+
 #include <Servo.h>
-#define CH 1 // connect signal PIN to PWM-0 of Aries Board
+
+#define CH 0 // connect signal PIN to PWM-0 of Aries Board
 Servo myservo;  // create servo object to control a servo
 
 int i;

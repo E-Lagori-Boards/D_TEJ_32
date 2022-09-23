@@ -1,3 +1,8 @@
+/*
+* BEEP SOUND USING PIEZO BUZZER
+* Blog Link : https://vegaprocessors.in/blog/buzzer-with-aries-v2-board/
+*/
+
 #define BUZZER 0 // connect IN pin of buzzer to GPIO-0
 
 void setup() {

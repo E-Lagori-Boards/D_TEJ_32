@@ -1,5 +1,5 @@
 /*
- * RGB LED STRIP
+ * RGB LED STRIP - GPIO
  */
 
 #define RED_LED 0  // Connect RED LED pin to GPIO-0

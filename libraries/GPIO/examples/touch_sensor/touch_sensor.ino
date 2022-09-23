@@ -1,6 +1,12 @@
-#define PIN 2  // connect SIG pin of touch sensor to aries GPIO-2
+/*
+* TOUCH SENSOR
+* BLOG Link : https://vegaprocessors.in/blog/ttp223b-touch-sensor-module-with-aries-v2-board/
+*/
 
-#define GREEN 22
+
+#define PIN 0  // connect SIG pin of touch sensor to aries GPIO-0
+
+#define GREEN 22  // Green LED
 
 void setup() {
   pinMode(PIN, INPUT);
@@ -12,7 +18,7 @@ void loop() {
   if (digitalRead(PIN) == HIGH){
     Serial.println("Sensor is touched");
 
-    digitalWrite(GREEN, LOW);
+    digitalWrite(GREEN, LOW);   // blink led if sensor is touched
     delay(50);
     digitalWrite(GREEN, HIGH);
   }

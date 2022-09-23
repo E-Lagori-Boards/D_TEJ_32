@@ -1,3 +1,9 @@
+/*
+* PIR MOTION SENSOR
+* BLOG Link : https://vegaprocessors.in/blog/pir-motion-sensor-with-vega-processors/
+*/
+
+
 int led = 22;                // the pin that the LED is atteched to GPIO-22 internally
 int sensor = 0;              // the pin that the sensor is atteched to GPIO-0 of Aries Board
 int state = LOW;             // by default, no motion detected

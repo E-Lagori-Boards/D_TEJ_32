@@ -1,4 +1,10 @@
-int IRSensor = 0; // connect OUT pin of IR sensor to aries GPIO-0
+/*
+* IR PROXIMITY SENSOR
+* BLOG Link : https://vegaprocessors.in/blog/capturing-irinfrared-signals-using-aries/
+*/
+
+
+int IRSensor = 4; // connect OUT pin of IR sensor to aries GPIO-4
 int LED = 22; // Green color LED is internally connected to GPIO-22
 
 void setup() 

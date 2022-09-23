@@ -1,3 +1,9 @@
+/*
+* DC RELAY MODULE
+* BLOG Link : https://vegaprocessors.in/blog/one-channel-relay-module-with-aries-v2-board/
+*/
+
+
 #define RELAY_PIN 0  // connect INP pin of DC Relay to GPIO-0 of Aries board 
 
 char mode = 0xff;

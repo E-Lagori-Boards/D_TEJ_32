@@ -1,3 +1,8 @@
+/*
+* RGB LED STRIP BRIGHTNESS PWM
+*/
+
+
 #include <pwm.h>
 
 #define RED_LED 0  // Red LED to PWM0

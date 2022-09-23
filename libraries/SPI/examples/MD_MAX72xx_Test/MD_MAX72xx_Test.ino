@@ -1,4 +1,6 @@
 /* 
+ *  8x8 LED DOT MATRIX
+ *  BLOG Link : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
  *  Library Name : MD_MAX72XX
  *  Library Version : 3.3.0
  */
@@ -28,6 +30,7 @@
 #define CLK_PIN   13  // not requied
 #define DATA_PIN  11  // not requied
 #define CS_PIN    10  // CS pin to GPIO-10
+
 SPIClass SPI(0);
 /*
  * PINS CONNECTION

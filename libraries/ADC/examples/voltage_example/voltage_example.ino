@@ -1,4 +1,10 @@
+/*
+* VOLTAGE EXAMPLE
+*/
+
+
 #include<Wire.h>
+
 #define PIN A0  // Reading value from Analog pin 0
 TwoWire Wire(8);
 

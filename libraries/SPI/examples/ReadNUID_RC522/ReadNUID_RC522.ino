@@ -1,4 +1,6 @@
 /* 
+ *  RFID-RC 522
+ *  BLOG Link : https://vegaprocessors.in/blog/rfid-rc-522-with-aries-v2-0-board/
  *  Library Name : MFRC522
  *  Library Version : 1.4.10
  */
@@ -8,6 +10,7 @@
 
 #define SS_PIN 10  // Connect SDA/SS pin of RFID to GPIO-10 of Aries board
 #define RST_PIN 9  // Not required
+
 SPIClass SPI(0);
 /*
  *  PIN CONNECTIONS 

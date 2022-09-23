@@ -1,4 +1,8 @@
-// Interfacing Aries V2.0 with LDR sensor
+/*
+* Interfacing Aries V2.0 with LDR sensor
+* BLOG Link : https://vegaprocessors.in/blog/interfacing-ldr-sensor-to-aries-v2-board/
+*/
+
 #include <Wire.h>
 
 TwoWire Wire(8);

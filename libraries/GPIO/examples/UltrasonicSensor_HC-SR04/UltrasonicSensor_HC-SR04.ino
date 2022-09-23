@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------- //
-// Ultrasoninc Sensor HC-SR04
-// Using Arduino IDE 1.8.7
-// Using HC-SR04 Module
+// Distance mesurment using Ultrasoninc Sensor HC-SR04
+// BLOG link : https://vegaprocessors.in/blog/ultrasonic-sensor-with-thejas-soc/
 // ---------------------------------------------------------------- //
 
 // connect VCC to 5V
@@ -16,7 +15,7 @@ int distance; // variable for the distance measurement
 void setup() {
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-  Serial.begin(115200); // // Serial Communication is starting with 115200 of baudrate speed
+  Serial.begin(115200);  // Serial Communication is starting with 115200 of baudrate speed
   Serial.println("Ultrasonic Sensor HC-SR04 Test"); // print some text in Serial Monitor
   Serial.println("with Aries V2.0");
 }
