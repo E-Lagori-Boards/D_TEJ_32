@@ -11,8 +11,8 @@
  * TM1637      Aries Board
  * 3V3      -   3.3V
  * GND      -   GND
- * DI0      -   GPIO1
- * Clk      -   GPIO0
+ * DI0      -   GPIO0
+ * Clk      -   GPIO1
  * .
  **/
 
@@ -36,11 +36,11 @@ void loop() {
 
   // example: "12:ab"
   // tm.display(position, character);
-  tm.display(0,1);
-  tm.display(1,2);
+  tm.display(0,10);
+  tm.display(1,11);
   tm.point(1);
-  tm.display(2,10);
-  tm.display(3,11);
+  tm.display(2,12);
+  tm.display(3,13);
 
   delay(1000);
 

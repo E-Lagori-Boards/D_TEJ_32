@@ -10,8 +10,8 @@
  * TSM1637     Aries Board
  * 3V3      -   3.3V
  * GND      -   GND
- * DI0      -   GPIO1
- * Clk      -   GPIO0
+ * DI0      -   GPIO0
+ * Clk      -   GPIO1
  * .
  **/
  
