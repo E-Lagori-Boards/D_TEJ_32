@@ -12,8 +12,11 @@ aries_devkit.menu.toolsloc.manual.compiler.path=
 #Point to the file for ./variants/<variant>/pins_arduino.h
 aries_devkit.build.variant=standard
 
-aries_devkit.menu.clksrc.fpga=75MHz FPGA Clock
-aries_devkit.menu.clksrc.fpga.build.f_cpu=75000000L
+aries_devkit.menu.clksrc.aries100=100MHz FPGA Clock
+aries_devkit.menu.clksrc.aries100.build.f_cpu=100000000L
+
+aries_devkit.menu.clksrc.aries75=75MHz FPGA Clock
+aries_devkit.menu.clksrc.aries75.build.f_cpu=75000000L
 
 aries_devkit.build.mcu=rv32im
 
