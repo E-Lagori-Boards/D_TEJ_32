@@ -75,10 +75,14 @@ Timer::Timer(uint32_t _id) :
 
 void Timer::isr_timer(void) {	// intr handler
 
-	volatile void (*timerIsrCallback)();
+	void (*timerIsrCallback)();
 
-	volatile unsigned int EOI = TIMER_REG(id_isr, TIMER_REG_EOI);//clear timer interrupt
-	//volatile unsigned int istatus = TIMER_REG(id_isr, TIMER_REG_IntrStatus);//clear timer interrupt
+	//volatile unsigned int EOI =
+	TIMER_REG(id_isr, TIMER_REG_EOI);//clear timer interrupt
+
+	//volatile unsigned int EOI = TIMER_REG(id_isr, TIMER_REG_EOI);//clear timer interrupt
+
+	 //volatile unsigned int istatus = TIMER_REG(id_isr, TIMER_REG_IntrStatus);//clear timer interrupt
 	//EOI = istatus;
 	//Serial.println("eoi addr:");
 	//Serial.print((unsigned int) &(TIMER_REG(id_isr, TIMER_REG_EOI)), 16);
@@ -236,9 +240,9 @@ void Timer::attachInterrupt(void (*user_isr)()) {
 
 	// *************************Register IRQ Handler*************************** //
 
-	irq_table[intr_number] = (fp) (&isr_timer);
+	irq_table[intr_number] =  (volatile fp) (&isr_timer);
 
-	isrCallbackAddr = user_isr;
+	isrCallbackAddr = (unsigned int) user_isr;
 
 	TIMER_REG(id,TIMER_REG_Control) = 0x03;	// Enable timer with intr unmasked.
 }

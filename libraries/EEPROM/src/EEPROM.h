@@ -195,7 +195,7 @@ struct EEPROMClass {
 	EEPtr end() {
 		return length();
 	} //Standards requires this to be the item after the last valid entry. The returned pointer is invalid.
-	uint16_t length() {
+	uint32_t length() {
 		return E2END + 1;
 	}
 

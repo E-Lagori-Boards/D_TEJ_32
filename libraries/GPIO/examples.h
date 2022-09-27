@@ -1,10 +1,10 @@
 /**
- @file Wire.h
- @brief header file for I2C driver
+ @file examples.h
+ @brief header file for examples
  @detail
  */
 /***************************************************
- * Module name: Wire.h
+ * Module name: examples.h
  *
  * Copyright 2020 Company CDAC(T).
  * All Rights Reserved.
@@ -16,11 +16,11 @@
  *
  *
  * Module Description:
- * I2C registers and function declarations
+ * example programs
  *
  ***************************************************/
-#ifndef aries_h
-#define aries_h
+#ifndef examples_h
+#define examples_h
 
 
 #endif
