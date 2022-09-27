@@ -7,7 +7,7 @@
 
 #define SERVO_DELAY	5000
 #define SERVO_MIN	30000
-#define SERVO_MAX	200000
+#define SERVO_MAX	300000
 #define SERVO_PERIOD	1500000 //For 50Hz, thejas soc 40mHz, period=CPU_FREQ/HZ
 
 

@@ -73,26 +73,42 @@ unsigned long micros(void) {
 
 void delay(unsigned long  ms) {
 
-  unsigned long  cycle_count, current_cycle, target_cycle;
-
-  cycle_count = ms * SYS_FREQ * 1000 * 1.85;
-
-  current_cycle = read_csr(mcycle);
-  target_cycle = current_cycle + cycle_count;
-
-  while ((read_csr(mcycle) < target_cycle))
-    ;
-}
+  asm volatile("mv a5,%0\n\t"
+    "li a6,1 \n\t"
+    "beq a5,a6,final\n\t"
+    "li a6,3 \n\t"
+    "bge a5,a6,cycle_loop\n\t"
+    "nop\n\t"
+    "nop\n\t"
+    "bnez a5,loop\n\t"
+    "j final\n\t"
+    "mul a4,a5,a4\n\t"
+    //"csrr a6,mcycle\n\t"
+    "bnez a4,loop1\n\t"
+    //"addi a5,a5,-1\n\t"
+    //"bnez a5,cycle_loop\n\t"
+    : : "r"(ms*1000) : "a5" );
+    }
 
 void delayMicroseconds(unsigned long us) {
 
-  unsigned int cycle_count, current_cycle, target_cycle;
-
-  cycle_count = us * SYS_FREQ * 1.85;
-
-  current_cycle = read_csr(mcycle);
-  target_cycle = current_cycle + cycle_count;
-
-  while ((read_csr(mcycle) < target_cycle))
-    ;
+ asm volatile("mv a5,%0\n\t"
+	"li a6,1 \n\t"
+	"beq a5,a6,final\n\t"
+	"li a6,3 \n\t"
+	"bge a5,a6,cycle_loop\n\t"
+	"loop: addi a5,a5,-1\n\t"
+	"nop\n\t"
+	"nop\n\t"
+	"bnez a5,loop\n\t"
+	"j final\n\t"
+	"cycle_loop: li a4,33\n\t"
+	"mul a4,a5,a4\n\t"
+	//"csrr a6,mcycle\n\t"
+	"loop1: addi a4,a4,-1\n\t"	
+	"bnez a4,loop1\n\t"
+	//"addi a5,a5,-1\n\t"
+	//"bnez a5,cycle_loop\n\t"
+	"final:\n\t"
+	: : "r"(us) : "a5" );
 }
