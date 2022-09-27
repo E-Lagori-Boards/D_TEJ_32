@@ -3,7 +3,7 @@
  * Name of the file                      :  UARTClass.cpp
  * Brief Description of file             :  Driver to control the UART device.
  * Name of Author                        :  Mydhily M R
- * Email ID                              :  mydhily37@gmail.com
+ * Email ID                              :  mydhily@cdac.in
 
  Copyright (C) 2020  CDAC(T). All rights reserved.
 
