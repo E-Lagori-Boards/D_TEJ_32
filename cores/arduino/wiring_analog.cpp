@@ -5,6 +5,7 @@
 #include "utility/twi.h"
 #include "Wire.h"
 
+TwoWire Wire(8);
 
 void analogWrite(uint32_t pin, uint32_t ulValue)
 {

@@ -3,10 +3,6 @@
 * BLOG Link : https://vegaprocessors.in/blog/interfacing-ldr-sensor-to-aries-v2-board/
 */
 
-#include <Wire.h>
-
-TwoWire Wire(8);
-
 #define LEDPIN  22 // Green LED is internally connected to GPIO-22 
 #define LDRPIN  A0 // analog pin 0
 
