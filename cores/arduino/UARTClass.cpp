@@ -3,7 +3,7 @@
  * Name of the file                      :  UARTClass.cpp
  * Brief Description of file             :  Driver to control the UART device.
  * Name of Author                        :  Mydhily M R
- * Email ID                              :  mydhily@cdac.in
+ * Email ID                              :  mydhily37@gmail.com
 
  Copyright (C) 2020  CDAC(T). All rights reserved.
 
@@ -47,6 +47,21 @@ void *__dso_handle;
 
 UARTClass Serial(0);
 
+
+#define RX_MAXIMUM_TIMEOUT 10000
+#define FIFO_SIZE	64
+
+
+unsigned char rx_buffer[FIFO_SIZE];
+
+unsigned int available_fifo_length=FIFO_SIZE;
+
+unsigned int rx_timeout=RX_MAXIMUM_TIMEOUT;
+
+unsigned char * write_buffer_ptr;
+unsigned char * read_buffer_ptr;
+
+
 /** @fn UARTClass::UARTClass(uint32_t _id) : id(_id)
  @brief Initialize UART Port.
  @details This function initialize the UART port.
@@ -57,6 +72,10 @@ UARTClass Serial(0);
  */
 UARTClass::UARTClass(uint32_t _id) :
 		id(_id) {
+			available_fifo_length=FIFO_SIZE;
+			
+			read_buffer_ptr = rx_buffer;
+			write_buffer_ptr =  rx_buffer;
 
 }
 
@@ -144,10 +163,38 @@ int UARTClass::sio_putchar(char c) {
  */
 
 int UARTClass::available(void) {
-	if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
+	/*if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
 		return 1;
 	else
-		return 0;
+		return 0;*/
+		
+	rx_timeout=RX_MAXIMUM_TIMEOUT;	
+		
+	while(rx_timeout){	
+	
+			if(available_fifo_length==0)			
+				break;	
+			else
+			{
+				if(write_buffer_ptr==(rx_buffer+FIFO_SIZE)){
+					write_buffer_ptr=rx_buffer;	
+				}
+				
+				if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) == 0) {
+					rx_timeout--; //No data
+					
+				}else{					
+					*write_buffer_ptr = UART_REG(id, UART_REG_DR);
+					write_buffer_ptr++;
+					available_fifo_length--;					
+					rx_timeout=RX_MAXIMUM_TIMEOUT;					
+				}
+			}			
+			
+	}
+	
+	//Serial.println(rx_char_count);
+	return (FIFO_SIZE-available_fifo_length);
 }
 
 /** @fn int UARTClass::availableForWrite(void)
@@ -178,11 +225,20 @@ int UARTClass::available(void) {
  */
 int UARTClass::read(void) {
 
-	if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
+	/*if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
 		return -1; //No data
 	}
 
-	int c = UART_REG(id, UART_REG_DR);
+	unsigned char c  = UART_REG(id, UART_REG_DR);*/
+	
+	unsigned char c = *read_buffer_ptr;
+	read_buffer_ptr++;
+	available_fifo_length++;
+	
+	if(read_buffer_ptr==(rx_buffer+FIFO_SIZE)){
+			read_buffer_ptr=rx_buffer;	
+	}
+				
 	return c;
 
 }
@@ -198,4 +254,38 @@ int UARTClass::read(void) {
 size_t UARTClass::write(const uint8_t uc_data) {
 	sio_putchar(uc_data);
 	return (1);
+}
+
+	uint32_t TimeOut = 0;
+
+int UARTClass::find(char* _Expected_Response)
+{
+	uint8_t ch, EXPECTED_RESPONSE_LENGTH = strlen(_Expected_Response);
+	uint32_t TimeCount = millis();
+	
+	char RECEIVED_CRLF_BUF[EXPECTED_RESPONSE_LENGTH];
+	while(1)
+	{
+		if((DEFAULT_TIMEOUT+TimeOut) <= (millis()-TimeCount))
+		{
+			TimeOut = 0;			
+			return 0;
+		}
+			
+		while(available())
+		{					
+				ch = read();
+				//Serial.print(char(ch));		
+				memmove(RECEIVED_CRLF_BUF, RECEIVED_CRLF_BUF + 1, EXPECTED_RESPONSE_LENGTH-1);
+				RECEIVED_CRLF_BUF[EXPECTED_RESPONSE_LENGTH-1] = ch;
+				if(!strncmp(RECEIVED_CRLF_BUF, _Expected_Response, EXPECTED_RESPONSE_LENGTH))
+				{					
+					TimeOut = 0;					
+					return 1;
+				}
+			
+		}
+	}
+	
+
 }

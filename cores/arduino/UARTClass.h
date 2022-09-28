@@ -47,10 +47,12 @@ public:
 	int read(void);
 	//void flush(void);
 	size_t write(const uint8_t c);
+	int find(char* find);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
 
 private:
 	volatile uint32_t id;
+
 	operator bool() {
 		return (true);
 	}
@@ -78,4 +80,9 @@ extern UARTClass uart;
 #endif
 
 extern UARTClass Serial;
+
+#define DEFAULT_BUFFER_SIZE     160
+#define DEFAULT_TIMEOUT       10000
+
+
 #endif // _UART_CLASS_

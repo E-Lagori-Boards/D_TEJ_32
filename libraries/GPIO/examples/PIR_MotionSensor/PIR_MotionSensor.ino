@@ -9,6 +9,9 @@ int sensor = 0;              // the pin that the sensor is atteched to GPIO-0 of
 int state = LOW;             // by default, no motion detected
 int val = 0;                 // variable to store the sensor status (value)
 
+
+// VCC - 5V
+
 void setup() {
   pinMode(led, OUTPUT);      // initalize LED as an output
   pinMode(sensor, INPUT);    // initialize sensor as an input
