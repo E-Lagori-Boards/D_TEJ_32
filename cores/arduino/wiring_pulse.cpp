@@ -34,6 +34,6 @@ pulseIn(uint32_t pin, bool state, uint32_t timeout)
 	while(digitalRead(pin)==state);
 	end_time =  read_csr(mcycle);	
 
-	total_time = (end_time - start_time)*0.0135;
+	total_time = (end_time - start_time)*0.01;
 	return total_time;
 }
