@@ -1,9 +1,22 @@
-/* 
- *  RFID-RC 522
- *  BLOG Link : https://vegaprocessors.in/blog/rfid-rc-522-with-aries-v2-0-board/
- *  Library Name : MFRC522
- *  Library Version : 1.4.10
- */
+/*
+  @file RC522_ReadRFID.ino
+  @brief Interface RC-522 RFID module to Aries v2.0 Board
+  @detail This demo will read NUID and display it on serial monitor
+
+   Reference aries board: https://vegaprocessors.in/blog/rfid-rc-522-with-aries-v2-0-board/
+   *  Library Name : MFRC522
+   *  Library Version : 1.4.10 
+   
+   *** Radio-Frequency Identification(RC-522) ***
+   Connections:
+   RFID     Aries Board
+   3.3V  -   3.3V
+   GND   -   GND
+   MISO  -   MISO0
+   MOSI  -   MOSI0
+   SCK   -   SCLK0
+   SDA   -   GPIO10
+*/
 
 #include <SPI.h>
 #include <MFRC522.h>
@@ -12,16 +25,7 @@
 #define RST_PIN 9  // Not required
 
 SPIClass SPI(0);
-/*
- *  PIN CONNECTIONS 
- *  RFID - ARIES
- *  3.3V - 3.3V
- *  GND  - GND
- *  MISO - MISO0
- *  MOSI - MOSI0
- *  SCK  - SCLK0
- *  SDA  - GPIO-10
- */
+
 MFRC522 rfid(SS_PIN, RST_PIN); // Instance of the class
 
 MFRC522::MIFARE_Key key; 

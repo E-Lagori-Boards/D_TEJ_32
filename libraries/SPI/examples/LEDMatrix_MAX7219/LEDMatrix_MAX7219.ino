@@ -1,9 +1,23 @@
-/* 
- *  8x8 LED DOT MATRIX
- *  BLOG Link : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
- *  Library Name : MD_MAX72XX
- *  Library Version : 3.3.0
- */
+/*
+  @file LEDMatrix_MAX7219.ino
+  @brief Interfacing 8×8 LED DOT Matrix to ARIES v2 Board
+  @detail This demo to display images, scrolling text, and few more transitions on the 8×8 LED Matrix
+
+   Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
+   *  Library Name : MD_MAX72XX
+   *  Library Version : 3.3.0  
+   
+   *** 8×8 LED DOT Matrix(MAX7219) ***
+   Connections:
+   Dot Matrix     Aries Board
+   VCC          -   5V
+   GND          -   GND
+   DIN          -   MOSI0
+   CS           -   GPIO10
+   CLK          -   SCLK0
+*/
+
+ 
 #include <MD_MAX72xx.h>
 
 // Turn on debug statements to the serial output
@@ -32,15 +46,7 @@
 #define CS_PIN    10  // CS pin to GPIO-10
 
 SPIClass SPI(0);
-/*
- * PINS CONNECTION
- * MAX72XX - ARIES
- * VCC     - 5V
- * GND     - GND
- * DIN     - MOSI0
- * CS      - GPIO-10
- * CLK     - SCLK0
- */
+
 // SPI hardware interface
 MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
 // Specific SPI hardware interface
