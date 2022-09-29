@@ -1,7 +1,7 @@
 /*
   @file LDR_Sensor.ino
   @brief Interfacing LDR sensor with ARIES v2 
-  @detail This demo read the LDR value and according turn LED ON or OFF
+  @detail This demo read the LDR value and accordingly turn LED ON or OFF
 
    Refrence aries board: https://vegaprocessors.in/blog/interfacing-ldr-sensor-to-aries-v2-board/
    

@@ -1,14 +1,14 @@
- /*
+/*
   @file OLED_SSD1306.ino
   @brief Interface OLED SSD-1306 display to Aries v2.0 Board
-  @detail This is an example for our Monochrome OLEDs based on SSD1306 drivers
+  @detail This is an example for Monochrome OLEDs based on SSD1306 drivers
   
    Reference OLED display: https://learn.adafruit.com/monochrome-oled-breakouts/arduino-library-and-examples
     * Library Required : Adafruit SSD1306 (Version 2.5.7)
     *                    Adafruit GFX Library (Version 1.11.3)
     *                    Adafruit BusIO
    
-   *** Radio-Frequency Identification(RC-522) ***
+   *** OLED DISPLAY(SSD-1306) ***
    Connections:
    SSD1306     Aries Board
    3.3V     -   3.3V

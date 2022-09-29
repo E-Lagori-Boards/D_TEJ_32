@@ -1,7 +1,7 @@
 /*
   @file Servo_motor.ino
   @brief Interfacing servo motor with Aries V2
-  @detail Rotating servo motor 
+  @detail Rotating servo motor (0-180 angle)
 
    Reference aries board: https://vegaprocessors.in/blog/servo-motors-with-aries-v2-board/
    

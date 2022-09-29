@@ -1,7 +1,7 @@
 /*
   @file PIEZO_Buzzer.ino
   @brief Continuous beeping sound using Piezo Buzzer
-  @detail Setting selected GPIO pin HIGH and LOW continuously (within small delay) to create beeping sound
+  @detail Setting selected GPIO pin HIGH and LOW continuously (with small delay in between) to create beeping sound
 
    Reference aries board: https://vegaprocessors.in/blog/buzzer-with-aries-v2-board/
    

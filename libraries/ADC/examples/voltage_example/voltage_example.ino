@@ -1,7 +1,7 @@
 /*
   @file voltage_example.ino
   @brief Read volatge value 
-  @detail This demo display the value of volatge on serial monitor
+  @detail This demo display the volatge (in volts) on serial monitor
 
    Aries board PINOUT: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
    
@@ -19,7 +19,6 @@ float resolution = 0.002;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  
 }
 
 void loop() {

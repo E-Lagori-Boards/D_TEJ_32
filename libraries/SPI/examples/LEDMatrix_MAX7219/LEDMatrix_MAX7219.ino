@@ -1,6 +1,6 @@
 /*
   @file LEDMatrix_MAX7219.ino
-  @brief Interfacing 8×8 LED DOT Matrix to ARIES v2 Board
+  @brief Interfacing 8×8 LED DOT Matrix to ARIES V2 Board
   @detail This demo to display images, scrolling text, and few more transitions on the 8×8 LED Matrix
 
    Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
@@ -17,8 +17,7 @@
    CLK          -   SCLK0
 */
 
- 
-#include <MD_MAX72xx.h>
+ #include <MD_MAX72xx.h>
 
 // Turn on debug statements to the serial output
 #define  DEBUG  1
@@ -39,11 +38,9 @@
 // NOTE: These pin numbers will probably not work with your hardware and may
 // need to be adapted
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
-#define MAX_DEVICES	1
+#define MAX_DEVICES 1
 
-#define CLK_PIN   13  // not requied
-#define DATA_PIN  11  // not requied
-#define CS_PIN    10  // CS pin to GPIO-10
+#define CS_PIN    10  // connect CS pin to GPIO-10
 
 SPIClass SPI(0);
 
@@ -69,7 +66,7 @@ void scrollText(const char *p)
   {
     charWidth = mx.getChar(*p++, sizeof(cBuf) / sizeof(cBuf[0]), cBuf);
 
-    for (uint8_t i=0; i<=charWidth; i++)	// allow space between characters
+    for (uint8_t i=0; i<=charWidth; i++)  // allow space between characters
     {
       mx.transform(MD_MAX72XX::TSL);
       if (i < charWidth)
@@ -285,7 +282,7 @@ void stripe()
 // with points plotted outside the display region ignored.
 {
   const uint16_t maxCol = MAX_DEVICES*ROW_SIZE;
-  const uint8_t	stripeWidth = 10;
+  const uint8_t stripeWidth = 10;
 
   PRINTS("\nEach individually by row then col");
   mx.clear();
@@ -356,7 +353,7 @@ void bounce()
   int  nCounter = 0;
 
   int  r = 0, c = 2;
-  int8_t dR = 1, dC = 1;	// delta row and column
+  int8_t dR = 1, dC = 1;  // delta row and column
 
   PRINTS("\nBouncing ball");
   mx.clear();
@@ -614,7 +611,7 @@ void setup()
 void loop()
 {
 #if 1
-  scrollText("Graphics");
+  scrollText("VEGA Processors");
   zeroPointSet();
   rows();
   columns();
@@ -627,20 +624,19 @@ void loop()
 #endif
 
 #if 1
-  scrollText("Control");
+  scrollText("CDAC");
   intensity();
   scanLimit();
   blinking();
 #endif
 
 #if 1
-  scrollText("Transform");
+  scrollText("DIR-V");
   transformation1();
   transformation2();
 #endif
 
-#if 1
-  scrollText("Charset");
+#if 1  
   wrapText();
   showCharset();
 #endif
