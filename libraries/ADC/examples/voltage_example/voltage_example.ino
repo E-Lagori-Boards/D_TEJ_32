@@ -1,5 +1,14 @@
 /*
-* VOLTAGE EXAMPLE
+  @file voltage_example.ino
+  @brief Read volatge value 
+  @detail This demo display the value of volatge on serial monitor
+
+   Aries board PINOUT: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
+   
+   *** Voltage Example ***
+   Connections:
+   Aries       Aries Board
+   A0      -   3.3V
 */
 
 #define PIN A0  // Reading value from Analog pin 0
