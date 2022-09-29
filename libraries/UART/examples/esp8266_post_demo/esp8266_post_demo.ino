@@ -1,13 +1,30 @@
+/*
+  @file esp8266_get_demo.ino
+  @brief ESP8266 Module communicates with the ARIES v2 Board via the UART Protocol
+  @detail ESP8266 allows ARIES to connect to a Wi-Fi network and push data of any sensor to adafruit block
+
+   Refrence aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
+   ESP8266 Pinout: https://raw.githubusercontent.com/AchimPieters/ESP8266-12F---Power-Mode/master/ESP8266_01X.jpg
+   Adafruit IO : https://io.adafruit.com/
+   
+   *** ESP8266 WiFi Module ***
+   Connections:
+   ESP8266     Aries Board
+   VCC      -   3.3V
+   GND      -   GND
+   RXD      -   TX1
+   TXD      -   RX1
+*/
 
 #include <UARTClass.h>
 
 UARTClass esp8266(1);
-char * AP="CDAC";
-char * PASS= "";
+char * AP="CDAC"; // Add network name here
+char * PASS= ""; // Add password
 char * HOST="io.adafruit.com";
 int PORT=80;
-char * KEY="aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";
-char * URL="/api/v2/Himanshu_D/feeds/trial/data";
+char * KEY="aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";   // Replace Key here
+char * URL="/api/v2/Himanshu_D/feeds/trial/data";  // Add URL of your feed here
 
 
 int countTrueCommand;

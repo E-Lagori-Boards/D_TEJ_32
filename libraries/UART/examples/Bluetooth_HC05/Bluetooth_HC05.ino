@@ -1,5 +1,5 @@
 /**
-  @file Bluetooth.ino
+  @file Bluetooth_HC05.ino
   @brief contains routines for UART HC05 interface
   @detail Includes software functions declarations to initialize,configure, write and read HC05 over UARt interface
 
