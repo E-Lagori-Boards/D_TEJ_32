@@ -1,9 +1,17 @@
-// ---------------------------------------------------------------- //
-// Distance mesurment using Ultrasoninc Sensor HC-SR04
-// BLOG link : https://vegaprocessors.in/blog/ultrasonic-sensor-with-thejas-soc/
-// ---------------------------------------------------------------- //
-
-// connect VCC to 5V
+/*
+  @file UltrasonicSensor_HC-SR04.ino
+  @brief HC-SR04 Ultrasonic Sensor with the ARIES v2 Board
+  @detail Measures the distance of a target object and display it on serial monitor
+   Reference aries board: https://vegaprocessors.in/blog/ultrasonic-sensor-with-thejas-soc/
+   
+   *** Ultrasonic Sensor(HC-SR04) ***
+   Connections:
+   HC-SR04    Aries Board
+   VCC      -   5V
+   GND      -   GND
+   Echo     -   GPIO1
+   Trig     -   GPIO0
+*/
 
 #define echoPin 1 // attach pin GPIO-1 Aries to pin Echo of HC-SR04
 #define trigPin 0 //attach pin GPIO-0 Aries to pin Trig of HC-SR04
