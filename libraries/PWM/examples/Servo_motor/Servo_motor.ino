@@ -1,8 +1,17 @@
 /*
-* SERVO MOTOR
-* BLOG Link : https://vegaprocessors.in/blog/servo-motors-with-aries-v2-board/
-*/
+  @file Servo_motor.ino
+  @brief Interfacing servo motor with Aries V2
+  @detail Rotating servo motor 
 
+   Reference aries board: https://vegaprocessors.in/blog/servo-motors-with-aries-v2-board/
+   
+   *** Servo Motor(SG90) ***
+   Connections:
+   Servo Motor     Aries Board
+   VCC          -   3.3V
+   GND          -   GND
+   SIG          -   PWM0
+*/
 
 #include <Servo.h>
 

@@ -1,7 +1,8 @@
 /*
   @file PIR_MotionSensor.ino
   @brief Interface HC-SR501 PIR motion sensor with ARIES V2 board
-  @detail "Motion detected!" is displayed in Serial Monitor when movement is detected in the vicinity of the sensor.
+  @detail "Motion detected!" is displayed in Serial Monitor when movement is detected in the vicinity of the sensor
+  
    Reference aries board: https://vegaprocessors.in/blog/pir-motion-sensor-with-vega-processors/
    
    *** Passive Infrared Motion Sensor(HC-SR501) ***

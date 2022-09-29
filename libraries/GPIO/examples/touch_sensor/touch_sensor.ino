@@ -2,6 +2,7 @@
   @file touch_sensor.ino
   @brief recording physical touch using touch sensor
   @detail "Sensor is touched" message will be display on serial monitor also green led will blink if sensor get touched
+  
    Reference aries board: https://vegaprocessors.in/blog/ttp223b-touch-sensor-module-with-aries-v2-board/
    
    *** RGB LED STRIP ***

@@ -1,7 +1,16 @@
 /*
-* RGB LED STRIP BRIGHTNESS PWM
+  @file RGB_LED_PWM.ino
+  @brief LED Breathing
+  @detail LED Brightness using PWM
+   
+   *** RGB LED Strip ***
+   Connections:
+   LED STRIP     Aries Board
+   GND        -   GND
+   R          -   PWM0
+   Y          -   PWM1
+   G          -   PWM2
 */
-
 
 #include <pwm.h>
 

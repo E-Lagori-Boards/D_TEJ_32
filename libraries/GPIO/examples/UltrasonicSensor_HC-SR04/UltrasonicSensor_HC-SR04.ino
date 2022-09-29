@@ -2,6 +2,7 @@
   @file UltrasonicSensor_HC-SR04.ino
   @brief HC-SR04 Ultrasonic Sensor with the ARIES v2 Board
   @detail Measures the distance of a target object and display it on serial monitor
+  
    Reference aries board: https://vegaprocessors.in/blog/ultrasonic-sensor-with-thejas-soc/
    
    *** Ultrasonic Sensor(HC-SR04) ***
