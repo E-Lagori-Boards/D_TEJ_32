@@ -1,28 +1,21 @@
-/**************************************************************************
- This is an example for our Monochrome OLEDs based on SSD1306 drivers
-
- Pick one up today in the adafruit shop!
- ------> http://www.adafruit.com/category/63_98
-
- This example is for a 128x64 pixel display using I2C to communicate
- 3 pins are required to interface (two I2C and one reset).
-
- Adafruit invests time and resources providing this open
- source code, please support Adafruit and open-source
- hardware by purchasing products from Adafruit!
-
- Written by Limor Fried/Ladyada for Adafruit Industries,
- with contributions from the open source community.
- BSD license, check license.txt for more information
- All text above, and the splash screen below must be
- included in any redistribution.
- **************************************************************************/
-/*
- * OLED DISPLAY I2C
- * Library Required : Adafruit SSD1306 (Version 2.5.7)
- *                    Adafruit GFX Library (Version 1.11.3)
- *                    Adafruit BusIO
- */
+ /*
+  @file OLED_SSD1306.ino
+  @brief Interface OLED SSD-1306 display to Aries v2.0 Board
+  @detail This is an example for our Monochrome OLEDs based on SSD1306 drivers
+  
+   Reference OLED display: https://learn.adafruit.com/monochrome-oled-breakouts/arduino-library-and-examples
+    * Library Required : Adafruit SSD1306 (Version 2.5.7)
+    *                    Adafruit GFX Library (Version 1.11.3)
+    *                    Adafruit BusIO
+   
+   *** Radio-Frequency Identification(RC-522) ***
+   Connections:
+   SSD1306     Aries Board
+   3.3V     -   3.3V
+   GND      -   GND
+   SDA      -   SDA0 
+   SCL      -   SCL0 
+*/
 
 #include <SPI.h>
 #include <Wire.h>
@@ -34,13 +27,6 @@ TwoWire Wire(0);
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-// The pins for I2C are defined by the Wire-library. 
-// On an Aries V2.0:       
-// (ARIES) - (SSD1306)
-// SDA0    - SDA 
-// SCL0    - SCL 
-// 3.3V    - VCC
-// GND     - GND
 
 #define OLED_RESET     -1 // Reset pin # not required
 #define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
