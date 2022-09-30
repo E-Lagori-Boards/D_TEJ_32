@@ -1,9 +1,9 @@
 /*
-  @file esp8266_get_demo.ino
+  @file esp8266_post_demo.ino
   @brief ESP8266 Module communicates with the ARIES v2 Board via the UART Protocol
   @detail ESP8266 allows ARIES to connect to a Wi-Fi network and push data of any sensor to adafruit block
 
-   Refrence aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
+   Reference aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
    ESP8266 Pinout: https://raw.githubusercontent.com/AchimPieters/ESP8266-12F---Power-Mode/master/ESP8266_01X.jpg
    Adafruit IO : https://io.adafruit.com/
    

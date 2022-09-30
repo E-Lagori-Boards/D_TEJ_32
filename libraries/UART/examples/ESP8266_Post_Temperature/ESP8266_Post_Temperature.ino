@@ -1,11 +1,11 @@
 /*
-  @file esp8266_get_demo.ino
+  @file ESP8266_Post_Temperature.ino
   @brief ESP8266 Module communicates with the ARIES v2 Board via the UART Protocol
-  @detail ESP8266 allows ARIES to connect to a Wi-Fi network and get data from adafruit to ON/OFF the RGB LED on Aries board
+  @detail ESP8266 allows ARIES to connect to a Wi-Fi network and push data of any sensor to adafruit block
 
-   Reference aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
+   Refrence aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
    ESP8266 Pinout: https://raw.githubusercontent.com/AchimPieters/ESP8266-12F---Power-Mode/master/ESP8266_01X.jpg
-   Adafruit IO : https://io.adafruit.com/
+   Adafruit IO : https://io.adafruit.com/Himanshu_D/dashboards/status
    
    *** ESP8266 WiFi Module ***
    Connections:
@@ -17,25 +17,26 @@
 */
 
 #include <UARTClass.h>
+#include"sensor.h"
 
 UARTClass esp8266(1);
-char * AP="Add Network name here";    
-char * PASS= "Add Password here";
+char * AP="HIMANSHU"; // Add network name here
+char * PASS= "12345678"; // Add password
 char * HOST="io.adafruit.com";
 int PORT=80;
-char * URL="/api/v2/Himanshu_D/feeds/trial/data/last?x-aio-key=aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";  // Add URL of your feeds along with key
+char * KEY="aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";   // Replace Key here
+char * URL="/api/v2/Himanshu_D/feeds/office/data";  // Add URL of your feed here
+
 
 int countTrueCommand;
 int countTimeCommand; 
 boolean found = false; 
-boolean ledon = false; 
+
 int valSensor = 1;
 char atcommand[250]={0,};
 char data[250]={0,};
-
-int getSensorData(){
-  return 100; // Replace with 
-}
+char payload[250]={0,};
+int timeout=3;
 
 void sendCommand(char * command, int maxTime, char readReplay[]) {
   Serial.print(countTrueCommand);
@@ -44,44 +45,27 @@ void sendCommand(char * command, int maxTime, char readReplay[]) {
   Serial.print(" ");
   while(countTimeCommand < (maxTime*1))
   { 
-    esp8266.println(command);//at+cipsend
-   
+    esp8266.println(command);//at+cipsend   
     if(esp8266.find(readReplay))//ok
     {
       found = true;
       break;
-    }
-  
+    }  
     countTimeCommand++;
-  }
-  
+  }  
   if(found == true)
   {
     Serial.println("-> OK");
     countTrueCommand++;
     countTimeCommand = 0;
-  }
-  
+  }  
   if(found == false)
   {
     Serial.println("-> Fail");
     countTrueCommand = 0;
     countTimeCommand = 0;
-  }
- 
+  } 
   found = false;
- }
-
- int checkButtonStatus()
- {
-    int i=500;
-    while(i){
-       while(esp8266.available())
-       {
-          Serial.print(char(esp8266.read()));
-       }
-       i--;
-    }
  }
 
 
@@ -96,44 +80,22 @@ void setup() {
   memset(atcommand,0,250);
   sprintf(atcommand,"AT+CWJAP=\"%s\",\"%s\"",AP,PASS);
   sendCommand(atcommand,2,"OK");
+  sensor_setup();
 }
-int timeout=3;
+
 void loop() { 
   sendCommand("AT+CIPMUX=1",3,"OK");
   memset(atcommand,0,250);
   sprintf(atcommand,"AT+CIPSTART=0,\"TCP\",\"%s\",%d", HOST, PORT);
   sendCommand(atcommand,3,"OK");
   memset(atcommand,0,250);
-  sprintf(data,"GET %s HTTP/1.1\r\nHost: %s\r\n\r\n", URL, HOST);
-  sprintf(atcommand,"AT+CIPSEND=0,%d",strlen(data));
+  memset(data,0,250);
+  sprintf(data,"{\"value\": %d}",getSensorData());
+  sprintf(payload,"POST %s HTTP/1.1\r\nHost: %s\r\nContent-Type: application/json\r\nX-AIO-Key: %s\r\nContent-Length: %d\r\n\r\n%s",URL, HOST, KEY, strlen(data),data);
+  sprintf(atcommand,"AT+CIPSEND=0,%d",strlen(payload));
   sendCommand(atcommand,4,">");
-  esp8266.println(data);
+  esp8266.println(payload);
   countTrueCommand++;
-  
-  
-  ledon=false;  
-  timeout=5;
-  while(timeout)
-  { 
-    if(esp8266.find("\"value\":\"1\""))
-    {
-        Serial.println("LED ON>>>>>>>>>");
-        ledon=true;  
-    }  
-    timeout--;   
-  }  
-  
-  if(ledon){
-    digitalWrite(24,LOW);
-    digitalWrite(22,LOW);
-    digitalWrite(23,LOW);
-  }
-  else{
-    digitalWrite(24,HIGH);
-    digitalWrite(22,HIGH);
-    digitalWrite(23,HIGH);
-  }
-  
+  delay(2000);
   sendCommand("AT+CIPCLOSE=0",5,"OK");
- 
 }
