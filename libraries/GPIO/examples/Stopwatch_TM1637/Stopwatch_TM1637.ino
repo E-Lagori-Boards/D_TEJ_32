@@ -15,7 +15,6 @@
  * .
  **/
 
-#include <EEPROM.h>
 #include "Timer.h"
 #include <avr/pgmspace.h>
 #include "TM1637.h"
@@ -59,10 +58,11 @@ void loop()
   switch(command)
   {
     case 'S':stopwatchStart();Serial.println("Start timing...");break;
+    case 's':stopwatchStart();Serial.println("Start timing...");break;
     case 'P':stopwatchPause();Serial.println("Stopwatch was paused");break;
-    case 'L':readTime();break;
-    case 'W':saveTime();Serial.println("Save the time");break;
+    case 'p':stopwatchPause();Serial.println("Stopwatch was paused");break;
     case 'R':stopwatchReset();Serial.println("Stopwatch was reset");break;
+    case 'r':stopwatchReset();Serial.println("Stopwatch was reset");break;
     default:break;
   }
   if(Update == ON)
@@ -104,45 +104,22 @@ void TimeUpdate(void)
 }
 void stopwatchStart()//timer1 on
 {
-  Serial.println("check 5");
   Flag_ReadTime = 0;
  Timer.start();
 
 }
-void stopwatchPause()//timer1 off if [CS12 CS11 CS10] is [0 0 0].
+void stopwatchPause()//to pause stopwatch
 {
    Timer.stop();
 
 }
 void stopwatchReset()
 {
-   Serial.println("check 6");
   stopwatchPause();
   Flag_ReadTime = 0;
   _microsecond_10 = 0;
   _second = 0;
   microsecond_10 = 0;
   second = 0;
-  Update = ON;
-}
-void saveTime()
-{
-  EEPROM.write(eepromaddr ++,microsecond_10);
-  EEPROM.write(eepromaddr ++,second);
-}
-void readTime()
-{
-  Flag_ReadTime = 1;
-  if(eepromaddr == 0)
-  {
-    Serial.println("The time had been read");
-    _microsecond_10 = 0;
-    _second = 0;
-  }
-  else{
-  _second = EEPROM.read(-- eepromaddr);
-  _microsecond_10 = EEPROM.read(-- eepromaddr);
-  Serial.println("List the time");
-  }
   Update = ON;
 }
