@@ -1,7 +1,7 @@
 /*
   @file PIR_MotionSensor.ino
   @brief Interface HC-SR501 PIR motion sensor with ARIES V2 board
-  @detail "Motion detected!" is displayed in Serial Monitor when movement is detected in the vicinity of the sensor
+  @detail Green LED will turn ON when movement is detected in the vicinity of the sensor and RED Led will turn ON when there is no movement.
   
    Reference aries board: https://vegaprocessors.in/blog/pir-motion-sensor-with-vega-processors/
    
@@ -13,35 +13,25 @@
    OUT      -   GPIO0
 */
 
-int led = 22;                // the pin that the LED is atteched to GPIO-22 internally
+int led1 = 22;                // the pin that the LED is atteched to GPIO-22 internally
+int led2 = 24;
 int sensor = 0;              // the pin that the sensor is atteched to GPIO-0 of Aries Board
-int state = LOW;             // by default, no motion detected
-int val = 0;                 // variable to store the sensor status (value)
 
 void setup() {
-  pinMode(led, OUTPUT);      // initalize LED as an output
+  pinMode(led1, OUTPUT);      // initalize LED as an output
+  pinMode(led2, OUTPUT);    
   pinMode(sensor, INPUT);    // initialize sensor as an input
   Serial.begin(115200);        // initialize serial
 }
 
 void loop(){
-  val = digitalRead(sensor);   // read sensor value
+  int val = digitalRead(sensor);   // read sensor value
   if (val == HIGH) {           // check if the sensor is HIGH
-    digitalWrite(led, HIGH);   // turn LED ON
-    delay(100);                // delay 100 milliseconds 
-    
-    if (state == LOW) {
-      Serial.println("Motion detected!"); 
-      state = HIGH;       // update variable state to HIGH
-    }
+    digitalWrite(led1, LOW);   // if motion detected turn (Green LED -> ON) and (Red LED -> OFF)
+    digitalWrite(led2, HIGH);
   } 
   else {
-      digitalWrite(led, LOW); // turn LED OFF
-      delay(200);             // delay 200 milliseconds 
-      
-      if (state == HIGH){
-        Serial.println("Motion stopped!");
-        state = LOW;       // update variable state to LOW
+      digitalWrite(led1, HIGH); // for no motion turn (Red LED -> ON) and (Green LED -> OFF) 
+      digitalWrite(led2, LOW); 
     }
-  }
 }
