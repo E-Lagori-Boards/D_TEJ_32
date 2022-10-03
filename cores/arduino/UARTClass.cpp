@@ -55,6 +55,7 @@ UARTClass Serial(0);
 unsigned char rx_buffer[FIFO_SIZE];
 
 unsigned int available_fifo_length=FIFO_SIZE;
+unsigned int fifo_data_length=0;
 
 unsigned int rx_timeout=RX_MAXIMUM_TIMEOUT;
 
@@ -163,12 +164,12 @@ int UARTClass::sio_putchar(char c) {
  */
 
 int UARTClass::available(void) {
-	/*if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
+	if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
 		return 1;
 	else
-		return 0;*/
+		return 0;
 		
-	rx_timeout=RX_MAXIMUM_TIMEOUT;	
+	/*rx_timeout=RX_MAXIMUM_TIMEOUT;	
 		
 	while(rx_timeout){	
 	
@@ -194,7 +195,7 @@ int UARTClass::available(void) {
 	}
 	
 	//Serial.println(rx_char_count);
-	return (FIFO_SIZE-available_fifo_length);
+	return (FIFO_SIZE-available_fifo_length);*/
 }
 
 /** @fn int UARTClass::availableForWrite(void)
@@ -225,19 +226,19 @@ int UARTClass::available(void) {
  */
 int UARTClass::read(void) {
 
-	/*if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
+	if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
 		return -1; //No data
 	}
 
-	unsigned char c  = UART_REG(id, UART_REG_DR);*/
+	unsigned char c  = UART_REG(id, UART_REG_DR);
 	
-	unsigned char c = *read_buffer_ptr;
+/*	unsigned char c = *read_buffer_ptr;
 	read_buffer_ptr++;
 	available_fifo_length++;
 	
 	if(read_buffer_ptr==(rx_buffer+FIFO_SIZE)){
 			read_buffer_ptr=rx_buffer;	
-	}
+	}*/
 				
 	return c;
 
