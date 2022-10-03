@@ -1,33 +1,3 @@
-/***************************************************************************
- * Project                               :  MDP
- * Name of the file                      :  UARTClass.cpp
- * Brief Description of file             :  Driver to control the UART device.
- * Name of Author                        :  Mydhily M R
- * Email ID                              :  mydhily@cdac.in
-
- Copyright (C) 2020  CDAC(T). All rights reserved.
-
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
- ***************************************************************************/
-/**
- @file UARTClass.cpp
- @brief Contains routines for UART interface
- @detail Includes software functions to initialize,
- configure, transmit and receive over UART
- */
-
 /*  Include section
  *
  ***************************************************/
@@ -35,17 +5,31 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "UARTClass.h"
+#include "esp8266.h"
 
 #include "variant.h"
 #include "platform.h"
-void *__dso_handle;
+
 
 /*  Global variable section
  *
  ***************************************************/
 
-UARTClass Serial(0);
+
+
+#define RX_MAXIMUM_TIMEOUT 10000
+#define FIFO_SIZE	64
+
+
+unsigned char rx_buffer[FIFO_SIZE];
+
+unsigned int available_fifo_length=FIFO_SIZE;
+
+unsigned int rx_timeout=RX_MAXIMUM_TIMEOUT;
+
+unsigned char * write_buffer_ptr;
+unsigned char * read_buffer_ptr;
+
 
 /** @fn UARTClass::UARTClass(uint32_t _id) : id(_id)
  @brief Initialize UART Port.
@@ -55,8 +39,12 @@ UARTClass Serial(0);
  '0' = UART PORT 0, '1' = UART PORT 1, '2' = UART PORT 2
  @param[Out] No output parameter
  */
-UARTClass::UARTClass(uint32_t _id) :
+ESP8266Class::ESP8266Class(uint32_t _id) :
 		id(_id) {
+			available_fifo_length=FIFO_SIZE;
+			
+			read_buffer_ptr = rx_buffer;
+			write_buffer_ptr =  rx_buffer;
 
 }
 
@@ -72,7 +60,7 @@ UARTClass::UARTClass(uint32_t _id) :
  @return Void function.
  */
 
-void UARTClass::sio_setbaud(int bauds) {
+void ESP8266Class::sio_setbaud(int bauds) {
 	unsigned long divisor;
 	UART_REG(id, UART_REG_LCR) = 0x83;	//setting DLAB = 1 in LCR
 	divisor = (F_CPU / (bauds * 16));
@@ -90,7 +78,7 @@ void UARTClass::sio_setbaud(int bauds) {
  @param[Out] No output parameter
  @return Void function
  */
-void UARTClass::begin(unsigned long bauds) {
+void ESP8266Class::begin(unsigned long bauds) {
 	unsigned long divisor;
 	divisor = (F_CPU / (bauds * 16));
 	UART_REG( id, UART_REG_LCR ) = 0x83; //0x83
@@ -110,7 +98,7 @@ void UARTClass::begin(unsigned long bauds) {
  @param[Out] No output parameter
  @return c -- read character
  */
-int UARTClass::sio_getchar(int c) //c-The variable to hold the read character
+int ESP8266Class::sio_getchar(int c) //c-The variable to hold the read character
 		{
 	while ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR)
 		;  //waiting for Data Ready
@@ -126,7 +114,7 @@ int UARTClass::sio_getchar(int c) //c-The variable to hold the read character
  @param[Out] No output parameter
  @return 0
  */
-int UARTClass::sio_putchar(char c) {
+int ESP8266Class::sio_putchar(char c) {
 	while ((UART_REG(id, UART_REG_LSR) & UART_LSR_THRE) != UART_LSR_THRE)
 		;	//waiting for THRE to be empty
 	UART_REG(id,UART_REG_DR) = c;
@@ -143,11 +131,39 @@ int UARTClass::sio_putchar(char c) {
  @return The number of bytes available to read.
  */
 
-int UARTClass::available(void) {
-	if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
+int ESP8266Class::available(void) {
+	/*if ((UART_REG(id,UART_REG_LSR) & UART_LSR_DR))
 		return 1;
 	else
-		return 0;
+		return 0;*/
+		
+	rx_timeout=RX_MAXIMUM_TIMEOUT;	
+		
+	while(rx_timeout){	
+	
+			if(available_fifo_length==0)			
+				break;	
+			else
+			{
+				if(write_buffer_ptr==(rx_buffer+FIFO_SIZE)){
+					write_buffer_ptr=rx_buffer;	
+				}
+				
+				if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) == 0) {
+					rx_timeout--; //No data
+					
+				}else{					
+					*write_buffer_ptr = UART_REG(id, UART_REG_DR);
+					write_buffer_ptr++;
+					available_fifo_length--;					
+					rx_timeout=RX_MAXIMUM_TIMEOUT;					
+				}
+			}			
+			
+	}
+	
+	//Serial.println(rx_char_count);
+	return (FIFO_SIZE-available_fifo_length);
 }
 
 /** @fn int UARTClass::availableForWrite(void)
@@ -176,13 +192,22 @@ int UARTClass::available(void) {
  @param[Out] No output parameter
  @return int function
  */
-int UARTClass::read(void) {
+int ESP8266Class::read(void) {
 
-	if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
+	/*if ((UART_REG(id, UART_REG_LSR) & UART_LSR_DR) != UART_LSR_DR) {
 		return -1; //No data
 	}
 
-	int c = UART_REG(id, UART_REG_DR);
+	unsigned char c  = UART_REG(id, UART_REG_DR);*/
+	
+	unsigned char c = *read_buffer_ptr;
+	read_buffer_ptr++;
+	available_fifo_length++;
+	
+	if(read_buffer_ptr==(rx_buffer+FIFO_SIZE)){
+			read_buffer_ptr=rx_buffer;	
+	}
+				
 	return c;
 
 }
@@ -195,7 +220,41 @@ int UARTClass::read(void) {
  @param[Out] No output parameter
  @return 1
  */
-size_t UARTClass::write(const uint8_t uc_data) {
+size_t ESP8266Class::write(const uint8_t uc_data) {
 	sio_putchar(uc_data);
 	return (1);
+}
+
+	uint32_t TimeOut = 0;
+
+int ESP8266Class::find(char* _Expected_Response)
+{
+	uint8_t ch, EXPECTED_RESPONSE_LENGTH = strlen(_Expected_Response);
+	uint32_t TimeCount = millis();
+	
+	char RECEIVED_CRLF_BUF[EXPECTED_RESPONSE_LENGTH];
+	while(1)
+	{
+		if((DEFAULT_TIMEOUT+TimeOut) <= (millis()-TimeCount))
+		{
+			TimeOut = 0;			
+			return 0;
+		}
+			
+		while(available())
+		{					
+				ch = read();
+				//Serial.print(char(ch));		
+				memmove(RECEIVED_CRLF_BUF, RECEIVED_CRLF_BUF + 1, EXPECTED_RESPONSE_LENGTH-1);
+				RECEIVED_CRLF_BUF[EXPECTED_RESPONSE_LENGTH-1] = ch;
+				if(!strncmp(RECEIVED_CRLF_BUF, _Expected_Response, EXPECTED_RESPONSE_LENGTH))
+				{					
+					TimeOut = 0;					
+					return 1;
+				}
+			
+		}
+	}
+	
+
 }

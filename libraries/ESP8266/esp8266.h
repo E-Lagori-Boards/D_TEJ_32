@@ -1,27 +1,5 @@
-/**
- @file UARTClass.h
- @brief header file for UART driver
- @detail
- */
-/***************************************************
- * Module name: UARTClass.h
- *
- * Copyright 2020 Company CDAC(T).
- * All Rights Reserved.
- *
- *  The information contained herein is confidential
- * property of Company. The user, copying, transfer or
- * disclosure of such information is prohibited except
- * by express written agreement with Company.
- *
- *
- * Module Description:
- * UART registers and function declarations
- *
- ***************************************************/
-
-#ifndef _UART_CLASS_
-#define _UART_CLASS_
+#ifndef _ESP8266_CLASS_
+#define _ESP8266_CLASS_
 
 /*  Include section
  *
@@ -36,9 +14,9 @@
  *
  ***************************************************/
 
-class UARTClass: public HardwareSerial {
+class ESP8266Class : public HardwareSerial {
 public:
-	UARTClass(uint32_t _id);
+	ESP8266Class(uint32_t _id);
 	void begin(unsigned long dwBaudRate);
 	//void end(void);
 	int available(void);
@@ -47,10 +25,12 @@ public:
 	int read(void);
 	//void flush(void);
 	size_t write(const uint8_t c);
+	int find(char* find);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
 
 private:
 	volatile uint32_t id;
+
 	operator bool() {
 		return (true);
 	}
@@ -73,9 +53,14 @@ protected:
 	char sio_rxbuf[SIO_RXBUFSIZE];
 };
 
-#if UART_INTERFACES_COUNT > 0
-extern UARTClass uart;
-#endif
+// #if UART_INTERFACES_COUNT > 0
+// extern UARTClass uart;
+// #endif
 
-extern UARTClass Serial;
-#endif // _UART_CLASS_
+extern ESP8266Class ESP;
+
+#define DEFAULT_BUFFER_SIZE     160
+#define DEFAULT_TIMEOUT       10000
+
+
+#endif // _ESP8266_CLASS_
