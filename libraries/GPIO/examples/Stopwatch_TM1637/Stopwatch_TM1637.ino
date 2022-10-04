@@ -1,10 +1,11 @@
-/**
- @file Stopwatch.ino
+/*
+ @file Stopwatch_TM1637.ino
  @brief contains routines for TM1637 interface
  @detail Includes software functions for working of TM1637 4 Digit 7-Segment Display with ARIES v2.0 Board
 
  * Reference arduino code:
  * Refrence aries board: https://vegaprocessors.in/blog/tm1637-7-segment-display-with-aries-v2-0-board/
+ * 
  * TM1637 4 Digit 7-Segment Display 
  * Connections:
  * TM1637     Aries Board
@@ -12,12 +13,12 @@
  * GND      -   GND
  * CLK      -   GPIO1
  * DIO      -   GPIO0
- * .
- **/
+*/
 
 #include "Timer.h"
 #include <avr/pgmspace.h>
 #include "TM1637.h"
+
 #define ON 1
 #define OFF 0
 
@@ -31,8 +32,9 @@ unsigned char _second;
 unsigned int eepromaddr;
 boolean Flag_ReadTime;
 
-#define CLK 1//pins definitions for TM1637 and can be changed to other ports
+#define CLK 1 //pins definitions for TM1637 and can be changed to other ports
 #define DIO 0
+
 TM1637 tm1637(CLK,DIO);
 Timer Timer(0);
 
@@ -47,8 +49,6 @@ void setup()
   Serial.println("Please send command to control the stopwatch:");
   Serial.println("S - start");
   Serial.println("P - pause");
-  Serial.println("L - list the time");
-  Serial.println("W - write the time to EEPROM ");
   Serial.println("R - reset");
 }
 void loop()
@@ -57,11 +57,11 @@ void loop()
   command = Serial.read();
   switch(command)
   {
-    case 'S':stopwatchStart();Serial.println("Start timing...");break;
+    case 'S':
     case 's':stopwatchStart();Serial.println("Start timing...");break;
-    case 'P':stopwatchPause();Serial.println("Stopwatch was paused");break;
+    case 'P':
     case 'p':stopwatchPause();Serial.println("Stopwatch was paused");break;
-    case 'R':stopwatchReset();Serial.println("Stopwatch was reset");break;
+    case 'R':
     case 'r':stopwatchReset();Serial.println("Stopwatch was reset");break;
     default:break;
   }

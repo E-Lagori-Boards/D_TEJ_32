@@ -1,7 +1,9 @@
 /*
-  @file RGB_LED_GPIO.ino
+  @file RYG_LED_GPIO.ino
   @brief Simple LED Application
   @detail Turning LEDs ON and OFF in simple serial pattern (in loop)
+
+   Aries Board pinout: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
    
    *** RGB LED STRIP ***
    Connections:

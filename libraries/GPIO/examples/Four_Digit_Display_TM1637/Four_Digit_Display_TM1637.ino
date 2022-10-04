@@ -1,5 +1,5 @@
-/**
- @file ClockDisplay.ino
+/*
+ @file Four_Digit_Display_TM1637.ino
  @brief contains routines for TM1637 interface
  @detail Includes software functions declarations to initialize,configure, write and read TSM1637
 
@@ -9,17 +9,16 @@
  * 
  * Connections:
  * TM1637      Aries Board
- * 3V3      -   3.3V
+ * VCC      -   3.3V
  * GND      -   GND
  * DI0      -   GPIO0
- * Clk      -   GPIO1
- * .
- **/
+ * CLK      -   GPIO1
+*/
 
 #include <TM1637.h>
 
-int CLK = 1; //CLK of TM1637 is connected to GPIO1 pin of arduino
-int DIO = 0;  //DI0 of TM1637 is connected to GPIO0 pin of arduino
+int CLK = 1; //CLK of TM1637 is connected to GPIO-1 pin of Aries Board
+int DIO = 0;  //DI0 of TM1637 is connected to GPIO-0 pin of Aries Board
 
 TM1637 tm(CLK,DIO);
 

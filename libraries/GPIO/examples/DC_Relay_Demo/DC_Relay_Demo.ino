@@ -1,16 +1,16 @@
 /*
   @file DC_Relay_Demo.ino
   @brief Simple DC relay application
-  @detail GREEN LED on the relay module will be ON/OFF when the Relay is ON/OFF
+  @detail GREEN LED on the relay module will ON/OFF when the Relay is ON/OFF
 
    Reference aries board: https://vegaprocessors.in/blog/one-channel-relay-module-with-aries-v2-board/
    
-   *** DC Relay ***
+   *** DC RELAY ***
    Connections:
    Relay     Aries Board
    VCC      -   3.3V
    GND      -   GND
-   IN       -   GPIO0
+   INP      -   GPIO0
 */
 
 

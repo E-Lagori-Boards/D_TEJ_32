@@ -1,7 +1,7 @@
 /*
   @file IR_Sensor_HW201.ino
   @brief Capturing IR(Infrared) signals using ARIES
-  @detail GREEN LED on the aries board will be ON when the IR receiver will receive infrared waves
+  @detail GREEN LED on the aries board will ON when the IR receiver receives infrared waves
 
    Reference aries board: https://vegaprocessors.in/blog/capturing-irinfrared-signals-using-aries/
    

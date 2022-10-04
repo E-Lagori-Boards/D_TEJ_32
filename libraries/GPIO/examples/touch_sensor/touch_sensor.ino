@@ -1,7 +1,7 @@
 /*
   @file touch_sensor.ino
-  @brief recording physical touch using touch sensor
-  @detail "Sensor is touched" message will be display on serial monitor and green led will blink if sensor get touched
+  @brief Recording physical touch using touch sensor
+  @detail "Sensor is touched" message will be display and green led will blink if sensor get touched
   
    Reference aries board: https://vegaprocessors.in/blog/ttp223b-touch-sensor-module-with-aries-v2-board/
    

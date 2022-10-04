@@ -1,5 +1,5 @@
-/**
- @file ClockDisplay.ino
+/*
+ @file ClockDisplay_TM1637.ino
  @brief contains routines for TM1637 interface
  @detail Includes software functions for working of TM1637 4 Digit 7-Segment Display with ARIES v2.0 Board
 
@@ -12,11 +12,11 @@
  * GND      -   GND
  * CLK      -   GPIO1
  * DIO      -   GPIO0
- * .
- **/
+*/
  
 #include <Timer.h>
 #include "TM1637.h"
+
 #define ON 1
 #define OFF 0
 
@@ -29,8 +29,8 @@ unsigned char minute = 0;
 unsigned char hour = 12;
 
 
-#define CLK 1//pins definitions for TM1637 and can be changed to other ports //clk=gpio1
-#define DIO 0
+#define CLK 1 // pins definitions for TM1637 and can be changed to other ports // CLK = GPIO-1
+#define DIO 0 // connect DIO pin to GPIO-0
 TM1637 tm1637(CLK,DIO);
 Timer Timer(2);
 

@@ -1,7 +1,7 @@
 /*
   @file PIR_MotionSensor.ino
   @brief Interface HC-SR501 PIR motion sensor with ARIES V2 board
-  @detail Green LED will turn ON when movement is detected in the vicinity of the sensor and RED Led will turn ON when there is no movement.
+  @detail Green LED will turn ON when movement is detected in the vicinity of the sensor and RED LED will glow when there is no movement.
   
    Reference aries board: https://vegaprocessors.in/blog/pir-motion-sensor-with-vega-processors/
    
@@ -13,15 +13,15 @@
    OUT      -   GPIO0
 */
 
-int led1 = 22;                // the pin that the LED is atteched to GPIO-22 internally
-int led2 = 24;
+int led1 = 22;               // Green LED
+int led2 = 24;               // Red LED
 int sensor = 0;              // the pin that the sensor is atteched to GPIO-0 of Aries Board
 
 void setup() {
   pinMode(led1, OUTPUT);      // initalize LED as an output
   pinMode(led2, OUTPUT);    
-  pinMode(sensor, INPUT);    // initialize sensor as an input
-  Serial.begin(115200);        // initialize serial
+  pinMode(sensor, INPUT);     // initialize sensor as an input
+  Serial.begin(115200);       // initialize serial
 }
 
 void loop(){
