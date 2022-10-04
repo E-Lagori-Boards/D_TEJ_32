@@ -1,21 +1,21 @@
-/**
- @file bmp180_pretemp_sensor.ino
+/*
+ @file bmp180_pre_temp_sensor.ino
  @brief contains routines for I2C Wire BMP180 sensor interface
  @detail Includes software functions declarations to initialize,configure, write and read BMP180 over I2C interface
 
  * Reference arduino code: https://lastminuteengineers.com/bmp180-arduino-tutorial/
  * Refrence aries board: https://vegaprocessors.in/blog/bmp180-digital-pressure-sensor-with-aries-v2-board/
+ * 
  * BMP180 pressure temeperature sensor
  * Device address -0x77
  * Connections:
  * BMP180     Aries Board
- * 3V3      -   3.3V
+ * VIN      -   3.3V
  * GND      -   GND
  * SDA      -   SDA1
  * SCL      -   SCL1
  * For connecting to port 0 (SCL 0 and SDA0) of aries board use the default variable TwoWire Wire(0) instead of TwoWire Wire(1);
- * .
- **/
+*/
 
 
 

@@ -11,7 +11,7 @@
    *** OLED DISPLAY(SSD-1306) ***
    Connections:
    SSD1306     Aries Board
-   3.3V     -   3.3V
+   VCC      -   3.3V
    GND      -   GND
    SDA      -   SDA0 
    SCL      -   SCL0 

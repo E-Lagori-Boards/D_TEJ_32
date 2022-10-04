@@ -5,6 +5,7 @@
 
  * Reference arduino code: https://www.engineersgarage.com/Wire345-accelerometer-arduino-i2c/
  * Refrence aries board: https://vegaprocessors.in/blog/interfacing-adxl345-digital-accelerometer-to-thejas-soc/
+ * 
  * ADXL345 accelerometer sensor
  * Device address -0x50
  * Connections:
@@ -19,7 +20,7 @@
 
 #include <Wire.h>
 
-TwoWire Wire(0);
+TwoWire Wire(1);
 
 void setup() {
 Serial.begin(115200);
