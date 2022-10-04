@@ -16,9 +16,10 @@
    TXD      -   RX1
 */
 
-#include <UARTClass.h>
+#include <esp8266.h>
 
-UARTClass esp8266(1);
+ESP8266Class esp8266(1);
+
 char * AP="CDAC"; // Add network name here
 char * PASS= ""; // Add password
 char * HOST="io.adafruit.com";
