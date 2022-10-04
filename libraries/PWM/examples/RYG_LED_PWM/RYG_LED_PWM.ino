@@ -1,9 +1,11 @@
 /*
-  @file RGB_LED_PWM.ino
+  @file RYG_LED_PWM.ino
   @brief LED Breathing
   @detail LED Brightness using PWM
+
+   Aries V2 Pinout: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
    
-   *** RGB LED Strip ***
+   *** RYG LED Strip ***
    Connections:
    LED STRIP     Aries Board
    GND        -   GND

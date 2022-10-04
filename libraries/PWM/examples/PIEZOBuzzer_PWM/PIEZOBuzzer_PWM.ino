@@ -1,14 +1,14 @@
 /*
   @file PIEZOBuzzer_PWM.ino
   @brief Interfacing Piezo Buzzer with ARIES Board using PWM
-  @detail varing duty cycle to turning volume of buzzer low-to-high and high-to-low repeatedly
+  @detail varing duty cycle to turn volume of buzzer low-to-high and high-to-low repeatedly
   
    Reference aries board: https://vegaprocessors.in/blog/buzzer-with-aries-v2-board/
    
    *** Piezo Buzzer ***
    Connections:
    Buzzer     Aries Board
-   VCC      -   5V
+   VCC      -   3.3V
    GND      -   GND
    IN       -   PWM0
 */

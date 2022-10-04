@@ -5,7 +5,7 @@
 
    Aries Board pinout: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
    
-   *** RGB LED STRIP ***
+   *** RYG LED STRIP ***
    Connections:
    LED        Aries Board
    GND      -   GND

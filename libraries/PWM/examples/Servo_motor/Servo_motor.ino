@@ -21,7 +21,7 @@ Servo myservo;  // create servo object to control a servo
 int i;
 
 void setup() {
-  myservo.attach(CH);  // attaches the servo on PWM-0
+  myservo.attach(CH);  // attaches the servo on PWM Channel
 }
 
 void loop() {
