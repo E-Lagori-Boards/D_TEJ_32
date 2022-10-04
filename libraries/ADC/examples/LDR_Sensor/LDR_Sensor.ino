@@ -1,7 +1,7 @@
 /*
   @file LDR_Sensor.ino
   @brief Interfacing LDR sensor with ARIES v2 
-  @detail This demo read the LDR value and accordingly turn LED ON or OFF
+  @detail This demo read the LDR value and turns LED ON when LDR senses darkness.
 
    Refrence aries board: https://vegaprocessors.in/blog/interfacing-ldr-sensor-to-aries-v2-board/
    
@@ -10,7 +10,7 @@
    LDR       Aries Board
    VCC      -   3.3V
    GND      -   GND
-   A0       -   A0
+   A0/OUT   -   A0
    D0       -   Not Required
 */
 
@@ -28,7 +28,7 @@ pinMode(LDRPIN, INPUT); // Here LDR sensor is determined as input.
 void loop() { 
   
 // Void loop is ran again and again and contains main code.
-int ldrStatus = analogRead(LDRPIN);
+int ldrStatus = analogRead(LDRPIN);  // resitance value // higher the light intensity, lower the resistance
 
 if (ldrStatus >= 1200) {
   digitalWrite(LEDPIN, LOW); // If LDR senses darkness led pin high that means led will glow.
