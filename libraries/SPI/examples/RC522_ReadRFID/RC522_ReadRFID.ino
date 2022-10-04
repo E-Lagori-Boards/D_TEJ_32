@@ -15,7 +15,7 @@
    MISO  -   MISO0
    MOSI  -   MOSI0
    SCK   -   SCLK0
-   SDA   -   GPIO10
+   SDA   -   GPIO-10
 */
 
 #include <SPI.h>

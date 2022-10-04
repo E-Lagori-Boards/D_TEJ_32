@@ -1,7 +1,7 @@
 /*
-  @file LEDMatrix_MAX7219.ino
-  @brief Use the MD_MAX72XX library to play Pong switches for left and right movement.
-  @detail Play pong on just one matrix. Bat is controlled by 2
+  @file DotMatrix_SimplePong.ino
+  @brief Use the MD_MAX72XX library to play Pong 
+  @detail Play pong on just one matrix. Use switches for left and right movement.
 
    Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
    *  Library Name : MD_MAX72XX
@@ -13,7 +13,7 @@
    VCC          -   5V
    GND          -   GND
    DIN          -   MOSI0
-   CS           -   GPIO10
+   CS           -   GPIO-10
    CLK          -   SCLK0
 */
 

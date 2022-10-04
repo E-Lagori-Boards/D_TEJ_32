@@ -13,7 +13,7 @@
    VCC          -   5V
    GND          -   GND
    DIN          -   MOSI0
-   CS           -   GPIO10
+   CS           -   GPIO-10
    CLK          -   SCLK0
 */
 

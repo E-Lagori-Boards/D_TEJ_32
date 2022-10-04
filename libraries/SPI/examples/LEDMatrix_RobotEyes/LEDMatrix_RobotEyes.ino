@@ -1,5 +1,5 @@
 /*
-  @file LEDMatrix_MAX7219.ino
+  @file LEDMatrix_RobotEyes.ino
   @brief Interfacing 8×8 LED DOT Matrix to ARIES V2 Board
   @detail Uses a sequence of bitmaps defined as a font to display animations of eyes to convey emotion. Eyes are coordinated to work together.
 
@@ -13,7 +13,7 @@
    VCC          -   5V
    GND          -   GND
    DIN          -   MOSI0
-   CS           -   GPIO10
+   CS           -   GPIO-10
    CLK          -   SCLK0
 */
 
