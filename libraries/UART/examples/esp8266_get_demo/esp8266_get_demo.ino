@@ -1,6 +1,6 @@
 /*
   @file esp8266_get_demo.ino
-  @brief ESP8266 Module communicates with the ARIES v2 Board via the UART Protocol
+  @brief ESP8266 Module communicates with the ARIES V2 Board via the UART Protocol
   @detail ESP8266 allows ARIES to connect to a Wi-Fi network and get data from adafruit to ON/OFF the RGB LED on Aries board
 
    Reference aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/

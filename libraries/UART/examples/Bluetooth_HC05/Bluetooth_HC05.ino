@@ -1,4 +1,4 @@
-/**
+/*
   @file Bluetooth_HC05.ino
   @brief contains routines for UART HC05 interface
   @detail Includes software functions declarations to initialize,configure, write and read HC05 over UARt interface
@@ -6,24 +6,23 @@
    Reference arduino code: https://electropeak.com/learn/
    Refrence aries board: https://vegaprocessors.in/blog/hc-05-bluetooth-module-with-aries-v2-board/
    Vega Arduino app apk: https://drive.google.com/file/d/1I8Gzlu3QLy9f35Pzw_uch31uhC18UtSt/view?usp=sharing
-   HC05 bluetooth sensor
+   
+   **HC05 bluetooth sensor**
    Connections:
    HC05     Aries Board
-   3V3      -   3.3V
+   VCC      -   3.3V
    GND      -   GND
-   RxD      -   Tx1
-   TxD      -   Rx1
-   For connecting to port 2 (RX 2 and TX 2) of aries board use the function UARTClass MyBlue(2) instead of UARTClass MyBlue(1);
-   .
- **/
+   RXD      -   TX1
+   TXD      -   RX1
+   For connecting to port 2 (RX2 and TX2) of aries board use the function UARTClass MyBlue(2) instead of UARTClass MyBlue(1);
+*/
 
 #include <UARTClass.h>
+
 UARTClass MyBlue(1); // RX | TX
 
 int flag = 0;
-int LED = 21;
-
-
+int LED = 22;  // Green LED
 
 int send_string(char * str)
 
@@ -98,7 +97,7 @@ void loop()
 
   {
 
-    digitalWrite(LED, HIGH);
+    digitalWrite(LED, LOW);
 
     send_string((char*)"LED ON\n");
 
@@ -110,7 +109,7 @@ void loop()
 
     send_string((char*)"LED OFF\n");
 
-    digitalWrite(LED, LOW);
+    digitalWrite(LED, HIGH);
 
   }
 
