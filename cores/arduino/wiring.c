@@ -33,7 +33,29 @@ unsigned long clock_count;
 
 
 unsigned long millis() {
-  static uint8_t count;
+  static unsigned long count;
+  unsigned long current_clock_count;
+  unsigned long m;
+  count = count + 1;
+
+  if(count <= 1)
+  {
+    clock_count = read_csr(mcycle);
+    m = (clock_count * 0.0101)/1000;
+    return m;
+  }
+  else
+  {
+    current_clock_count = read_csr(mcycle);
+    m = ((current_clock_count - clock_count) * 0.0101)/1000;
+    return m;
+  }
+}
+
+
+unsigned long micros(void) {
+
+  static unsigned long count;
   unsigned long current_clock_count;
 
   count = count + 1;
@@ -41,32 +63,12 @@ unsigned long millis() {
   if(count <= 1)
   {
     clock_count = read_csr(mcycle);
-    return ((clock_count * 0.0135)/1000);
+    return (clock_count * 0.0101);
   }
   else
   {
     current_clock_count = read_csr(mcycle);
-    return (((current_clock_count - clock_count) * 0.0135)/1000);
-  }
-}
-
-
-unsigned long micros(void) {
-
-  static uint8_t count;
-  unsigned long current_clock_count = 0;
-
-  count = count + 1;
-
-  if(count <= 1)
-  {
-    clock_count = read_csr(mcycle);
-    return (clock_count * 0.0135);
-  }
-  else
-  {
-    current_clock_count = read_csr(mcycle);
-    return ((current_clock_count - clock_count) * 0.0135);
+    return ((current_clock_count - clock_count) * 0.0101);
   }
 }
 
