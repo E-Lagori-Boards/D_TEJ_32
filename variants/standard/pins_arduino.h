@@ -15,7 +15,6 @@
 #define NINA_RESETN (27u)  //Not using
 #define NINA_ACK    (28u)   //Not using
 
-// #define SS 1
 #define SS_FLASHMEM 1
 
 #define PIN_SPI_SS    (10)
@@ -25,6 +24,11 @@
 #define SDCARD_SS_PIN (10)
 
 static const uint8_t SS   = PIN_SPI_SS;
+// static const uint8_t CS   = PIN_SPI_SS;
 static const uint8_t MOSI = PIN_SPI_MOSI;
 static const uint8_t MISO = PIN_SPI_MISO;
 static const uint8_t SCK  = PIN_SPI_SCK;
+
+//NEW
+#define regtype volatile uint32_t
+#define regsize uint32_t

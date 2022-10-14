@@ -43,6 +43,7 @@ extern "C"{
 #include "wiring_constants.h"
 
 #define	SystemCoreClock F_CPU
+#define _BV(bit) (1 << (bit))
 
 #define clockCyclesPerMicrosecond() ( SystemCoreClock / 1000000L )
 #define clockCyclesToMicroseconds(a) ( ((a) * 1000L) / (SystemCoreClock / 1000L) )

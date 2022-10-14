@@ -50,6 +50,8 @@ typedef uint64_t prog_uint64_t;
 typedef const void* int_farptr_t;
 typedef const void* uint_farptr_t;
 
+#define printf_P printf
+
 #define memchr_P(s, c, n) memchr((s), (c), (n))
 #define memcmp_P(s1, s2, n) memcmp((s1), (s2), (n))
 #define memccpy_P(dest, src, c, n) memccpy((dest), (src), (c), (n))
