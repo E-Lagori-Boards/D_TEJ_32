@@ -1,5 +1,5 @@
 #include <stdarg.h>
-#include <avr/eeprom.h>
+#include <eeprom.h>
 
 #include "stash.h"
 

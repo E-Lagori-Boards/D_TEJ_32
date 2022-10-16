@@ -13,10 +13,12 @@
 // 2015-11-09 dani.lomajhenic@gmail.com
 
 #include <EtherCard.h>
+#include <SPI.h>
 
+SPIClass SPI(0);
 // change these settings to match your own setup
 //#define FEED "000"
-#define APIKEY "beef1337beef1337" // put your key here
+#define APIKEY "VGFJWLT1XCIKWUDZ" // put your key here
 
 // ethernet interface mac address, must be unique on the LAN
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
@@ -67,7 +69,7 @@ void initialize_ethernet(void){
 }
 
 void setup () {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("\n[ThingSpeak example]");
 
   //Initialize Ethernet
@@ -89,8 +91,8 @@ void loop () {
 
     // Generate random info
     float demo = random(0,500);
-    word one = random(0,500);
-    String msje;
+    //word one = random(0,500);
+    char* msje;
 
     if (demo < 250){
       msje = "low";
@@ -144,5 +146,3 @@ void loop () {
    }
    delay(300);
 }
-
-
