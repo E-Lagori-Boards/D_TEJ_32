@@ -29,24 +29,29 @@
 #include "platform.h"
 #include "encoding.h"
 
-unsigned long clock_count;
-
 
 unsigned long millis() {
   static unsigned long count;
-  unsigned long current_clock_count;
+  unsigned long long current_clock_count;
   unsigned long m;
+  unsigned long long clock_count;
+  unsigned long long clk_cnt_msb; 
+  unsigned long long clk_cnt_lsb;
   count = count + 1;
 
   if(count <= 1)
   {
-    clock_count = read_csr(mcycle);
+    clk_cnt_lsb = read_csr(mcycle);
+    clk_cnt_msb = read_csr(mcycleh);
+    clock_count = (clk_cnt_msb<<32) | clk_cnt_lsb;
     m = (clock_count * 0.0101)/1000;
     return m;
   }
   else
   {
-    current_clock_count = read_csr(mcycle);
+    clk_cnt_lsb = read_csr(mcycle);
+    clk_cnt_msb = read_csr(mcycleh);
+    current_clock_count = (clk_cnt_msb<<32) | clk_cnt_lsb;
     m = ((current_clock_count - clock_count) * 0.0101)/1000;
     return m;
   }
@@ -56,19 +61,29 @@ unsigned long millis() {
 unsigned long micros(void) {
 
   static unsigned long count;
-  unsigned long current_clock_count;
+  unsigned long long clock_count;
+  unsigned long long current_clock_count;
+  unsigned long long clk_cnt_msb; 
+  unsigned long long clk_cnt_lsb;
+  unsigned long m;
 
   count = count + 1;
 
   if(count <= 1)
   {
-    clock_count = read_csr(mcycle);
-    return (clock_count * 0.0101);
+    clk_cnt_lsb = read_csr(mcycle);
+    clk_cnt_msb = read_csr(mcycleh);
+    clock_count = (clk_cnt_msb<<32) | clk_cnt_lsb;
+    m = clock_count * 0.0101;
+    return m;
   }
   else
   {
-    current_clock_count = read_csr(mcycle);
-    return ((current_clock_count - clock_count) * 0.0101);
+    clk_cnt_lsb = read_csr(mcycle);
+    clk_cnt_msb = read_csr(mcycleh);
+    current_clock_count = (clk_cnt_msb<<32) | clk_cnt_lsb;
+    m = ((current_clock_count - clock_count) * 0.0101);
+    return m;
   }
 }
 

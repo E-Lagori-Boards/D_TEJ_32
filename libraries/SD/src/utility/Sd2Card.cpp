@@ -325,11 +325,11 @@ uint8_t Sd2Card::init(uint8_t sckRateID, uint8_t chipSelectPin) {
 
   while ((status_ = cardAcmd(ACMD41, arg)) != R1_READY_STATE) {
     // check for timeout
-    // unsigned int d = millis() - t0;
-    // if (d > SD_INIT_TIMEOUT) {
-    //   error(SD_CARD_ERROR_ACMD41);
-    //   goto fail;
-    // }
+    unsigned int d = millis() - t0;
+    if (d > SD_INIT_TIMEOUT) {
+      error(SD_CARD_ERROR_ACMD41);
+      goto fail;
+    }
   }
   // if SD2 read OCR register to check for SDHC card
   if (type() == SD_CARD_TYPE_SD2) {
