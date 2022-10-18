@@ -5,6 +5,8 @@
 
  * Reference arduino code:
  * Refrence aries board: https://vegaprocessors.in/blog/tm1637-7-segment-display-with-aries-v2-0-board/
+ * Library Name : Grove 4-Digit Display (by Seeed Studio)
+ 
  * TM1637 4 Digit 7-Segment Display 
  * Connections:
  * TM1637     Aries Board

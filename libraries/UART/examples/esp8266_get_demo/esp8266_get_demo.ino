@@ -20,8 +20,8 @@
 
 ESP8266Class esp8266(1);
 
-char * AP="Add Network name here";    
-char * PASS= "Add Password here";
+char * AP="HIMANSHU";    // Add network name here
+char * PASS= "12345678";     // Add password
 char * HOST="io.adafruit.com";
 int PORT=80;
 char * URL="/api/v2/Himanshu_D/feeds/trial/data/last?x-aio-key=aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";  // Add URL of your feeds along with key
@@ -92,35 +92,43 @@ void setup() {
   countTimeCommand=0;
   Serial.begin(115200);
   esp8266.begin(115200);
-  sendCommand("AT",5,"OK");
-  sendCommand("AT+CWMODE=1",5,"OK");
+  sendCommand("AT",5,"OK");          // the basic command that tests the AT start up. If the AT start up is successful, then the response is OK.
+  sendCommand("AT+CWMODE=1",5,"OK");  // to set the WiFi Mode of operation (1 = Station mode i.e ESP connects to the router as a client.)
   memset(atcommand,0,250);
-  sprintf(atcommand,"AT+CWJAP=\"%s\",\"%s\"",AP,PASS);
+  sprintf(atcommand,"AT+CWJAP=\"%s\",\"%s\"",AP,PASS);  // This command is to connect to an Access Point (like a router).
   sendCommand(atcommand,2,"OK");
+  ledon=false;
 }
 int timeout=3;
 void loop() { 
-  sendCommand("AT+CIPMUX=1",3,"OK");
+  sendCommand("AT+CIPMUX=1",3,"OK");  // This AT Command is used to enable or disable multiple TCP Connections. (0: Single connection, 1: Multiple connections)
   memset(atcommand,0,250);
-  sprintf(atcommand,"AT+CIPSTART=0,\"TCP\",\"%s\",%d", HOST, PORT);
+  sprintf(atcommand,"AT+CIPSTART=0,\"TCP\",\"%s\",%d", HOST, PORT);   // to establish one of the three connections: TCP, UDP or SSL. 
   sendCommand(atcommand,3,"OK");
   memset(atcommand,0,250);
   sprintf(data,"GET %s HTTP/1.1\r\nHost: %s\r\n\r\n", URL, HOST);
-  sprintf(atcommand,"AT+CIPSEND=0,%d",strlen(data));
+  sprintf(atcommand,"AT+CIPSEND=0,%d",strlen(data));                  //  to start sending data in transparent transmission mode.
   sendCommand(atcommand,4,">");
   esp8266.println(data);
-  countTrueCommand++;
-  
-  
-  ledon=false;  
-  timeout=5;
+  countTrueCommand++; 
+    
+  timeout=2;
   while(timeout)
   { 
     if(esp8266.find("\"value\":\"1\""))
     {
         Serial.println("LED ON>>>>>>>>>");
-        ledon=true;  
+        ledon=true;
+        break;  
     }  
+    else if(esp8266.find("\"value\":\"0\""))
+    {
+        Serial.println("LED OFF>>>>>>>>>");
+        ledon=false;  
+        break;
+    }
+    
+    //Serial.println(timeout);
     timeout--;   
   }  
   
@@ -135,6 +143,6 @@ void loop() {
     digitalWrite(23,HIGH);
   }
   
-  sendCommand("AT+CIPCLOSE=0",5,"OK");
- 
+  sendCommand("AT+CIPCLOSE=0",5,"OK");             // Closes TCP/UDP/SSL connection 
+  delay(500);
 }

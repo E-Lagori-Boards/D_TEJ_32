@@ -4,6 +4,8 @@
  @detail Includes software functions declarations to initialize,configure, write and read TSM1637 over I2C interface
 
  * Reference: https://create.arduino.cc/projecthub/ryanchan/tm1637-digit-display-arduino-quick-tutorial-ca8a93
+ * Library Name : Grove 4-Digit Display (by Seeed Studio)
+ * 
  * TSM1637 seven segment display
  * 
  * Connections:

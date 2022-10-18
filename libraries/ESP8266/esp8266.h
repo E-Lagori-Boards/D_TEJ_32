@@ -59,8 +59,8 @@ protected:
 
 extern ESP8266Class ESP;
 
-#define DEFAULT_BUFFER_SIZE     160
-#define DEFAULT_TIMEOUT       10000
+#define DEFAULT_BUFFER_SIZE     300
+#define DEFAULT_TIMEOUT       	200
 
 
 #endif // _ESP8266_CLASS_

@@ -5,6 +5,8 @@
 
  * Reference for arduino code: https://create.arduino.cc/projecthub/ryanchan/tm1637-digit-display-arduino-quick-tutorial-ca8a93
  * Reference for aries board: https://vegaprocessors.in/blog/tm1637-7-segment-display-with-aries-v2-0-board/
+ * Library Name : Grove 4-Digit Display (by Seeed Studio)
+ *
  * TM1637 seven segment display
  * 
  * Connections:

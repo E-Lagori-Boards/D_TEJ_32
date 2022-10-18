@@ -5,6 +5,7 @@
 
  * Reference arduino code: https://lastminuteengineers.com/bmp180-arduino-tutorial/
  * Refrence aries board: https://vegaprocessors.in/blog/bmp180-digital-pressure-sensor-with-aries-v2-board/
+ * Library Name : Adafruit BMP085 Library
  * 
  * BMP180 pressure temeperature sensor
  * Device address -0x77
