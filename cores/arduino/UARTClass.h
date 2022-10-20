@@ -48,13 +48,13 @@ public:
 	//void flush(void);
 	size_t write(const uint8_t c);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
-
-private:
-	volatile uint32_t id;
 	operator bool() {
 		return (true);
 	}
-	; // UART always active
+	;
+	// UART always active
+private:
+	volatile uint32_t id;
 
 protected:
 	// int sio_probe_rx();
