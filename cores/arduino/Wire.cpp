@@ -86,10 +86,10 @@ void TwoWire::begin(void) {
 
 	IIC_REG(id, IIC_REG_TxCLR) = 0xFF; //clear TxFIFO register
 	__asm__ __volatile__ ("fence");
-	unsigned short CH = SYS_CLK / (2 * I2C_CLK); //sys clock=75000000, i2c clock=100000
+	unsigned short CH = F_CPU / (2 * I2C_CLK); //i2c clock=100000
 	IIC_REG(id, IIC_REG_CHL) = ((unsigned char) (CH & 0x0FF)); //set timing registers CHL,CHH,CHHL,CHHH
 	IIC_REG(id, IIC_REG_CHH) = (unsigned char) ((CH >> 8) & 0xFF);
-	unsigned short CHH = SYS_CLK / (4 * I2C_CLK);
+	unsigned short CHH = F_CPU / (4 * I2C_CLK);
 	IIC_REG(id, IIC_REG_CHHL) = ((unsigned char) (CHH & 0xFF));
 	IIC_REG(id, IIC_REG_CHHH) = (unsigned char) ((CHH >> 8) & 0xFF);
 	__asm__ __volatile__ ("fence");
@@ -112,10 +112,10 @@ void TwoWire::begin(int address) {
 
 void TwoWire::setClock(uint32_t clock) {
 	clock = I2C_CLK;
-	unsigned short CH = SYS_CLK / (2 * I2C_CLK); //sys clock=75000000, i2c clock=100000
+	unsigned short CH = F_CPU / (2 * I2C_CLK); //i2c clock=100000
 	IIC_REG(id, IIC_REG_CHL) = ((unsigned char) (CH & 0x0FF)); //set timing registers CHL,CHH,CHHL,CHHH
 	IIC_REG(id, IIC_REG_CHH) = (unsigned char) ((CH >> 8) & 0xFF);
-	unsigned short CHH = SYS_CLK / (4 * I2C_CLK);
+	unsigned short CHH = F_CPU / (4 * I2C_CLK);
 	IIC_REG(id, IIC_REG_CHHL) = ((unsigned char) (CHH & 0xFF));
 	IIC_REG(id, IIC_REG_CHHH) = (unsigned char) ((CHH >> 8) & 0xFF);
 	__asm__ __volatile__ ("fence");
