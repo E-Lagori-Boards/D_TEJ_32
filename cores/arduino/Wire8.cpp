@@ -38,24 +38,24 @@ extern "C" {
 #include "utility/twi.h"
 }
 
-#include "Wire.h"
+#include "Wire8.h"
 
 /*  Global variable section
  *
  ***************************************************/
-uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::rxBufferIndex = 0;
-uint8_t TwoWire::rxBufferLength = 0;
+uint8_t TwoWire8::rxBuffer[BUFFER_LENGTH];
+uint8_t TwoWire8::rxBufferIndex = 0;
+uint8_t TwoWire8::rxBufferLength = 0;
 
-uint8_t TwoWire::slaveAddress = 0;
-uint8_t TwoWire::txBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::txBufferIndex = 0;
-uint8_t TwoWire::txBufferLength = 0;
+uint8_t TwoWire8::slaveAddress = 0;
+uint8_t TwoWire8::txBuffer[BUFFER_LENGTH];
+uint8_t TwoWire8::txBufferIndex = 0;
+uint8_t TwoWire8::txBufferLength = 0;
 
-uint8_t TwoWire::transmitting = 0;
-uint8_t DataRead;
+uint8_t TwoWire8::transmitting = 0;
+// uint8_t DataRead;
 
-/** @fn TwoWire::TwoWire(uint8_t _id): id(_id)
+/** @fn TwoWire8::TwoWire8(uint8_t _id): id(_id)
  @brief Initialize i2c Port.
  @details This function initialize the I2C port.
  @warning
@@ -64,13 +64,13 @@ uint8_t DataRead;
  @param[Out] No output parameter
  */
 
-TwoWire::TwoWire(uint8_t _id) :
+TwoWire8::TwoWire8(uint8_t _id) :
 		id(_id) {
 
 }
 
 /**
- @fn void TwoWire::begin(void)
+ @fn void TwoWire8::begin(void)
  @brief I2C Initialization
  @details Initializes I2C Clock period registers
  @param[in]  No input parameter
@@ -78,7 +78,7 @@ TwoWire::TwoWire(uint8_t _id) :
  @return Void function.
  */
 
-void TwoWire::begin(void) {
+void TwoWire8::begin(void) {
 	rxBufferIndex = 0;
 	rxBufferLength = 0;
 	txBufferIndex = 0;
@@ -95,14 +95,14 @@ void TwoWire::begin(void) {
 	__asm__ __volatile__ ("fence");
 
 }
-void TwoWire::begin(uint8_t address) {
+void TwoWire8::begin(uint8_t address) {
 	begin();
 }
-void TwoWire::begin(int address) {
+void TwoWire8::begin(int address) {
 	begin((uint8_t) address);
 }
 /**
- @fn void TwoWire::setClock(uint32_t clock)
+ @fn void TwoWire8::setClock(uint32_t clock)
  @brief Configures I2C
  @details Configures I2C Clock period registers
  @param[in] (uint32_t clock)-- I2C clock frequency to be used
@@ -110,7 +110,7 @@ void TwoWire::begin(int address) {
  @return nil
  */
 
-void TwoWire::setClock(uint32_t clock) {
+void TwoWire8::setClock(uint32_t clock) {
 	clock = I2C_CLK;
 	unsigned short CH = F_CPU / (2 * I2C_CLK); //i2c clock=100000
 	IIC_REG(id, IIC_REG_CHL) = ((unsigned char) (CH & 0x0FF)); //set timing registers CHL,CHH,CHHL,CHHH
@@ -121,13 +121,13 @@ void TwoWire::setClock(uint32_t clock) {
 	__asm__ __volatile__ ("fence");
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
+uint8_t TwoWire8::requestFrom(uint8_t address, uint8_t quantity,
 		uint32_t iaddress, uint8_t isize, uint8_t sendStop) { //address = slave adress,quantity=num ofbytes
 	return requestFrom((uint8_t) address, (uint8_t) quantity,
 			(uint8_t) sendStop);
 }
 /**
- @fn uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,uint8_t sendStop)
+ @fn uint8_t TwoWire8::requestFrom(uint8_t address, uint8_t quantity,uint8_t sendStop)
  @brief to request bytes from a peripheral device.
  @details allows one master device to send multiple requests while in control. The default value is true.
  @param[in] (uint8_t address)--7-bit slave address of the device to request bytes from.
@@ -137,7 +137,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
  @return rxBufferLength if true and return 0 when NACK is received
  */
 
-uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
+uint8_t TwoWire8::requestFrom(uint8_t address, uint8_t quantity,
 		uint8_t sendStop) {
 	rxBufferLength = quantity;
 	IIC_REG(id, IIC_REG_CR ) = ((quantity << 2) | 0x01); //Set Start bit for read,set read length
@@ -179,28 +179,28 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
 	return rxBufferLength;
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity) {
+uint8_t TwoWire8::requestFrom(uint8_t address, uint8_t quantity) {
 	return requestFrom((uint8_t) address, (uint8_t) quantity, (uint8_t) true);
 }
 
-uint8_t TwoWire::requestFrom(int address, int quantity) {
+uint8_t TwoWire8::requestFrom(int address, int quantity) {
 	return requestFrom((uint8_t) address, (uint8_t) quantity, (uint8_t) true);
 }
 
-uint8_t TwoWire::requestFrom(int address, int quantity, int sendStop) {
+uint8_t TwoWire8::requestFrom(int address, int quantity, int sendStop) {
 
 	return requestFrom((uint8_t) address, (uint8_t) quantity,
 			(uint8_t) sendStop);
 }
 /**
- @fn void TwoWire::beginTransmission(uint8_t address)
+ @fn void TwoWire8::beginTransmission(uint8_t address)
  @brief begins transmission
  @details begins a transmission to the I2C peripheral device with the given address
  @param[in] (uint8_t address)--the 7-bit address of the device to transmit to.
  @param[Out] No output parameters.
  @return nil
  */
-void TwoWire::beginTransmission(uint8_t address) {
+void TwoWire8::beginTransmission(uint8_t address) {
 
 	// indicate that we are transmitting
 	transmitting = 1;
@@ -220,11 +220,11 @@ void TwoWire::beginTransmission(uint8_t address) {
 
 }
 
-void TwoWire::beginTransmission(int address) {
+void TwoWire8::beginTransmission(int address) {
 	beginTransmission((uint8_t) address);
 }
 /**
- @fn uint8_t TwoWire::endTransmission(uint8_t sendStop)
+ @fn uint8_t TwoWire8::endTransmission(uint8_t sendStop)
  @brief  ends a transmission to a peripheral device
  @details This function ends a transmission to a peripheral device that was
  begun by beginTransmission() and transmits the bytes that were queued by write()
@@ -240,7 +240,7 @@ void TwoWire::beginTransmission(int address) {
  5: timeout
  */
 
-uint8_t TwoWire::endTransmission(uint8_t sendStop) {
+uint8_t TwoWire8::endTransmission(uint8_t sendStop) {
 	while (((IIC_REG(id, IIC_REG_SR0)) & IIC_SR0_TxFFF) == ( IIC_SR0_TxFFF))
 		; //TxFF full or not
 	IIC_REG(id,IIC_REG_TxFF) = slaveAddress; //write slave address to Txff
@@ -301,11 +301,11 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop) {
 	return 0;
 }
 
-uint8_t TwoWire::endTransmission(void) {
+uint8_t TwoWire8::endTransmission(void) {
 	return endTransmission(true);
 }
 /**
- @fn size_t TwoWire::write(uint8_t data)
+ @fn size_t TwoWire8::write(uint8_t data)
  @brief  writes data
  @details  writes data from a peripheral device in response to a request from a controller device,
  or queues bytes for transmission from a controller to peripheral device
@@ -313,7 +313,7 @@ uint8_t TwoWire::endTransmission(void) {
  @param[Out] No output parameters.
  @return 0 if data size exceeded and return 1 if txBufferLength = txBufferIndex;
  */
-size_t TwoWire::write(uint8_t data) {
+size_t TwoWire8::write(uint8_t data) {
 	//Serial.print("write start \n\r");
 
 	if (txBufferIndex >= BUFFER_LENGTH) {
@@ -330,7 +330,7 @@ size_t TwoWire::write(uint8_t data) {
 	return 1;
 }
 /**
- @fn size_t TwoWire::write(const uint8_t *data, size_t quantity)
+ @fn size_t TwoWire8::write(const uint8_t *data, size_t quantity)
  @brief  writes data
  @details  writes data from a peripheral device in response to a request from a controller device,
  or queues bytes for transmission from a controller to peripheral device
@@ -338,7 +338,7 @@ size_t TwoWire::write(uint8_t data) {
  @param[Out] No output parameters.
  @return quantity
  */
-size_t TwoWire::write(const uint8_t *data, size_t quantity) {
+size_t TwoWire8::write(const uint8_t *data, size_t quantity) {
 	//Serial.print("write start1 \n\r");
 	for (size_t i = 0; i < quantity; ++i) {
 		write(data[i]);
@@ -346,25 +346,25 @@ size_t TwoWire::write(const uint8_t *data, size_t quantity) {
 	return quantity;
 }
 /**
- @fn int TwoWire::available(void)
+ @fn int TwoWire8::available(void)
  @brief  number of bytes available
  @details returns the number of bytes available for retrieval with read()
  @param[in] No Input parameters.
  @param[Out] No output parameters
  @return rxBufferLength
  */
-int TwoWire::available(void) {
+int TwoWire8::available(void) {
 	return rxBufferLength;
 }
 /**
- @fn int TwoWire::read(void)
+ @fn int TwoWire8::read(void)
  @brief  reads a byte
  @details reads a byte that was transmitted from a peripheral device to a controller device
  @param[in] No Input parameters.
  @param[Out] No output parameters.
  @return value
  */
-int TwoWire::read(void) {
+int TwoWire8::read(void) {
 
 	int value = -1;
 
@@ -377,28 +377,28 @@ int TwoWire::read(void) {
 	return value;
 }
 
-/*int TwoWire::peek(void) {
+/*int TwoWire8::peek(void) {
 
 }*/
 
-void TwoWire::flush(void) {
+void TwoWire8::flush(void) {
 // XXX: to be implemented.
 }
 
-void TwoWire::onRequestService(void) {
+void TwoWire8::onRequestService(void) {
 
 }
 
 // sets function called on slave write
-void TwoWire::onReceive(void (*function)(int)) {
+void TwoWire8::onReceive(void (*function)(int)) {
 	user_onReceive = function;
 }
 
 // sets function called on slave read
-void TwoWire::onRequest(void (*function)(void)) {
+void TwoWire8::onRequest(void (*function)(void)) {
 	user_onRequest = function;
 }
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
-//TwoWire Wire = TwoWire(0);
+//TwoWire8 Wire = TwoWire8(0);

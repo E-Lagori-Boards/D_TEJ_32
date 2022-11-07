@@ -97,7 +97,7 @@
 
 extern "C" void i2c0_isr(void);
 
-class TwoWire: public Stream {
+class TwoWire8: public Stream {
 
 	static uint8_t rxBuffer[];
 	static uint8_t rxBufferIndex;
@@ -117,7 +117,7 @@ class TwoWire: public Stream {
 	static void onReceiveService(uint8_t*, int);
 
 public:
-	TwoWire(uint8_t _id);
+	TwoWire8(uint8_t _id);
 	void begin();
 	void begin(uint8_t);
 	void begin(int);
@@ -163,6 +163,6 @@ private:
 
 };
 
-extern TwoWire Wire;
+extern TwoWire8 Wire8;
 
 #endif

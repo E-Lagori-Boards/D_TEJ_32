@@ -3,9 +3,9 @@
 #include "platform.h"
 #include "pwm.h"
 #include "utility/twi.h"
-#include "Wire.h"
+#include "Wire8.h"
 
-TwoWire Wire(8);
+TwoWire8 Wire8(8);
 
 void analogWrite(uint32_t pin, uint32_t ulValue)
 {
@@ -19,25 +19,25 @@ void analogWrite(uint32_t pin, uint32_t ulValue)
 
 static void writeRegister(uint8_t address, uint8_t reg, uint16_t value) {
 
-	Wire.beginTransmission(address);
-	Wire.write((uint8_t) reg);
-	Wire.write((uint8_t) (value >> 8));
-	Wire.write((uint8_t) (value & 0xFF));
-	Wire.endTransmission(TRUE);
+	Wire8.beginTransmission(address);
+	Wire8.write((uint8_t) reg);
+	Wire8.write((uint8_t) (value >> 8));
+	Wire8.write((uint8_t) (value & 0xFF));
+	Wire8.endTransmission(TRUE);
 }
 
 static uint16_t readRegister(uint8_t address, uint8_t reg) {
 
-	Wire.beginTransmission(address);
-	Wire.write(reg);
-	Wire.endTransmission(TRUE);
-	Wire.requestFrom(address, (uint8_t) 2);	//true
-	return (Wire.read() << 8 | Wire.read());
+	Wire8.beginTransmission(address);
+	Wire8.write(reg);
+	Wire8.endTransmission(TRUE);
+	Wire8.requestFrom(address, (uint8_t) 2);	//true
+	return (Wire8.read() << 8 | Wire8.read());
 }
 
 uint32_t analogRead(uint32_t pin)
 {
-	Wire.begin(); //need to check
+	Wire8.begin(); //need to check
 	if (pin > 3) {	//channel=pin
 		return 1;
 	}
