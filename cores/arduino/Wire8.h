@@ -51,7 +51,7 @@
 #define IIC_REG_CHHH			 0x09			  //Clock period half half register high
 #define IIC_REG_TxCLR			 0x0A			  //TX fifo clear register
 
-#define SYS_CLK  75000000
+
 #define I2C_CLK	 100000
 
 #define IIC_READ 	1
