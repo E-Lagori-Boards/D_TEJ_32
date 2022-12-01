@@ -26,7 +26,7 @@
 #include <inttypes.h>
 #include "Arduino.h"
 
-#define BUFFER_LENGTH 128	//Fifo depth
+#define BUFFER_LENGTH 16	//Fifo depth
 
 // WIRE_HAS_END means Wire has end()
 #define WIRE_HAS_END 1

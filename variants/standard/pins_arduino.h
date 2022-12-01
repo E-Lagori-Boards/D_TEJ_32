@@ -11,16 +11,16 @@
 #define LED_BUILTIN PIN_LED
 
 //NINA
-#define NINA_GPIO0  (13) //connected to GPIO13 of aries
+#define NINA_GPIO0  (17) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO13 of Aries V2 or GPIO17 of Aries IOT
 #define NINA_RESETN (27u)  //Not using
 #define NINA_ACK    (28u)   //Not using
 
 #define SS_FLASHMEM 1
 
 #define PIN_SPI_SS    (10)
-#define PIN_SPI_MOSI  (16)
-#define PIN_SPI_MISO  (14)
-#define PIN_SPI_SCK   (15)
+#define PIN_SPI_MOSI  (-1)
+#define PIN_SPI_MISO  (-1)
+#define PIN_SPI_SCK   (-1)
 #define SDCARD_SS_PIN (10)
 
 static const uint8_t SS   = PIN_SPI_SS;

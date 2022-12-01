@@ -7,20 +7,20 @@ extern "C"{
 
 void yield(void);
 
-typedef enum {
-  LOW     = 0,
-  HIGH    = 1,
-  CHANGE  = 2,
-  FALLING = 3,
-  RISING  = 4,
-} PinStatus;
+// typedef enum {
+//   LOW     = 0,
+//   HIGH    = 1,
+//   CHANGE  = 2,
+//   FALLING = 3,
+//   RISING  = 4,
+// } PinStatus;
 
-typedef enum {
-  INPUT           = 0x0,
-  OUTPUT          = 0x1,
-  INPUT_PULLUP    = 0x2,
-  INPUT_PULLDOWN  = 0x3,
-} PinMode;
+// typedef enum {
+//   INPUT           = 0x0,
+//   OUTPUT          = 0x1,
+//   INPUT_PULLUP    = 0x2,
+//   INPUT_PULLDOWN  = 0x3,
+// } PinMode;
 
 #define PI          3.1415926535897932384626433832795
 #define HALF_PI     1.5707963267948966192313216916398
@@ -99,32 +99,13 @@ void loop(void);
 } // extern "C"
 #endif
 
-#ifdef __cplusplus
-  template<class T, class L> 
-  auto min(const T& a, const L& b) -> decltype((b < a) ? b : a)
-  {
-    return (b < a) ? b : a;
-  }
-
-  template<class T, class L> 
-  auto max(const T& a, const L& b) -> decltype((b < a) ? b : a)
-  {
-    return (a < b) ? b : a;
-  }
-#else
 #ifndef min
-#define min(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a < _b ? _a : _b; })
-#endif
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif // min
+
 #ifndef max
-#define max(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
-#endif
-#endif
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif // max
 
 #ifdef __cplusplus
 
