@@ -24,8 +24,7 @@
  * or LOW, the type of pulse to measure.  Works on pulses from 2-3 microseconds
  * to 3 minutes in length, but must be called at least a few dozen microseconds
  * before the start of the pulse. */
-extern uint32_t
-pulseIn(uint32_t pin, bool state, uint32_t timeout)
+extern unsigned long pulseIn(uint32_t pin, bool state, uint32_t timeout)
 {
 	uint32_t start_time=0, end_time=0;
 	unsigned long total_time=0;
@@ -34,6 +33,6 @@ pulseIn(uint32_t pin, bool state, uint32_t timeout)
 	while(digitalRead(pin)==state);
 	end_time =  read_csr(mcycle);	
 
-	total_time = (end_time - start_time)*0.01;
+	total_time = (end_time - start_time)*0.0101;
 	return total_time;
 }

@@ -27,7 +27,7 @@ __BEGIN_DECLS
  * to 3 minutes in length, but must be called at least a few dozen microseconds
  * before the start of the pulse.
  */
-extern uint32_t pulseIn(uint32_t ulPin, bool ulState, uint32_t ulTimeout = 1000000L);
+extern unsigned long pulseIn(uint32_t ulPin, bool ulState, uint32_t ulTimeout = 1000000L);
 
 __END_DECLS
 
