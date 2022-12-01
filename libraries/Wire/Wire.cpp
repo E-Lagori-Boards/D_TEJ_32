@@ -111,8 +111,7 @@ void TwoWire::begin(int address) {
  */
 
 void TwoWire::setClock(uint32_t clock) {
-
-	unsigned short CH = F_CPU / (2 * clock); //i2c clock=100000
+	unsigned short CH = F_CPU / (2 * clock); 
 	IIC_REG(id, IIC_REG_CHL) = ((unsigned char) (CH & 0x0FF)); //set timing registers CHL,CHH,CHHL,CHHH
 	IIC_REG(id, IIC_REG_CHH) = (unsigned char) ((CH >> 8) & 0xFF);
 	unsigned short CHH = F_CPU / (4 * clock);

@@ -26,7 +26,7 @@
 #include <inttypes.h>
 #include "Arduino.h"
 
-#define BUFFER_LENGTH 128	//Fifo depth
+#define BUFFER_LENGTH 16	//Fifo depth
 
 // WIRE_HAS_END means Wire has end()
 #define WIRE_HAS_END 1
@@ -52,7 +52,7 @@
 #define IIC_REG_TxCLR			 0x0A			  //TX fifo clear register
 
 
-#define I2C_CLK	 100000
+#define I2C_CLK  100000
 
 #define IIC_READ 	1
 #define IIC_WRITE 	0
