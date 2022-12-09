@@ -24,7 +24,7 @@
 SPIClass SPI(0);  // selecting SPI port-0
 
 #define SPEED_FROM_ANALOG 0   // optional to use analog input for speed control
-#define DEBUG 0   // Enable or disable (default) debugging output
+#define DEBUG 1   // Enable or disable (default) debugging output
 
 #if DEBUG
 #define PRINT(s, v)   { Serial.print(F(s)); Serial.print(v); }      // Print a string followed by a value (decimal)
@@ -71,8 +71,10 @@ const uint32_t END_GAME_DELAY = 2000;   // in milliseconds
 
 const uint8_t BAT_SIZE = 3;             // in pixels, odd number looks best
 
-char welcome[] = "PONG";
+char *welcome;
 bool messageComplete;
+static int score;
+int finalScore;
 
 // ========== General Variables ===========
 //
@@ -193,7 +195,7 @@ void setup(void)
 
 void loop(void)
 {
-  static enum:uint8_t { INIT, WELCOME, PLAY_INIT, WAIT_START, PLAY, END } state = INIT;
+  static enum:uint8_t { INIT, WELCOME, PLAY_INIT, WAIT_START, PLAY, END , FINAL_SCORE } state = INIT;
   
   static int8_t ballX, ballY;
   static int8_t batX;
@@ -205,6 +207,7 @@ void loop(void)
   {
   case INIT:
     PRINTS("\n>>INIT");
+    welcome = (char*)"** PONG **";
     resetDisplay();
     mx.setShiftDataInCallback(scrollDataSource);
     prevTime = 0;
@@ -293,6 +296,7 @@ void loop(void)
       //=== Check for side bounce/bat collision
       if (ballY == batY - 1 && deltaY == 1)  // just above the bat and travelling towards it
       {
+        score += 1;
         PRINT("check bat x=", batX); PRINTS(" - ");
         if ((ballX >= batX) && (ballX <= batX + BAT_SIZE - 1)) // over the bat - just bounce vertically
         {
@@ -316,6 +320,8 @@ void loop(void)
       {
         PRINTS("\n>>PLAY - past bat! -> end of game");
         state = END;
+        finalScore = score;
+        score = 0;
       }
 
       prevTime = millis();
@@ -323,12 +329,25 @@ void loop(void)
     break;
 
   case END:
-    if (millis() - prevTime >= END_GAME_DELAY)
-    {
+      delay(20);
       PRINTS("\n>>END");
-      state = PLAY_INIT;
-    }
-    break;
+      sprintf(welcome, "GAME OVER  ");
+      mx.setShiftDataInCallback(scrollDataSource);
+      prevTime = 0;
+      scrollText();
+      if (messageComplete) state = FINAL_SCORE;
+      break;
+
+  case FINAL_SCORE:
+      delay(20);
+      Serial.print("SCORE = ");
+      Serial.println(finalScore);
+      sprintf(welcome, " SCORE : %d    ", finalScore);
+      mx.setShiftDataInCallback(scrollDataSource);
+      prevTime = 0;
+      scrollText();
+      if (messageComplete) state = PLAY_INIT;
+      break;
     
    default:
      PRINT("\n>>UNHANDLED !!! ", state);
