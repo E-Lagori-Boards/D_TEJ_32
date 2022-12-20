@@ -4,8 +4,3 @@ vegaxmodem.program.tool=vegaxmodem
 vegaxmodem.program.params.verbose=
 vegaxmodem.program.params.quiet=
 
-vegaflasher.name=VEGA FLASHER
-vegaflasher.communication=serial
-vegaflasher.program.tool=vegaflasher
-vegaflasher.program.params.verbose=
-vegaflasher.program.params.quiet=

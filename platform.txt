@@ -82,8 +82,3 @@ recipe.size.regex=\s*[0-9]+\s+[0-9]+\s+[0-9]+\s+([0-9]+).*
 tools.vegaxmodem.path={runtime.tools.vegaxmodem.path}/
 tools.vegaxmodem.cmd=xmodem
 tools.vegaxmodem.program.pattern="{path}{cmd}" /dev/ttyUSB0 "{build.path}/{build.project_name}.bin"
-
-tools.vegaflasher.path={runtime.tools.vegaflasher.path}/
-tools.vegaflasher.cmd=flasher
-tools.vegaflasher.program.pattern="{path}{cmd}" /dev/ttyUSB0 "{build.path}/{build.project_name}.bin"
-
