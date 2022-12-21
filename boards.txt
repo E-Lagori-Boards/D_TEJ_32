@@ -33,3 +33,40 @@ aries_devkit.upload.tool=vegaxmodem
 aries_devkit.upload.maximum_size=268435456
 aries_devkit.build.ldscript={compiler.sdk.path}/link.lds
 
+#################################################################################################
+
+
+menu.clksrc=CPU Clock Frequency
+menu.toolsloc=Tool Install Location
+
+aries_flash.name=ARIES DevKit Flash
+
+aries_flash.menu.toolsloc.default=Default
+aries_flash.menu.toolsloc.manual=Manual
+aries_flash.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-vega-elf-gcc.path}/bin/
+aries_flash.menu.toolsloc.manual.compiler.path=
+
+#Point to the file for ./variants/<variant>/pins_arduino.h
+aries_flash.build.variant=standard
+
+aries_flash.menu.clksrc.aries100=100MHz
+aries_flash.menu.clksrc.aries100.build.f_cpu=100000000L
+
+aries_flash.menu.clksrc.aries75=75MHz
+aries_flash.menu.clksrc.aries75.build.f_cpu=75000000L
+
+aries_flash.build.mcu=rv32im
+
+#"The 'core' file directory for this board, in ./cores
+aries_flash.build.core=arduino
+# This sets a define for use in the compiled code.
+aries_flash.build.board=ARIES_DEVKIT
+aries_flash.build.boardenv=aries
+aries_flash.build.sdata.size=4096
+#This selects the tool from "programmers.txt"
+aries_flash.program.tool=vegaxmodem
+aries_flash.upload.tool=vegaxmodem
+# Limit is the 128MB Flash. Assume half is used for something else.
+aries_flash.upload.maximum_size=268435456
+aries_flash.build.ldscript={compiler.sdk.path}/link1.lds
+
