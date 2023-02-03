@@ -12,11 +12,12 @@
    pin no. 20,21 - Yellow LED
    Pin no. 22 - Green LED 
    Pin no. 23 - Blue LED
-   Note: BLUE and GREEN LED will be in "ON" state for a digital "0" input and in "OFF" state for a digital "1" input.
+   Pin no. 24 - Red LED
+   Note: BLUE,RED and GREEN LED will be in "ON" state for a digital "0" input and in "OFF" state for a digital "1" input.
          YELLOW LED will be in "ON" state for a digital "1" input and in "OFF" state for a digital "0" input.
  **/
 
-int ledPin=22; // Green LED
+int ledPin=24; // Green LED
 
 void setup()
 {
