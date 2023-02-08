@@ -1,6 +1,6 @@
 /*
   @file Weight_Calibration.ino
-  @brief Interfacing HX711 Weight Sensor to ARIES V2 Board
+  @brief Interfacing HX711 Load Sensor to ARIES V2 Board
   @detail First use a known weight to calibrate the sensor and then you can see the weight measurements of any object in serial monitor.
 
    Reference arduino code: https://randomnerdtutorials.com/arduino-load-cell-hx711/ 
@@ -10,7 +10,7 @@
    *  Library Name : HX711_ADC
    *  Library Version : 1.2.12  
    
-   *** Weight Sensor ***
+   *** Load Sensor ***
    Connections:
    HX711            Aries Board
    VCC          -   3.3V
