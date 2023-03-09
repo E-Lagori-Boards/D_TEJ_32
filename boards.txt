@@ -1,13 +1,19 @@
 
 menu.clksrc=CPU Clock Frequency
-menu.toolsloc=Tool Install Location
+#menu.toolsloc=Tool Install Location
+menu.FlashMode=Flash Mode
 
-aries_devkit.name=ARIES DevKit
+################################################################################################
 
-aries_devkit.menu.toolsloc.default=Default
-aries_devkit.menu.toolsloc.manual=Manual
-aries_devkit.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-vega-elf-gcc.path}/bin/
-aries_devkit.menu.toolsloc.manual.compiler.path=
+aries_devkit.name=ARIES V2
+
+aries_devkit.vid.0=0x0403
+aries_devkit.pid.0=0x6015
+
+#aries_devkit.menu.toolsloc.default=Default
+#aries_devkit.menu.toolsloc.manual=Manual
+#aries_devkit.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-vega-elf-gcc.path}/bin/
+#aries_devkit.menu.toolsloc.manual.compiler.path=
 
 #Point to the file for ./variants/<variant>/pins_arduino.h
 aries_devkit.build.variant=standard
@@ -19,54 +25,103 @@ aries_devkit.menu.clksrc.aries75=75MHz
 aries_devkit.menu.clksrc.aries75.build.f_cpu=75000000L
 
 aries_devkit.build.mcu=rv32im
+aries_devkit.build.vid.0=0x0403
+aries_devkit.build.vid.0=0x6015
 
 #"The 'core' file directory for this board, in ./cores
 aries_devkit.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_devkit.build.board=ARIES_DEVKIT
+aries_devkit.build.board=ARIES_V2
 aries_devkit.build.boardenv=aries
+aries_devkit.build.usb_product="ARIES"
 aries_devkit.build.sdata.size=4096
+
 #This selects the tool from "programmers.txt"
 aries_devkit.program.tool=vegaxmodem
 aries_devkit.upload.tool=vegaxmodem
 # Limit is the 128MB Flash. Assume half is used for something else.
 aries_devkit.upload.maximum_size=268435456
-aries_devkit.build.ldscript={compiler.sdk.path}/link.lds
+
+aries_devkit.menu.FlashMode.default=Disabled
+aries_devkit.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
+aries_devkit.menu.FlashMode.on=Enabled
+aries_devkit.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
+
+#aries_devkit.build.ldscript={compiler.sdk.path}/link.lds
+
+################################################################################################
+
+aries_micro_devkit.name=ARIES MICRO V1
+
+#aries_micro_devkit.vid.0=0x0403
+#aries_micro_devkit.pid.0=0x6015
+
+#Point to the file for ./variants/<variant>/pins_arduino.h
+aries_micro_devkit.build.variant=standard
+
+aries_micro_devkit.menu.clksrc.aries100=100MHz
+aries_micro_devkit.menu.clksrc.aries100.build.f_cpu=100000000L
+
+aries_micro_devkit.menu.clksrc.aries75=75MHz
+aries_micro_devkit.menu.clksrc.aries75.build.f_cpu=75000000L
+
+aries_micro_devkit.build.mcu=rv32im
+
+#"The 'core' file directory for this board, in ./cores
+aries_micro_devkit.build.core=arduino
+# This sets a define for use in the compiled code.
+aries_micro_devkit.build.board=ARIES_MICRO
+aries_micro_devkit.build.boardenv=aries
+aries_micro_devkit.build.usb_product="ARIES"
+aries_micro_devkit.build.sdata.size=4096
+#This selects the tool from "programmers.txt"
+aries_micro_devkit.program.tool=vegaxmodem
+aries_micro_devkit.upload.tool=vegaxmodem
+# Limit is the 128MB Flash. Assume half is used for something else.
+aries_micro_devkit.upload.maximum_size=268435456
+
+aries_micro_devkit.menu.FlashMode.default=Disabled
+aries_micro_devkit.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
+aries_micro_devkit.menu.FlashMode.on=Enabled
+aries_micro_devkit.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
+#aries_micro_devkit.build.ldscript={compiler.sdk.path}/link.lds
 
 #################################################################################################
 
+aries_iot_v1.name=ARIES IOT V1
 
-menu.clksrc=CPU Clock Frequency
-menu.toolsloc=Tool Install Location
-
-aries_flash.name=ARIES DevKit Flash
-
-aries_flash.menu.toolsloc.default=Default
-aries_flash.menu.toolsloc.manual=Manual
-aries_flash.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-vega-elf-gcc.path}/bin/
-aries_flash.menu.toolsloc.manual.compiler.path=
+#aries_iot_v1.vid.0=0x0403
+#aries_iot_v1.pid.0=0x6015
 
 #Point to the file for ./variants/<variant>/pins_arduino.h
-aries_flash.build.variant=standard
+aries_iot_v1.build.variant=standard
 
-aries_flash.menu.clksrc.aries100=100MHz
-aries_flash.menu.clksrc.aries100.build.f_cpu=100000000L
+aries_iot_v1.menu.clksrc.aries100=100MHz
+aries_iot_v1.menu.clksrc.aries100.build.f_cpu=100000000L
 
-aries_flash.menu.clksrc.aries75=75MHz
-aries_flash.menu.clksrc.aries75.build.f_cpu=75000000L
+aries_iot_v1.menu.clksrc.aries75=75MHz
+aries_iot_v1.menu.clksrc.aries75.build.f_cpu=75000000L
 
-aries_flash.build.mcu=rv32im
+aries_iot_v1.build.mcu=rv32im
 
 #"The 'core' file directory for this board, in ./cores
-aries_flash.build.core=arduino
+aries_iot_v1.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_flash.build.board=ARIES_DEVKIT
-aries_flash.build.boardenv=aries
-aries_flash.build.sdata.size=4096
+aries_iot_v1.build.board=ARIES_IOT
+aries_iot_v1.build.boardenv=aries
+aries_iot_v1.build.usb_product="ARIES"
+aries_iot_v1.build.sdata.size=4096
 #This selects the tool from "programmers.txt"
-aries_flash.program.tool=vegaxmodem
-aries_flash.upload.tool=vegaxmodem
+aries_iot_v1.program.tool=vegaxmodem
+aries_iot_v1.upload.tool=vegaxmodem
 # Limit is the 128MB Flash. Assume half is used for something else.
-aries_flash.upload.maximum_size=268435456
-aries_flash.build.ldscript={compiler.sdk.path}/link1.lds
+aries_iot_v1.upload.maximum_size=268435456
+
+aries_iot_v1.menu.FlashMode.default=Disabled
+aries_iot_v1.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
+aries_iot_v1.menu.FlashMode.on=Enabled
+aries_iot_v1.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
+#aries_iot_v1.build.ldscript={compiler.sdk.path}/link.lds
+
+#################################################################################################
 

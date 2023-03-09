@@ -1,4 +1,4 @@
-name= C-DAC Aries Boards
+name= VEGA PROCESSOR: ARIES BOARDS
 version=2.0.0
 
 # Compile variables
@@ -86,3 +86,4 @@ tools.vegaxmodem.program.pattern="{path}{cmd}" {serial.port} "{build.path}/{buil
 tools.vegaflasher.path={runtime.tools.vegaflasher.path}/
 tools.vegaflasher.cmd=flasher
 tools.vegaflasher.program.pattern="{path}{cmd}" {serial.port} "{build.path}/{build.project_name}.bin"
+
