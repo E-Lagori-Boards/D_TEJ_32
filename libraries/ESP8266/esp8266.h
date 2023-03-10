@@ -26,6 +26,10 @@ public:
 	//void flush(void);
 	size_t write(const uint8_t c);
 	int find(char* find);
+
+	void enableInterrupt(uint8_t tx_intr, uint8_t rx_intr);
+	void disableInterrupt(void);
+
 	using Print::write; // pull in write(str) and write(buf, size) from Print
 
 private:

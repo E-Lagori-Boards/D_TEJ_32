@@ -200,7 +200,7 @@ void Timer::attachInterrupt(void (*isr)(), unsigned long microseconds) {
 	if (microseconds > 0)
 		setPeriod(microseconds);
 	attachInterrupt(isr);
-
+	id_isr = id;
 }
 
 /**

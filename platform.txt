@@ -1,4 +1,4 @@
-name= VEGA PROCESSOR: ARIES BOARDS
+name= VEGA Processor: ARIES Boards
 version=2.0.0
 
 # Compile variables

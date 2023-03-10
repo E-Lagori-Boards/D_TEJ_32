@@ -67,18 +67,10 @@ void interrupt_handler(void) {
 		
 			unsigned int intr_status = MACHINE_INT_STATUS; // Read interrupt status register.
 
-			//Serial.println("intr_status:");
-			//Serial.print(intr_status, 16);
-
-
 			for(unsigned int i = 0; i < MAXIMUM_INTR_COUNT ; i++)  /*MAXIMUM_INTR_COUNT*/
 			{
 				if ((intr_status >> i) & (unsigned int)1){
 					irq_table[i]();// Invoke the peripheral handler as function pointer.
-					//Serial.println("i");
-					//Serial.print(i);
-					//Serial.print("\n");
-					return;
 				}
 			}
 		}
@@ -93,7 +85,7 @@ void interrupt_handler(void) {
 
 void detachInterrupt(uint32_t intr_number) {
 
-	clear_csr(mie, MIP_MSIP);	// Clear MSIP bit in MIE register for Machine 
-	MACHINE_INT_ENABLE |= ((unsigned long)0 << intr_number);	// Disable interrupt for peripheral in interrupt controller.
-	__asm__ __volatile__ ("fence");	
+	MACHINE_INT_ENABLE &= ~((uint32_t)1 << intr_number);	// Disable interrupt for peripheral in interrupt controller.
+	irq_table[intr_number] = 0;
+	__asm__ __volatile__ ("fence");
 }

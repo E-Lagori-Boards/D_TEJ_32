@@ -81,8 +81,8 @@ enum BitOrder {
 #define interrupts() cli()
 #define noInterrupts() sei()
 
-#define cli()
-#define sei()
+#define cli()  clear_csr(mstatus, MSTATUS_MIE); // Clear global machine intr bit (3rd bit) in MSTATUS register.
+#define sei()  set_csr(mstatus, MSTATUS_MIE); // Set global machine intr bit (3rd bit) in MSTATUS register.
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))

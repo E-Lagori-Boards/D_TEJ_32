@@ -255,6 +255,14 @@ int ESP8266Class::find(char* _Expected_Response)
 			
 		}
 	}
-	
+}
 
+void ESP8266Class::enableInterrupt(uint8_t tx_intr, uint8_t rx_intr) {
+
+	UART_REG(id, UART_REG_IE) = ((tx_intr << 1) | (rx_intr));
+}
+
+void ESP8266Class::disableInterrupt(void) {
+
+	UART_REG(id, UART_REG_IIR_FCR);
 }

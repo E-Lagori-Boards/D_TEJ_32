@@ -199,3 +199,13 @@ size_t UARTClass::write(const uint8_t uc_data) {
 	sio_putchar(uc_data);
 	return (1);
 }
+
+void UARTClass::enableInterrupt(uint8_t tx_intr, uint8_t rx_intr) {
+
+	UART_REG(id, UART_REG_IE) = ((tx_intr << 1) | (rx_intr));
+}
+
+void UARTClass::disableInterrupt(void) {
+
+	UART_REG(id, UART_REG_IIR_FCR);
+}
