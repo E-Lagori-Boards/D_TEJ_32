@@ -5,7 +5,7 @@ menu.FlashMode=Flash Mode
 
 ################################################################################################
 
-aries_devkit.name=ARIES V2
+aries_devkit.name=ARIES v2
 
 aries_devkit.vid.0=0x0403
 aries_devkit.pid.0=0x6015
@@ -51,7 +51,49 @@ aries_devkit.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
 
 ################################################################################################
 
-aries_micro_devkit.name=ARIES MICRO V1
+aries_v3.name=ARIES v3
+
+aries_v3.vid.0=0x10C4
+aries_v3.pid.0=0xEA60
+
+
+#Point to the file for ./variants/<variant>/pins_arduino.h
+aries_v3.build.variant=standard
+
+aries_v3.menu.clksrc.aries100=100MHz
+aries_v3.menu.clksrc.aries100.build.f_cpu=100000000L
+
+aries_v3.menu.clksrc.aries75=75MHz
+aries_v3.menu.clksrc.aries75.build.f_cpu=75000000L
+
+aries_v3.build.mcu=rv32im
+aries_v3.build.vid.0=0x10C4
+aries_v3.build.vid.0=0xEA60
+
+#"The 'core' file directory for this board, in ./cores
+aries_v3.build.core=arduino
+# This sets a define for use in the compiled code.
+aries_v3.build.board=ARIES_V3
+aries_v3.build.boardenv=aries
+aries_v3.build.usb_product="ARIES"
+aries_v3.build.sdata.size=4096s
+
+#This selects the tool from "programmers.txt"
+aries_v3.program.tool=vegaxmodem
+aries_v3.upload.tool=vegaxmodem
+# Limit is the 128MB Flash. Assume half is used for something else.
+aries_v3.upload.maximum_size=268435456
+
+aries_v3.menu.FlashMode.default=Disabled
+aries_v3.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
+aries_v3.menu.FlashMode.on=Enabled
+aries_v3.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
+
+#aries_v3.build.ldscript={compiler.sdk.path}/link.lds
+
+################################################################################################
+
+aries_micro_devkit.name=ARIES Micro v1
 
 #aries_micro_devkit.vid.0=0x0403
 #aries_micro_devkit.pid.0=0x6015
@@ -88,7 +130,7 @@ aries_micro_devkit.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.ld
 
 #################################################################################################
 
-aries_iot_v1.name=ARIES IOT V1
+aries_iot_v1.name=ARIES IoT v1
 
 #aries_iot_v1.vid.0=0x0403
 #aries_iot_v1.pid.0=0x6015
@@ -124,4 +166,3 @@ aries_iot_v1.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
 #aries_iot_v1.build.ldscript={compiler.sdk.path}/link.lds
 
 #################################################################################################
-
