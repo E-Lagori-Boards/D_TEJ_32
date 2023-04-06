@@ -15,13 +15,13 @@ compiler.size.cmd=riscv64-vega-elf-size
 
 
 compiler.sdk.path={runtime.platform.path}/thejas32
-compiler.preproc.flags=-I{build.system.path}/include -I{compiler.sdk.path}/include
+compiler.preproc.flags=-I "{build.system.path}/include" -I "{compiler.sdk.path}/include"
 
 compiler.c.flags=-c -O2 -march={build.mcu} -mabi=ilp32 -fpeel-loops -ffreestanding -ffunction-sections -fdata-sections -Wall {compiler.preproc.flags} -include sys/cdefs.h -g
 
 compiler.cpp.flags=-c -O2 -march={build.mcu} -mabi=ilp32 -fpeel-loops -ffreestanding -ffunction-sections -fdata-sections -fpermissive -Wall -fno-rtti -fno-exceptions  {compiler.preproc.flags} -include sys/cdefs.h -g
 
-compiler.ld.flags=-march={build.mcu} -mabi=ilp32 -T {build.ldscript} -nostartfiles -Wl,-N -Wl,--gc-sections -Wl,--wrap=malloc -Wl,--wrap=free -Wl,--wrap=sbrk 
+compiler.ld.flags=-march={build.mcu} -mabi=ilp32 -T "{build.ldscript}" -nostartfiles -Wl,-N -Wl,--gc-sections -Wl,--wrap=malloc -Wl,--wrap=free -Wl,--wrap=sbrk 
 
 compiler.S.flags=-c -march={build.mcu} -mabi=ilp32 {compiler.preproc.flags} -g
 
