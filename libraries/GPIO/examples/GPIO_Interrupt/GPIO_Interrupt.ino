@@ -30,15 +30,13 @@
 
 const byte ledPin = 22;      // Green LED connected to GPIO-22
 const byte interruptPin = 0; // GPIO Number
-const byte interruptNo = 10; // Correspoding Interrupt Number for GPIO
 
 void setup() {
   pinMode(ledPin, OUTPUT);
-  pinMode(interruptNo, INPUT_PULLUP);
   pinMode(PUSH_BUTTON, INPUT);
   pinMode(interruptPin, OUTPUT);
   
-  attachInterrupt(interruptNo, blink, 0);  // attachInterrupt(interrupt number, void (*irq_handler)(), mode);
+  attachInterrupt(digitalPinToInterrupt(interruptPin), blink, 0);  // attachInterrupt(interrupt number, void (*irq_handler)(), mode);
 }
 
 void loop() {
@@ -52,7 +50,7 @@ void loop() {
 void blink() {          
   // Interrupt Service Routine (ISR)                       
   Serial.print("Interrupt occur at GPIO-");
-  Serial.println(interruptNo-10);
+  Serial.println(interruptPin);
   digitalWrite(ledPin, LOW);               // Green LED is ON
   
   if(digitalRead(PUSH_BUTTON) == HIGH)     // True when button-1 is not pressed (HIGH State)
