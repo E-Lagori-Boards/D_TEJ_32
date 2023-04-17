@@ -39,8 +39,8 @@ aries_devkit.build.sdata.size=4096
 #This selects the tool from "programmers.txt"
 aries_devkit.program.tool=vegaxmodem
 aries_devkit.upload.tool=vegaxmodem
-# Limit is the 128MB Flash. Assume half is used for something else.
-aries_devkit.upload.maximum_size=268435456
+# Flash max limit is 2MB
+aries_devkit.upload.maximum_size=2097152
 
 aries_devkit.menu.FlashMode.default=Disabled
 aries_devkit.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
@@ -81,8 +81,8 @@ aries_v3.build.sdata.size=4096s
 #This selects the tool from "programmers.txt"
 aries_v3.program.tool=vegaxmodem
 aries_v3.upload.tool=vegaxmodem
-# Limit is the 128MB Flash. Assume half is used for something else.
-aries_v3.upload.maximum_size=268435456
+# Flash max limit is 2MB
+aries_v3.upload.maximum_size=2097152
 
 aries_v3.menu.FlashMode.default=Disabled
 aries_v3.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
@@ -119,8 +119,8 @@ aries_micro_devkit.build.sdata.size=4096
 #This selects the tool from "programmers.txt"
 aries_micro_devkit.program.tool=vegaxmodem
 aries_micro_devkit.upload.tool=vegaxmodem
-# Limit is the 128MB Flash. Assume half is used for something else.
-aries_micro_devkit.upload.maximum_size=268435456
+# Flash max limit is 2MB
+aries_micro_devkit.upload.maximum_size=2097152
 
 aries_micro_devkit.menu.FlashMode.default=Disabled
 aries_micro_devkit.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
@@ -156,8 +156,8 @@ aries_iot_v1.build.sdata.size=4096
 #This selects the tool from "programmers.txt"
 aries_iot_v1.program.tool=vegaxmodem
 aries_iot_v1.upload.tool=vegaxmodem
-# Limit is the 128MB Flash. Assume half is used for something else.
-aries_iot_v1.upload.maximum_size=268435456
+# Flash max limit is 2MB
+aries_iot_v1.upload.maximum_size=2097152
 
 aries_iot_v1.menu.FlashMode.default=Disabled
 aries_iot_v1.menu.FlashMode.default.build.ldscript={compiler.sdk.path}/link.lds
