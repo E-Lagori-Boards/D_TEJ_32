@@ -1,13 +1,14 @@
 /*
-  @file Keypad.ino
-  @brief Simple 4*3 Keypad Application
-  @detail When you press a key in the keypad, corresponding value will be displayed in serial monitor
-  Aries V2.0 reference: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
-   
-   *** Keypad ***
-   Connections:   
+ * @file KEYPAD.ino
+ * 
+ * @brief Simple 4*3 Keypad Application
+ * @detail When you press a key in the keypad, corresponding value will be displayed in serial monitor
+ * 
+ * Aries V2.0 reference: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf   
+ 
+  *** Keypad ***  
+ *  Connections:  
  *  4*3 matrix Keypad   - Aries 
-   
  *    1                 -  GPIO-9
  *    2                 -  GPIO-8
  *    3                 -  GPIO-7

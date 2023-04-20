@@ -6,6 +6,9 @@
  * Reference arduino code: https://www.youtube.com/watch?v=8SOTsR1k8-g&t=312s, https://how2electronics.com/interfacing-max30100-pulse-oximeter-sensor-arduino/
  * Refrence aries board: https://vegaprocessors.in/blog/interfacing-max30102-pulse-oximeter-to-thejas-soc/
  * 
+ * Library Name : VEGA_MAX30100
+ * Library Version : 1.0.0 
+ * 
  * MAX30100 sensor
  * Device address -0x57
  * Connections:
