@@ -16,7 +16,7 @@ void analogWrite(uint32_t pin, uint32_t ulValue)
 }
 
 
-#if defined(ARIES_V2) || defined(ARIES_MICRO)
+#if defined(VEGA_ARIES_V2) || defined(VEGA_ARIES_MICRO) || defined(VEGA_ARIES_V3)
 
 static void writeRegister(uint8_t address, uint8_t reg, uint16_t value) {
 
@@ -87,9 +87,9 @@ uint32_t analogRead(uint32_t pin)
 	//return 0;
 }
 
-#endif  // ARIES_V2 || ARIES_MICRO
+#endif  // VEGA_ARIES_V2 || VEGA_ARIES_MICRO || VEGA_ARIES_V3
 
-#if defined(ARIES_IOT)
+#if defined(VEGA_ARIES_IOT)
 
 ADS7828 ads;
 
@@ -232,4 +232,4 @@ uint32_t analogRead(uint32_t pin) {
 	// 16-bit unsigned results for the ADS7828
 	return readRegister(ADS7828_DEFAULT_ADDRESS);
 }
-#endif  // ARIES_IOT
+#endif  // VEGA_ARIES_IOT

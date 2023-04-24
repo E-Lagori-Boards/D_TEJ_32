@@ -31,7 +31,7 @@ aries_devkit.build.vid.0=0x6015
 #"The 'core' file directory for this board, in ./cores
 aries_devkit.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_devkit.build.board=ARIES_V2
+aries_devkit.build.board=VEGA_ARIES_V2
 aries_devkit.build.boardenv=aries
 aries_devkit.build.usb_product="ARIES"
 aries_devkit.build.sdata.size=4096
@@ -73,7 +73,7 @@ aries_v3.build.vid.0=0xEA60
 #"The 'core' file directory for this board, in ./cores
 aries_v3.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_v3.build.board=ARIES_V3
+aries_v3.build.board=VEGA_ARIES_V3
 aries_v3.build.boardenv=aries
 aries_v3.build.usb_product="ARIES"
 aries_v3.build.sdata.size=4096s
@@ -112,7 +112,7 @@ aries_micro_devkit.build.mcu=rv32im
 #"The 'core' file directory for this board, in ./cores
 aries_micro_devkit.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_micro_devkit.build.board=ARIES_MICRO
+aries_micro_devkit.build.board=VEGA_ARIES_MICRO
 aries_micro_devkit.build.boardenv=aries
 aries_micro_devkit.build.usb_product="ARIES"
 aries_micro_devkit.build.sdata.size=4096
@@ -149,7 +149,7 @@ aries_iot_v1.build.mcu=rv32im
 #"The 'core' file directory for this board, in ./cores
 aries_iot_v1.build.core=arduino
 # This sets a define for use in the compiled code.
-aries_iot_v1.build.board=ARIES_IOT
+aries_iot_v1.build.board=VEGA_ARIES_IOT
 aries_iot_v1.build.boardenv=aries
 aries_iot_v1.build.usb_product="ARIES"
 aries_iot_v1.build.sdata.size=4096
@@ -166,3 +166,4 @@ aries_iot_v1.menu.FlashMode.on.build.ldscript={compiler.sdk.path}/link1.lds
 #aries_iot_v1.build.ldscript={compiler.sdk.path}/link.lds
 
 #################################################################################################
+
