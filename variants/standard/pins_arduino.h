@@ -11,7 +11,12 @@
 #define LED_BUILTIN PIN_LED
 
 //NINA
-#define NINA_GPIO0  (17) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO13 of Aries V2 or GPIO17 of Aries IOT
+#if defined(VEGA_ARIES_IOT)
+    #define NINA_GPIO0  (17) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO17 of Aries IOT
+#else
+    #define NINA_GPIO0  (13) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO13 of Aries V2
+#endif
+
 #define NINA_RESETN (27u)  //Not using
 #define NINA_ACK    (28u)   //Not using
 
@@ -41,3 +46,4 @@ static const uint8_t SCK  = PIN_SPI_SCK;
 // WiFiNINA
 #define regtype volatile uint32_t
 #define regsize uint32_t
+

@@ -71,7 +71,7 @@ void PWMC_Enable();
 void PWMC_Disable();
 };
 
-#if defined(ARIES_IOT)
+#if defined(VEGA_ARIES_IOT)
     /**************************************************************************
         I2C ADDRESS/BITS
     **************************************************************************/
@@ -153,7 +153,7 @@ void PWMC_Disable();
         private:
     };
 
-#endif // ARIES_IOT
+#endif // VEGA_ARIES_IOT
 
 extern PWMClass PWM;
 
