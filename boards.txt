@@ -28,6 +28,9 @@ aries_devkit.build.mcu=rv32im
 aries_devkit.build.vid.0=0x0403
 aries_devkit.build.vid.0=0x6015
 
+aries_devkit.bootloader.tool=arduflasher
+aries_devkit.bootloader.file=arduflasher/flasher_arduino.bin
+
 #"The 'core' file directory for this board, in ./cores
 aries_devkit.build.core=arduino
 # This sets a define for use in the compiled code.
@@ -70,6 +73,9 @@ aries_v3.build.mcu=rv32im
 aries_v3.build.vid.0=0x10C4
 aries_v3.build.vid.0=0xEA60
 
+aries_v3.bootloader.tool=arduflasher
+aries_v3.bootloader.file=arduflasher/flasher_arduino.bin
+
 #"The 'core' file directory for this board, in ./cores
 aries_v3.build.core=arduino
 # This sets a define for use in the compiled code.
@@ -97,6 +103,9 @@ aries_micro_devkit.name=ARIES Micro v1
 
 #aries_micro_devkit.vid.0=0x0403
 #aries_micro_devkit.pid.0=0x6015
+
+aries_micro_devkit.bootloader.tool=arduflasher
+aries_micro_devkit.bootloader.file=arduflasher/flasher_arduino.bin
 
 #Point to the file for ./variants/<variant>/pins_arduino.h
 aries_micro_devkit.build.variant=standard
@@ -134,6 +143,9 @@ aries_iot_v1.name=ARIES IoT v1
 
 #aries_iot_v1.vid.0=0x0403
 #aries_iot_v1.pid.0=0x6015
+
+aries_iot_v1.bootloader.tool=arduflasher
+aries_iot_v1.bootloader.file=arduflasher/flasher_arduino.bin
 
 #Point to the file for ./variants/<variant>/pins_arduino.h
 aries_iot_v1.build.variant=standard
