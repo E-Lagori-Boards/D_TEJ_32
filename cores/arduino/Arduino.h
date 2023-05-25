@@ -49,6 +49,9 @@ extern "C"{
 #define clockCyclesToMicroseconds(a) ( ((a) * 1000L) / (SystemCoreClock / 1000L) )
 #define microsecondsToClockCycles(a) ( (a) * (SystemCoreClock / 1000000L) )
 
+
+
+
 // attachInterrupt() - digitalPinToInterrupt()
 #define NOT_AN_INTERRUPT -1
 
@@ -65,6 +68,10 @@ typedef void (*voidFuncPtr)( void ) ;
 
 #ifdef __cplusplus
 } // extern "C"
+
+
+void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
+void noTone(uint8_t _pin);
 
 #include "WCharacter.h"
 #include "WString.h"
