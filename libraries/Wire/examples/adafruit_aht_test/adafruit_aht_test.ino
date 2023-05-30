@@ -5,6 +5,7 @@
 
    
   * About ARIES Development Boards: https://vegaprocessors.in/devboards/
+  * Library Required: Adafruit AHTX0
    
   *** AHT25 Humidity and Temperature Module ***
    
