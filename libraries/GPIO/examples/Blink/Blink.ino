@@ -17,7 +17,7 @@
          YELLOW LED will be in "ON" state for a digital "1" input and in "OFF" state for a digital "0" input.
  **/
 
-int ledPin=24; // Green LED
+int ledPin=22; // Green LED
 
 void setup()
 {
