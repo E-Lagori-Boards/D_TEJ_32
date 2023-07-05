@@ -9,7 +9,7 @@
    Connections:
    No external connections required to test this code. You can directly connect Aries board through USB and upload the program
    LED pins for Aries Board are: 
-   pin no. 20,21 - Yellow LED
+   pin no. 20,21 - Yellow LED (for Aries v2)
    Pin no. 22 - Green LED 
    Pin no. 23 - Blue LED
    Pin no. 24 - Red LED
