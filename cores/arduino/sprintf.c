@@ -22,15 +22,6 @@
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 static char *upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-char data[100];
-char* myName = "ArduinoBasics";
-char* myBlog = "https://arduinobasics.blogspot.com";
-int year = 2019;
-int num = 49;
-char myChar = 'a';
-float myFloat = 99.9911;
-long long int vLong = 1234567890123456789LL;
-
 /**
 @fn int sprintf(char * buffer,const char *fmt, ...)
 @brief To print the string in to a give buffer
