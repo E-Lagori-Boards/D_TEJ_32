@@ -3,22 +3,26 @@
 
 #define PINS_COUNT    (40u)
 
-#define NINA_CTS      NINA_ACK
-#define NINA_RTS      NINA_GPIO0
-
 #define PIN_LED_22  (22)
 #define PIN_LED     PIN_LED_22
 #define LED_BUILTIN PIN_LED
 
 //NINA
 #if defined(VEGA_ARIES_IOT)
-    #define NINA_GPIO0  (17) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO17 of Aries IOT
+    #define NINA_GPIO0      (17) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO17 of Aries IOT
+    #define NINA_RESETN     (20)  // For Reseting NiNA Module 
+    #define NINA_ACK        (16)   // Acknowledge 
+    #define NINA_CTS        NINA_ACK
+    #define NINA_RTS        NINA_GPIO0 
 #else
-    #define NINA_GPIO0  (13) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO13 of Aries V2
+    #define NINA_GPIO0      (13) //connect 27-GPIO0 (Boot pin) of WiFiNINA to GPIO13 of Aries V2
+    #define NINA_RESETN     (14)  // For Reseting NiNA Module 
+    #define NINA_ACK        (15)   // Acknowledge 
+    #define NINA_CTS        NINA_ACK
+    #define NINA_RTS        NINA_GPIO0 
 #endif
 
-#define NINA_RESETN (27u)  //Not using
-#define NINA_ACK    (28u)   //Not using
+#define SPIWIFI_SS (9)
 
 #define SS_FLASHMEM 1
 
@@ -33,9 +37,10 @@
 
 // GPIO
 #define PINA(mode) *(unsigned short *)0x100C0000 = (*(unsigned short *)0x100C0000 |= mode) // Pinmode GPIO 0-15
-#define PORTA(data) *(unsigned short *)0x100BFFFC = data // GPIO 0-15  
-// #define PORTA(data) *(unsigned short *)0x100803FC = data // GPIO 0-7
+// #define PORTA(data) *(unsigned short *)0x100BFFFC = data // GPIO 0-15  
+#define PORTA(data) *(unsigned short *)0x100803FC = data // GPIO 0-7
 // #define PORTB(data) *(unsigned short *)0x100803FC << 8 = data // GPIO 8-15 
+#define PORTA_READ *(unsigned short *)0x100803FC
 
 static const uint8_t SS   = PIN_SPI_SS;
 // static const uint8_t CS   = PIN_SPI_SS;
