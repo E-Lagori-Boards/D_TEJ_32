@@ -18,10 +18,10 @@ class ESP8266Class : public HardwareSerial {
 public:
 	ESP8266Class(uint32_t _id);
 	void begin(unsigned long dwBaudRate);
-	//void end(void);
+	void end(void);
 	int available(void);
 	//  int availableForWrite(void);
-	// int peek(void);
+	int peek(void);
 	int read(void);
 	//void flush(void);
 	size_t write(const uint8_t c);

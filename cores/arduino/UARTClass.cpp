@@ -209,3 +209,8 @@ void UARTClass::disableInterrupt(void) {
 
 	UART_REG(id, UART_REG_IIR_FCR);
 }
+
+void UARTClass::end(void){}
+int UARTClass::peek(void){
+	return 1;
+}

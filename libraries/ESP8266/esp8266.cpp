@@ -266,3 +266,11 @@ void ESP8266Class::disableInterrupt(void) {
 
 	UART_REG(id, UART_REG_IIR_FCR);
 }
+
+void ESP8266Class::end(void){}
+
+
+int ESP8266Class::peek(void){
+	
+	return *rx_buffer;
+}
