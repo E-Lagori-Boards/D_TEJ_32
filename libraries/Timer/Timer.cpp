@@ -246,3 +246,19 @@ void Timer::attachInterrupt(void (*user_isr)()) {
 
 	TIMER_REG(id,TIMER_REG_Control) = 0x03;	// Enable timer with intr unmasked.
 }
+
+void Timer::timerPutDelay(uint32_t no_of_clocks) {
+
+	TIMER_REG(id,TIMER_REG_Control) = 0x0;		// Disable timer.
+	__asm__ __volatile__ ("fence");
+	TIMER_REG(id,TIMER_REG_LoadCount) = no_of_clocks;	// Load timer with no of clocks.
+	__asm__ __volatile__ ("fence");
+	TIMER_REG(id,TIMER_REG_Control) = 0x07;		// Enable timer with intr masked
+	__asm__ __volatile__ ("fence");
+}
+
+uint32_t Timer::getCurrentValue(void) {
+
+	uint32_t currentTime = TIMER_REG(id, TIMER_REG_CurrentValue);
+	return currentTime;
+}

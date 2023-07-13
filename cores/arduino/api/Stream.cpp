@@ -23,7 +23,7 @@
  */
 
 #include "Common.h"
-#include "Stream.h"
+#include "api/Stream.h"
 
 #define PARSE_TIMEOUT 1000  // default number of milli-seconds to wait
 

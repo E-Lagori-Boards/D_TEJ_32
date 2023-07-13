@@ -95,6 +95,8 @@ public:
 	void attachInterrupt(void (*isr)(), unsigned long microseconds);
 	void detachInterrupt();
 	void isr_timer(void);
+	void timerPutDelay(uint32_t no_of_clocks);
+	uint32_t getCurrentValue(void);
 
 private:
 	volatile uint32_t id;
