@@ -1,7 +1,7 @@
 /*
  @file   ColorSensor.ino
  @brief  This is the test code for the APDS9960 Color sensor
- @detail This example reads color data from the on-board APDS-9960 sensor of the Nano 33 BLE Sense 
+ @detail This example reads color data from the on-board APDS-9960 sensor  
           and prints the color RGB (red, green, blue) values to the Serial Monitor once a second.
 
  * Reference ARIES IoT board: https://vegaprocessors.in/devboards/ariesiot.html
@@ -18,6 +18,7 @@
 TwoWire Wire(8);    //I2C connection  
 
 void setup() {
+  delay(2000);
   Serial.begin(115200);
   while (!Serial);
 
@@ -27,6 +28,8 @@ void setup() {
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   // check if a color reading is available
   while (! APDS.colorAvailable()) {
     delay(5);
@@ -47,4 +50,8 @@ void loop() {
 
   // wait a bit before reading again
   delay(1000);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif  
 }

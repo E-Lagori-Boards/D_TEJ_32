@@ -69,6 +69,8 @@ void setup()
 
 void loop() 
 {
+  #if defined (VEGA_ARIES_IOT)
+  
   /* read the accel */
   accel.readSensor();
   /* read the gyro */
@@ -90,4 +92,8 @@ void loop()
   Serial.print("\n");
   /* delay to help with printing */
   delay(20);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif  
 }

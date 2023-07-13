@@ -75,14 +75,19 @@ float _temperature = 0;
 void setup() {
  delay(2000);
  Serial.begin(115200);
+ #if defined (VEGA_ARIES_IOT)
   //while (!Serial); // wait for serial port to connect. Needed for native USB port only
  T0 = 25 + 273.15;                 //Temperature T0 from datasheet, conversion from Celsius to kelvin
 
  connectToWIFI();
- 
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
   
    httpRequest();
    if (state == 1) 
@@ -106,6 +111,10 @@ void loop() {
     readSensors();
     httpRequest(); // send data to Cloud
  // }
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif
   
 }
 
@@ -124,7 +133,7 @@ void readSensors()
    _temperature =TX;
   Serial.print("Temperature : ");
   Serial.println(_temperature);
- delay(10);
+ delay(10); 
 
 }
 

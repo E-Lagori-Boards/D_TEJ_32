@@ -18,12 +18,15 @@
 
 // the setup routine runs once when you press reset:
 void setup() {
+  delay(2000);
   // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   // read the input on analog pin 6:
   int sensorValue = analogRead(A6);  
   
@@ -38,4 +41,8 @@ void loop() {
   Serial.print(" \tVoltage Value: ");
   Serial.print(voltage);
   delay(500);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }

@@ -73,6 +73,8 @@ void setup() {
 }
 
 void loop() {
+   #if defined (VEGA_ARIES_IOT)
+   
   if (! bme.performReading()) {
     Serial.println("Failed to perform reading :(");
     return;
@@ -99,4 +101,8 @@ void loop() {
 
   Serial.println();
   delay(2000);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif
 }

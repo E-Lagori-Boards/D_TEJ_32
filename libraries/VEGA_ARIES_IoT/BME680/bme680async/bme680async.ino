@@ -53,6 +53,7 @@ Adafruit_BME680 bme; // I2C
 //Adafruit_BME680 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK);
 
 void setup() {
+  delay(2000);
   Serial.begin(115200);
   while (!Serial);
   Serial.println(F("BME680 async test"));
@@ -71,6 +72,8 @@ void setup() {
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   // Tell BME680 to begin measurement.
   unsigned long endTime = bme.beginReading();
   if (endTime == 0) {
@@ -119,4 +122,8 @@ void loop() {
 
   Serial.println();
   delay(2000);
+
+   #else
+  Serial.println("Choose the correct board! " );
+  #endif
 }

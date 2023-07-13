@@ -29,6 +29,8 @@ void setup() {
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   // check if a proximity reading is available
   if (APDS.proximityAvailable()) {
     // read the proximity
@@ -43,4 +45,8 @@ void loop() {
 
   // wait a bit before reading again
   delay(100);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }

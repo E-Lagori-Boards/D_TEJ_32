@@ -23,14 +23,18 @@ const int btn1 = 19;// the pin our push button is on
 
 void setup()
 {
-  pinMode(redLED,OUTPUT); // Set the LED Pin as an output
-  pinMode(greenLED,OUTPUT); // Set the LED Pin as an output
+  delay(2000);
+  Serial.begin(115200);
+  //pinMode(redLED,OUTPUT); // Set the LED Pin as an output
+  //pinMode(greenLED,OUTPUT); // Set the LED Pin as an output
   pinMode(btn0,INPUT); // Set the button as an input
   pinMode(btn1,INPUT); // Set the button as an input
 }
 
 void loop()
 {
+   #if defined (VEGA_ARIES_IOT)
+   
   int digitalVal = digitalRead(btn0); // Take a reading
   int digitalVal1 = digitalRead(btn1); // Take a reading
 
@@ -51,4 +55,8 @@ void loop()
   {
     digitalWrite(greenLED,LOW);//Turn the LED on
   }
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }

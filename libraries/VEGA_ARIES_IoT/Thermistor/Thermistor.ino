@@ -36,6 +36,8 @@ void setup() {
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   VRT = analogRead(thermistor);       //Acquisition analog value of VRT
   VRT = (3.30 / 4095.00) * VRT;      //Conversion to voltage
   VR = VCC - VRT;
@@ -55,4 +57,8 @@ void loop() {
   Serial.print((TX * 1.8) + 32);    //Conversion to Fahrenheit
   Serial.println("F");
   delay(500);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif
 }

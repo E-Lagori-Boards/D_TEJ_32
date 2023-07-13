@@ -119,6 +119,8 @@ WiFiServer server(80);
 
 void setup() {
   delay(2000);
+  Serial.begin(115200);
+  #if defined (VEGA_ARIES_IOT)
   bmeSetup();
   bmiSetup();
   apdsSetup();
@@ -126,9 +128,15 @@ void setup() {
   buttonSetup();
   buzzerSetup();
   wifiSetup();
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }
 
-void loop() {
+void loop() {  
+  #if defined (VEGA_ARIES_IOT)
+  
   Serial.println("Press ENTER key to Start");
   Serial.println(" ");
   
@@ -204,6 +212,10 @@ void loop() {
         && adcTestflag && wifiTestflag){
       while(1);
     }
+
+    #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }
 
 void bmeSetup(){

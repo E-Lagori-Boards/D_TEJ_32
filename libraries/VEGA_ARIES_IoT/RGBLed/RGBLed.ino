@@ -22,10 +22,13 @@ int blueLed=23; // Blue LED
 
 void setup()
 {
-    
+  delay(2000);
+  Serial.begin(115200);   
 }
 void loop()
 {  
+  #if defined (VEGA_ARIES_IOT)
+  
     digitalWrite(redLed,LOW);    // LED ON
     delay(1000);                // Set the delay time, 1000 = 1S
     digitalWrite(redLed,HIGH);  // LED OFF
@@ -39,5 +42,9 @@ void loop()
     digitalWrite(blueLed,LOW); 
     delay(1000);               
     digitalWrite(blueLed,HIGH);  
-    delay(1000);               
+    delay(1000);  
+
+    #else
+    Serial.println("Choose the correct board! " );
+    #endif             
 } 

@@ -16,14 +16,22 @@
 
 void setup() {
   // put your setup code here, to run once:
+  delay(2000);
+  Serial.begin(115200);
 
 }
 
 void loop() {
+   #if defined (VEGA_ARIES_IOT)
+   
   // put your main code here, to run repeatedly:
  tone(buzzer,period);
  delay(1000);
 
  analogWrite(buzzer, 0);
  delay(500);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }

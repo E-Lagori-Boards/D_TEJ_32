@@ -17,6 +17,7 @@
 TwoWire Wire(8);    //I2C connection  
 
 void setup() {
+  delay(2000);
   Serial.begin(115200);
   while (!Serial); // Wait for Serial Monitor to open
 
@@ -31,6 +32,7 @@ int r = 0, g = 0, b = 0;
 unsigned long lastUpdate = 0;
 
 void loop() {
+ #if defined (VEGA_ARIES_IOT)
 
   // Check if a proximity reading is available.
   if (APDS.proximityAvailable()) {
@@ -80,4 +82,8 @@ void loop() {
     Serial.print(",");
     Serial.println(b);
   }
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif  
 }

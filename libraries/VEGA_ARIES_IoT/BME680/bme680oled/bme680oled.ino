@@ -57,6 +57,7 @@ Adafruit_BME680 bme; // I2C
 Adafruit_SSD1306 display = Adafruit_SSD1306();
 
 void setup() {
+  delay(2000);
   Serial.begin(115200);
   Serial.println(F("BME680 test"));
 
@@ -84,6 +85,8 @@ void setup() {
 }
 
 void loop() {
+  #if defined (VEGA_ARIES_IOT)
+  
   display.setCursor(0,0);
   display.clearDisplay();
 
@@ -106,4 +109,8 @@ void loop() {
   Serial.println();
   display.display();
   delay(2000);
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif 
 }

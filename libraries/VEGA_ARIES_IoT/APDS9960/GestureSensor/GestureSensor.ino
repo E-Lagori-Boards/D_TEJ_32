@@ -25,6 +25,7 @@
 TwoWire Wire(8);    
 
 void setup() {
+  delay(2000);
   Serial.begin(115200);
   while (!Serial);
 
@@ -42,6 +43,8 @@ void setup() {
   Serial.println("Detecting gestures ...");
 }
 void loop() {
+ #if defined (VEGA_ARIES_IOT)
+ 
   if (APDS.gestureAvailable()) {
     // a gesture was detected, read and print to Serial Monitor
     int gesture = APDS.readGesture();
@@ -68,4 +71,8 @@ void loop() {
         break;
     }
   }
+
+  #else
+  Serial.println("Choose the correct board! " );
+  #endif  
 }
