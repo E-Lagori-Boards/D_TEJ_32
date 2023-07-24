@@ -99,6 +99,7 @@ void setup() {
 }
 
 void loop() {
+  delay(1000);
   char str[100] = {0,};
   char sensorValue[50] = {0,};
   receive_string(str);
@@ -108,13 +109,13 @@ void loop() {
   Serial.println(sensorValue);
   
   if (strncmp(str, "Start", 2) == 0) {  
-    send_string("Post Demo \n");
-  } else if (strncmp(str, "Next", 2) == 0) {
     send_string(sensorValue);
-    
-  } else {
+  } 
+  
+  else {
     send_string("error \n");
   }
   Serial.println("done !!");
   Serial.println();
+  
 }
