@@ -1,5 +1,5 @@
 /*
- * @file2 Post_AriestoNodeMCU.ino
+ * @file2 SendString_AriestoNodeMCU.ino
  * @brief NodeMCU Module communicates with the ARIES v2 Board via the UART Protocol 
  * @detail NodeMCU allows ARIES to connect to a Wi-Fi network and push data of any sensor to Firebase block
  * 
@@ -52,9 +52,8 @@
 
 
 #include <UARTClass.h>
-#include <sprintf.h>
 
-UARTClass esp(1);     //NodeMCU connected to UART-1 of ARIES v2
+UARTClass esp(1);
 
 void send_string(const char* str) {
   while (*str != '\0') {
@@ -68,7 +67,7 @@ void send_string(const char* str) {
 
 void receive_string(char* str) {
   char data;
- // int i = 0;
+  //int i = 0;
   while (1) {
     if (esp.available() > 0) {
       data = esp.read();
@@ -83,11 +82,6 @@ void receive_string(char* str) {
   }
 }
 
-
-float getSensorData(){
-   return random(1000); // Replace with 
-}
-
 void setup() {
   Serial.begin(115200);
   esp.begin(9600);
@@ -100,21 +94,15 @@ void setup() {
 
 void loop() {
   char str[100] = {0,};
-  char sensorValue[50] = {0,};
   receive_string(str);
   Serial.print(str);
   
-  sprintf(sensorValue, "%.2f \n", getSensorData());
-  Serial.println(sensorValue);
-  
-  if (strncmp(str, "Start", 2) == 0) {  
-    send_string("Post Demo \n");
+  if (strncmp(str, "Start", 2) == 0) {
+    send_string("Hello World \n");
   } else if (strncmp(str, "Next", 2) == 0) {
-    send_string(sensorValue);
-    
+    send_string("123.4 \n");
   } else {
     send_string("error \n");
   }
   Serial.println("done !!");
-  Serial.println();
 }

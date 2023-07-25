@@ -67,24 +67,24 @@
 
 #include <ESP8266WiFi.h>
 #include <FirebaseArduino.h>
-#include<SoftwareSerial.h>                                                //Included SoftwareSerial Library
+#include<SoftwareSerial.h> //Included SoftwareSerial Library
 
 
-#define FIREBASE_HOST "randomdata-55fed-default-rtdb.firebaseio.com"    // Replace with your  project name address from firebase id
-#define FIREBASE_AUTH "dIr2SgAwI3dHlTkPdZ5VCgN6YDSgUXGP9LMtpPdQ"       // Replace with your secret key generated from firebase
-#define WIFI_SSID "redmi"                                             // Replace with your Wi-Fi Hotspot user name                      
-#define WIFI_PASSWORD "123456789"                                    //Replace with your Wi-Fi Hotspot password
+#define FIREBASE_HOST "randomdata-55fed-default-rtdb.firebaseio.com"              // the project name address from firebase id
+#define FIREBASE_AUTH "dIr2SgAwI3dHlTkPdZ5VCgN6YDSgUXGP9LMtpPdQ"       // the secret key generated from firebase
+#define WIFI_SSID "redmi"                                              // your ssid                     
+#define WIFI_PASSWORD "123456789"                                   //password
 
-SoftwareSerial NodeMCU(13, 15);        //D7(GPIO-13/RXD) && D8(GPIO-15/TXD) pins of nodemcu,Connect nodemcu rx -> ARIES tx && nodemcu tx -> ARIES rx
+SoftwareSerial NodeMCU(13, 15);                                      //d7,13-RX,&&d8,15-TX pins of nodemcu, nodemcu rx - aries tx, nodemcu tx - aries rx
 char data, arr[15], a = 0;
 int indx = 0;
 char flag = 0;
 
-String fireStatus = "";              // led status received from firebase
+String fireStatus = "";                                                     // led status received from firebase
 void setup()
 {
   Serial.begin(9600);
-  NodeMCU.begin(9600);              // initialization
+  NodeMCU.begin(9600);                                                    // initialization
   Serial.println("tx rx begin");
 
 
@@ -101,15 +101,19 @@ void setup()
   Serial.println();
   Serial.print("Connected to ");
   Serial.println(WIFI_SSID);
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);     // connect to firebase
-  Firebase.setString("LED_STATUS", "OFF");         //send initial string of led status
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);                  // connect to firebase
+  Firebase.setString("CONNECTION_STATUS", "ON");                       //send initial string of led status
 }
 
 void loop()
 {
 
   //..... communication between nodemcu and vegaboard....
-
+  int status=NodeMCU.available();
+  Serial.print("status: ");
+  Serial.println(status);
+  Firebase.setInt("VEGA_STATUS", status);
+   
   if (NodeMCU.available() > 0) // to check the status of vega
   {
     if (flag == 0)
@@ -124,23 +128,16 @@ void loop()
     read_RX(); // initial read command
 
     Serial.println(arr); // string
-    Firebase.setString("New Message", arr); // updated in firebase         ......communication to firebase from nodemcu............
-    if (Firebase.failed())
-    {
-      Serial.print("setting /message failed:");
-      Serial.println(Firebase.error());
-      return;
-    }
 
-    NodeMCU.write("Next\n"); // signal for next data to be transmitted
-    read_RX(); // next read command
-
+   // read_RX(); // next read command
+    //Serial.println(atoi(arr)); // to integer
+    //Serial.println(atof(arr)); // to float
 
     //communication to firebase from nodemcu............
 
-    Firebase.setString("Sensor Value", arr);
-    //Firebase.setFloat("number", (atof(arr +a))); // updated to firebase
-    //a++;
+    Firebase.setFloat("SensorValue",atof(arr));
+    Firebase.setFloat("Event",a); // updated to firebase
+    a++;
 
     if (Firebase.failed())
     {
@@ -149,27 +146,14 @@ void loop()
       return;
     }
 
+
     Serial.println("ok");
 
-
-    //communication from firebase to nodemcu............
-    fireStatus = Firebase.getString("LED_STATUS");           // get led status input from firebase
-
-    if (fireStatus == "ON")
-    { // compare the input of led status received from firebase
-      Serial.println("Led Turned ON");
-    }
-    else if (fireStatus == "OFF")
-    { // compare the input of led status received from firebase
-      Serial.println("Led Turned OFF");
-    }
-    else
-    {
-      Serial.println("Command Error! Please send ON/OFF");
-    }
-
   }
+  delay(1000);
 }
+
+
 
 char read_RX()
 {
