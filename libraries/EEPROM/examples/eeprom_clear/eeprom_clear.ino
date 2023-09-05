@@ -1,9 +1,7 @@
 /*
  @file   eeprom_clear.ino
  @brief  clear internal flash 
- @detail Sets all of the bytes of the EEPROM to 0.
- *       Please see eeprom_iteration for a more in depth
- *       look at how to traverse the EEPROM.  
+ @detail The EEPROM.clear() function erase 4KB memory starting from address 0.
 
  * Reference VEGA ARIES board: https://vegaprocessors.in/devboards/
  * Reference VEGA Processors : https://vegaprocessors.in/
@@ -15,11 +13,13 @@
 #include <EEPROM.h>
 
 void setup() {
-  EEPROM.begin();
+  /***
+   * passing 1 in parameter to EEPROM.clear() function
+   * (i,e. EEPROM.clear(1)) erase complete flash memory. 
+  ***/
   
-  for (int i = 0 ; i < EEPROM.length() ; i++) {
-    EEPROM.write(i, 0);
-  }
+  EEPROM.clear(); // erase 4KB flash
+  
   // turn the LED on when we're done
   digitalWrite(LED_BUILTIN, LOW);
 }

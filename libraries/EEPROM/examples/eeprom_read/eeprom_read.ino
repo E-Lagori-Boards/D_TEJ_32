@@ -35,7 +35,7 @@ void loop() {
   Serial.println();
 
   address = address + 1;
-  if (address == EEPROM.length()) {
+  if (address == PAGE_SIZE) {
     address = 0;
   }
 

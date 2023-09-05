@@ -51,6 +51,10 @@ uint8_t EEPROMClass::read(uint32_t address) {
  * @return 
  */
 void EEPROMClass::read(uint8_t *readBuf, uint32_t length, uint32_t eepromAddress) {
+    if(length > 512) {
+        Serial.println("Error: Maximum length for reading from EEPROM is 512 Bytes at a time!");
+        return;
+    }
     SPI_EEPROM.at25sf161ReadEeprom(readBuf, length, (_address + eepromAddress));
     return;
 }
@@ -78,6 +82,11 @@ void EEPROMClass::write(uint32_t address, uint8_t val) {
  * @return 
  */
 void EEPROMClass::write(uint8_t *writeBuf, uint32_t length, uint32_t eepromAddress) {
+    if(length > PAGE_SIZE) {
+        Serial.println("Error: Maximum length for writing on EEPROM is 256 Bytes at a time!");
+        return;
+    }
+    SPI_EEPROM.at25sf161Begin();
     SPI_EEPROM.at25sf161WriteEeprom(writeBuf, length, (_address + eepromAddress));
     return;
 }
@@ -113,4 +122,69 @@ void EEPROMClass::update(uint32_t address, uint8_t val) {
  */
 uint32_t EEPROMClass::length(void) {
     return PAGE_SIZE;
+}
+
+/**
+ * @fn void EEPROMClass::clear(uint8_t value) 
+ * @brief This function erase the EEPROM.
+ * @details
+ * @param[in] uint8_t value: if value = 0, then it will clear first 4KB space
+ *                           if value = 1, then it will erase the complete flash
+ * @param[Out] 
+ * @return 
+ */
+void EEPROMClass::clear(uint8_t value) {
+    SPI_EEPROM.at25sf161Begin();
+    switch(value)
+    {
+        case 0:
+            SPI_EEPROM.at25sf161blockErase4k(_address);
+            break;
+        
+        case 1:
+            SPI_EEPROM.at25sf161ChipErase();
+            break;
+
+        default:
+            SPI_EEPROM.at25sf161blockErase4k(_address);
+            break;
+        }
+}
+
+// void EEPROMClass::clear(uint32_t address, uint32_t length) {
+//     uint32_t currentLength = length;
+//     SPI_EEPROM.at25sf161Begin();
+//     if(length >= LENGTH_4K) {
+//         for( ; currentLength >= LENGTH_4K; address += LENGTH_4K) {
+//             SPI_EEPROM.at25sf161blockErase4k(address + _address);
+//             currentLength -= LENGTH_4K;
+//         }
+//     } 
+//     if(length >= PAGE_SIZE) {
+//         uint8_t buffer[PAGE_SIZE];
+//         for(int i=0; i<PAGE_SIZE; i++) {
+//             buffer[i] = 0xFF;
+//         }
+//         for(; currentLength >= PAGE_SIZE; address += PAGE_SIZE) {
+//             write(buffer, currentLength, address);
+//             currentLength -= PAGE_SIZE;
+//         }
+//     }
+//     if(length <= PAGE_SIZE) {
+//         for(uint32_t i=0; i < currentLength; i++) {
+//             write(address, 0xFF);
+//         }
+//     }
+// }
+
+/**
+ * @fn void EEPROMClass::clear(void) 
+ * @brief This function erase the first 4KB of EEPROM.
+ * @details
+ * @param[in] 
+ * @param[Out] 
+ * @return 
+ */
+void EEPROMClass::clear(void) {
+    clear(0);
 }

@@ -6,6 +6,7 @@
 #include <eeprom.h>
 
 #define PAGE_SIZE 256
+#define LENGTH_4K 262144
 
 struct EEPROMClass {
 	public:
@@ -19,7 +20,10 @@ struct EEPROMClass {
 		uint32_t length(void);
 		void write(uint8_t *writeBuf, uint32_t length, uint32_t eepromAddress);
 		void read(uint8_t *readBuf, uint32_t length, uint32_t eepromAddress);
-
+		void clear(void);
+		void clear(uint8_t value);
+		void clear(uint32_t address, uint32_t length); 
+		
 		template< typename T > T &get( int idx, T &t ){
             int e = idx;
             uint8_t *ptr = (uint8_t*) &t;
@@ -35,10 +39,10 @@ struct EEPROMClass {
         }
 
 	protected:
-		uint8_t _page;
 		uint32_t _address;
 };
 
 extern EEPROMClass EEPROM;
 
 #endif // _EEPROM_H_
+
