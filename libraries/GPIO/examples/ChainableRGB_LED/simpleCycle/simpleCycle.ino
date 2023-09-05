@@ -7,7 +7,7 @@
  * VEGA ARIES Boards: https://vegaprocessors.in/devboards/
  * VEGA Processors: https://vegaprocessors.in/
  
- * Library Name : VEGA_ChianableLED (by VEGA_Processor)
+ * Library Name : VEGA_ChainableLED (by VEGA_Processor)
  
  * Grove Chianable RGB LED v2.0 
  * Connections:
