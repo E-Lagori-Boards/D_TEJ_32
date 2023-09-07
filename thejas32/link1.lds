@@ -16,8 +16,8 @@ PHDRS
 
 SECTIONS
 {
-  __stack_size = 2K;
-  __heap_size = 2K;
+  __stack_size = 8K;
+  __heap_size = 8K;
   
 
   .init           :

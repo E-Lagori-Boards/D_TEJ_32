@@ -42,6 +42,8 @@
 // #define PORTB(data) *(unsigned short *)0x100803FC << 8 = data // GPIO 8-15 
 #define PORTA_READ *(unsigned short *)0x100803FC
 
+#define SERIAL_PORT_MONITOR   Serial
+
 static const uint8_t SS   = PIN_SPI_SS;
 // static const uint8_t CS   = PIN_SPI_SS;
 static const uint8_t MOSI = PIN_SPI_MOSI;
