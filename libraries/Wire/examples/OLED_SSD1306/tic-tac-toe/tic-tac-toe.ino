@@ -20,6 +20,8 @@
 
   * ARIES GPIO pin 18  <-- button MOVE 
   * ARIES GPIO pin 19  <-- button OK  
+
+  * by - Giovanni Verrua
 */
 
 //including   the needed libraries for the OLED display
