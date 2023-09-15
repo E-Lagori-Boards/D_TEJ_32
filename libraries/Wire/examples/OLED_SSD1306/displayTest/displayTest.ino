@@ -13,8 +13,8 @@
    SSD1306     Aries Board
    VCC      -   3.3V
    GND      -   GND
-   SDA      -   SDA0 
-   SCL      -   SCL0 
+   SDA      -   SDA1 
+   SCL      -   SCL1 
 */
 
 #include <SPI.h>
@@ -22,7 +22,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-TwoWire Wire(0);
+TwoWire Wire(1);
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
