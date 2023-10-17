@@ -1,9 +1,30 @@
-// Present a "Will be back soon web page", as stand-in webserver.
-// 2011-01-30 <jc@wippler.nl>
-//
-// License: GPLv2
+/*
+  @file backSoon.ino
+  @brief Will be back soon web page
+  @detail Present a "Will be back soon web page", as stand-in webserver.
+
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** The ENC28J60 Ethernet Module ***
+  Connections:
+  Ethernet Module     Aries Board
+  VCC              -   3.3V
+  GND              -   GND
+  SO               -   MISO-1
+  SI               -   MOSI-1
+  SCK              -   SCLK-1
+  CS               -   GPIO-10
+*/
 
 #include <EtherCard.h>
+#include <SPI.h>
+
+SPIClass SPI(1);
 
 #define STATIC 0  // set to 1 to disable DHCP (adjust myip/gwip values below)
 
@@ -39,7 +60,8 @@ const char page[] PROGMEM =
 ;
 
 void setup(){
-  Serial.begin(57600);
+  delay(1000);
+  Serial.begin(115200);
   Serial.println("\n[backSoon]");
 
   // Change 'SS' to your Slave Select pin, if you arn't using the default pin

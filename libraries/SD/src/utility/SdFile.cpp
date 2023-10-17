@@ -301,8 +301,9 @@ uint8_t SdFile::make83Name(const char* str, uint8_t* name) {
       i = 8;   // place for extension
     } else {
       // illegal FAT characters
-      uint8_t b;
+      
       #if defined(__AVR__)
+      uint8_t b;
       PGM_P p = PSTR("|<>^+=?/[];,*\"\\");
       while ((b = pgm_read_byte(p++))) if (b == c) {
           return false;
@@ -450,6 +451,9 @@ uint8_t SdFile::makeDir(SdFile* dir, const char* dirName) {
    a directory, \a fileName is invalid, the file does not exist
    or can't be opened in the access mode specified by oflag.
 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
+
 uint8_t SdFile::open(SdFile* dirFile, const char* fileName, uint8_t oflag) {
   uint8_t dname[11];
   dir_t* p;
@@ -547,6 +551,8 @@ uint8_t SdFile::open(SdFile* dirFile, const char* fileName, uint8_t oflag) {
   // open entry in cache
   return openCachedEntry(dirIndex_, oflag);
 }
+
+#pragma GCC diagnostic pop
 //------------------------------------------------------------------------------
 /**
    Open a file by index.
@@ -1129,6 +1135,11 @@ uint8_t SdFile::seekSet(uint32_t pos) {
    Reasons for failure include a call to sync() before a file has been
    opened or an I/O error.
 */
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
+
+
 uint8_t SdFile::sync(uint8_t blocking) {
   // only allow open files and directories
   if (!isOpen()) {
@@ -1165,6 +1176,8 @@ uint8_t SdFile::sync(uint8_t blocking) {
 
   return SdVolume::cacheFlush(blocking);
 }
+
+#pragma GCC diagnostic pop
 //------------------------------------------------------------------------------
 /**
    Set a file's timestamps in its directory entry.
@@ -1525,3 +1538,4 @@ int SdFile::availableForWrite() {
 
   return n;
 }
+
