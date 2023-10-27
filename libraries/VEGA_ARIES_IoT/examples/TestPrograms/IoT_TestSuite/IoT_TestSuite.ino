@@ -137,7 +137,6 @@ void setup() {
 
 void loop() {  
   #if defined (VEGA_ARIES_IOT)
-  Serial.println("Select 'Newline' option in Serial Monitor to view the proper output for this program");
   
   Serial.println("Press ENTER key to Start");
   Serial.println(" ");
@@ -222,6 +221,7 @@ void loop() {
 
 void bmeSetup(){
    while (!Serial);
+   Serial.println();
    Serial.println("ARIES IoT Test START");
    //Serial.println(F("BME680 test")); 
    if (!bme.begin(0x76)) {
@@ -286,6 +286,7 @@ void wifiSetup(){
     Serial.println("Please upgrade the firmware");
   }
 
+  Serial.println("Select 'Newline' option in Serial Monitor to view the proper output for this program");
   // attempt to connect to WiFi network:
   Serial.println("Turn on your Wi-Fi hotspot and give its credentials in arduino_secrets.h before running the program");
   Serial.println(" ");

@@ -25,8 +25,8 @@ void setup()
 }
 void loop()
 {  
-    digitalWrite(ledPin,HIGH); // LED ON
+    digitalWrite(ledPin,HIGH); // LED OFF
     delay(1000);               // Set the delay time, 1000 = 1S
-    digitalWrite(ledPin,LOW);  // LED OFF
+    digitalWrite(ledPin,LOW);  // LED ON
     delay(1000);               // Set the delay time, 1000 = 1S
 } 
