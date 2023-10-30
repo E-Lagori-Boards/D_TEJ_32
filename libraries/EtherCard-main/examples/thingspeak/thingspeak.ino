@@ -1,21 +1,30 @@
-// Simple demo for feeding some random data to Pachube.
-// 2011-07-08 <jc@wippler.nl>
-//
-// License: GPLv2
+/*
+  @file thingspeak.ino
+  @brief Simple demo for feeding some random data to Pachube.
+  @detail Simple demo for feeding some random data to Pachube.
 
-// Handle returning code and reset ethernet module if needed
-// 2013-10-22 hneiraf@gmail.com
-
-// Modifing so that it works on my setup for www.thingspeak.com.
-// Arduino pro-mini 5V/16MHz, ETH modul on SPI with CS on pin 10.
-// Also added a few changes found on various forums. Do not know what the
-// res variable is for, tweaked it so it works faster for my application
-// 2015-11-09 dani.lomajhenic@gmail.com
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** The ENC28J60 Ethernet Module ***
+  Connections:
+  Ethernet Module     Aries Board
+  VCC              -   3.3V
+  GND              -   GND
+  SO               -   MISO-1
+  SI               -   MOSI-1
+  SCK              -   SCLK-1
+  CS               -   GPIO-10
+*/
 
 #include <EtherCard.h>
 #include <SPI.h>
 
-SPIClass SPI(0);
+SPIClass SPI(1);
 // change these settings to match your own setup
 //#define FEED "000"
 #define APIKEY "VGFJWLT1XCIKWUDZ" // put your key here
@@ -69,6 +78,7 @@ void initialize_ethernet(void){
 }
 
 void setup () {
+  delay(1000);
   Serial.begin(115200);
   Serial.println("\n[ThingSpeak example]");
 
