@@ -46,7 +46,7 @@ void BufferFiller::emit_p(const char* fmt PROGMEM, ...) {
             continue;
         }
         case 'L':
-            ltoa(va_arg(ap, long), (char*) ptr, 10);
+            utoa(va_arg(ap, long), (char*) ptr, 10);
             break;
         case 'S':
             strcpy((char*) ptr, va_arg(ap, const char*));

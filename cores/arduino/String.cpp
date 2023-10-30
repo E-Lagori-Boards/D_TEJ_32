@@ -172,9 +172,8 @@ unsigned char String::reserve(unsigned int size)
 
 unsigned char String::changeBuffer(unsigned int maxStrLen)
 {
-	// char *newbuffer = (char *)realloc(buffer, maxStrLen + 1);
-	free(buffer);
-	char *newbuffer = (char *)malloc(maxStrLen + 1);
+	char *newbuffer = (char *)realloc(buffer, maxStrLen + 1);
+
 	if (newbuffer) {
 		buffer = newbuffer;
 		capacity = maxStrLen;
