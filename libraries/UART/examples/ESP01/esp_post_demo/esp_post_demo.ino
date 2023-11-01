@@ -22,11 +22,11 @@
 
 ESP8266Class esp8266(1); // UART-1
 
-char * AP = "<HOTSPOT-NAME>";       // Add your mobile hotspot name here
-char * PASS = "<HOTSPOT-PASSWORD>"; // Add password
+char * AP = "HOTSPOT-NAME";       // Add your mobile hotspot name here
+char * PASS = "HOTSPOT-PASSWORD"; // Add password
 char * HOST = "io.adafruit.com";
 int PORT=80;
-char * KEY = "<ADAFRUIT-KEY>";   // Add Adafruit Key here
+char * KEY = "ADAFRUIT-KEY";   // Add Adafruit Key here
 char * URL = "/api/v2/<ADAFRUIT-USERNAME>/feeds/<FEED-NAME>/data";  // Add URL of your feed here
 
 
