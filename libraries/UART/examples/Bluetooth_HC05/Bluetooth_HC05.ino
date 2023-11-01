@@ -3,14 +3,16 @@
   @brief contains routines for UART HC05 interface
   @detail Includes software functions declarations to initialize,configure, write and read HC05 over UARt interface
 
-   Reference arduino code: https://electropeak.com/learn/
-   Refrence aries board: https://vegaprocessors.in/blog/hc-05-bluetooth-module-with-aries-v2-board/
-   Vega Arduino app apk: https://drive.google.com/file/d/1I8Gzlu3QLy9f35Pzw_uch31uhC18UtSt/view?usp=sharing
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-hc-05-bluetooth-module-with-vega-aries-boards/
+    Android App: https://drive.google.com/file/d/1I8Gzlu3QLy9f35Pzw_uch31uhC18UtSt/view?usp=sharing
    
-   **HC05 bluetooth sensor**
-   Connections:
+  **HC05 bluetooth sensor**
+  Connections:
    HC05     Aries Board
-   VCC      -   3.3V
+   VCC      -   3.3/5V
    GND      -   GND
    RXD      -   TX1
    TXD      -   RX1
@@ -19,99 +21,73 @@
 
 #include <UARTClass.h>
 
-UARTClass MyBlue(1); // RX | TX
+UARTClass MyBlue(1); // UART-1 
 
 int flag = 0;
 int LED = 22;  // Green LED
 
-int send_string(char * str)
-
-{
+// the send_string function
+int send_string(char * str) {
 
   while (*str != '\0') {
-
     MyBlue.write(*str);
-
     if (*str == '\n')
-
       MyBlue.write('\r');
-
     str++;
-
   }
 
   return 0;
-
 }
 
-
-void receive_string(char * str)
-
-{
+// the receive_string function
+void receive_string(char * str) {
   int data;
   char char_data;
 
-  
   while (1) {
-
     do{
       data = MyBlue.read();
     }while(data == -1);
 
-  char_data = (char)data;
-    
+    char_data = (char)data;
     *str = char_data;
-
     str++;
 
     if (char_data == '\n') {
       *str = '\r';
-
       break;
-
     }
-
   }
-
 }
 
-void setup()
-{
-  Serial.begin(115200);
-  MyBlue.begin(9600);
-  pinMode(LED, OUTPUT);
-  Serial.println("Ready to connect\nDefualt password is 1234 or 000");
-}
-void loop()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize both serial communication 
+  Serial.begin(115200); 
+  MyBlue.begin(9600); // default baudrate for HC_05 is 9600 bits per second
 
+  delay(1000);
+  pinMode(LED, OUTPUT); // initialize LED pin/GPIO-22 as OUTPUT
+  Serial.println("Ready to connect\nDefualt password is 1234 or 0000");
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  // Continuously check for the string received
   static char str[100] = {0,};
 
   memset(str, 0, sizeof(str));
-
   receive_string((char*)str);
-
   Serial.println(str);
 
   if (strncmp(str, "ON", 2) == 0)
-
   {
-
-    digitalWrite(LED, LOW);
-
+    digitalWrite(LED, LOW); // make LED on
     send_string((char*)"LED ON\n");
-
   }
-
   else
-
   {
-
     send_string((char*)"LED OFF\n");
-
-    digitalWrite(LED, HIGH);
-
+    digitalWrite(LED, HIGH); // make LED off
   }
-
-
 }

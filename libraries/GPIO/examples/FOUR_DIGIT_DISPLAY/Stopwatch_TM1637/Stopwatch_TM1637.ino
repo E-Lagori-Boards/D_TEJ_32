@@ -3,17 +3,20 @@
  @brief contains routines for TM1637 interface
  @detail Includes software functions for working of TM1637 4 Digit 7-Segment Display with ARIES v2.0 Board
 
- * Reference arduino code:
- * Refrence aries board: https://vegaprocessors.in/blog/tm1637-7-segment-display-with-aries-v2-0-board/
- * Library Name : Grove 4-Digit Display (by Seeed Studio)
- * 
- * TM1637 4 Digit 7-Segment Display 
- * Connections:
- * TM1637     Aries Board
- * VCC      -   3.3V
- * GND      -   GND
- * CLK      -   GPIO1
- * DIO      -   GPIO0
+ Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-tm1637-four-digit-7-segment-display-with-vega-aries-boards/
+
+ Library Name : Grove 4-Digit Display (by Seeed Studio)
+ 
+ *** TM1637 4 Digit 7-Segment Display ***
+ Connections:
+   TM1637     Aries Board
+   VCC      -   3.3V
+   GND      -   GND
+   CLK      -   GPIO1
+   DIO      -   GPIO0
 */
 
 #include "Timer.h"
@@ -39,8 +42,8 @@ boolean Flag_ReadTime;
 TM1637 tm1637(CLK,DIO);
 Timer Timer(0);
 
-void setup()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
   Serial.begin(115200);
   tm1637.set(BRIGHT_TYPICAL);//BRIGHT_TYPICAL = 2,BRIGHT_DARKEST = 0,BRIGHTEST = 7;
   tm1637.init();
@@ -52,8 +55,9 @@ void setup()
   Serial.println("P - pause");
   Serial.println("R - reset");
 }
-void loop()
-{
+
+// the loop function runs over and over again forever
+void loop() {
   char command;
   command = Serial.read();
   switch(command)
@@ -74,8 +78,7 @@ void loop()
 
 }
 //************************************************
-void TimingISR()
-{
+void TimingISR() {
   microsecond_10 ++;
   Update = ON;
   if(microsecond_10 == 100){
@@ -93,8 +96,8 @@ void TimingISR()
     _second = second;
   }
 }
-void TimeUpdate(void)
-{
+
+void TimeUpdate(void) {
   if(ClockPoint)tm1637.point(POINT_ON);//POINT_ON = 1,POINT_OFF = 0;
   else tm1637.point(POINT_ON);
   TimeDisp[2] = _microsecond_10 / 10;
@@ -103,19 +106,18 @@ void TimeUpdate(void)
   TimeDisp[1] = _second % 10;
   Update = OFF;
 }
-void stopwatchStart()//timer1 on
-{
+
+void stopwatchStart() {//timer1 on
   Flag_ReadTime = 0;
- Timer.start();
-
+  Timer.start();
 }
-void stopwatchPause()//to pause stopwatch
-{
-   Timer.stop();
 
+void stopwatchPause() {//to pause stopwatch
+
+  Timer.stop();
 }
-void stopwatchReset()
-{
+
+void stopwatchReset() {
   stopwatchPause();
   Flag_ReadTime = 0;
   _microsecond_10 = 0;

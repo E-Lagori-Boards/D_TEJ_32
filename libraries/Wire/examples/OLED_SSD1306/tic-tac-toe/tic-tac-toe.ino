@@ -3,20 +3,23 @@
   @brief play tic-tac-toe on OLED display
   @detail play tic-tac-toe game on OLED display (SSD-1306)
 
-  Refrence ARIES board: https://vegaprocessors.in/devboards/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/play-tic-tac-toe-on-oled-display-using-vega-aries-board/
    
-  * Library Required : Adafruit SSD1306 (Version 2.5.7)
-  *                    Adafruit GFX Library (Version 1.11.3)
-  *                    Adafruit BusIO
+  Library Required: Adafruit SSD1306 (Version 2.5.7)
+                    Adafruit GFX Library (Version 1.11.3)
+                    Adafruit BusIO
    
    *** TIC-TAC-TOE on OLED DISPLAY(SSD-1306) ***
    
-   Connections:
-   *SSD1306*   *ARIES Board*
-   VCC       -  3.3V
-   GND       -  GND
-   SDA       -  SDA1 
-   SCL       -  SCL1 
+  Connections:
+  SSD1306       ARIES Board
+   VCC       -    3.3V
+   GND       -    GND
+   SDA       -    SDA1 
+   SCL       -    SCL1 
 
   * ARIES GPIO pin 18  <-- button MOVE 
   * ARIES GPIO pin 19  <-- button OK  
@@ -30,7 +33,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-TwoWire Wire(1);
+TwoWire Wire(1); // I2C-1
 
 #define BUTTON_MOVE 18  // BTN1
 #define BUTTON_OK   19  // BTN0

@@ -3,13 +3,17 @@
   @brief Interface OLED SSD-1306 display to Aries v2.0 Board
   @detail This is an example for Monochrome OLEDs based on SSD1306 drivers
   
-   Reference OLED display: https://learn.adafruit.com/monochrome-oled-breakouts/arduino-library-and-examples
-    * Library Required : Adafruit SSD1306 (Version 2.5.7)
-    *                    Adafruit GFX Library (Version 1.11.3)
-    *                    Adafruit BusIO
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-oled-display-with-aries-v3-0-board/
+  
+  Library Required: Adafruit SSD1306 (Version 2.5.7)
+                    Adafruit GFX Library (Version 1.11.3)
+                    Adafruit BusIO
    
-   *** OLED DISPLAY(SSD-1306) ***
-   Connections:
+  *** OLED DISPLAY(SSD-1306) ***
+  Connections:
    SSD1306     Aries Board
    VCC      -   3.3V
    GND      -   GND
@@ -22,7 +26,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-TwoWire Wire(1);
+TwoWire Wire(1);  // I2C-1
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
@@ -54,7 +58,9 @@ static const unsigned char PROGMEM logo_bmp[] =
   0b01110000, 0b01110000,
   0b00000000, 0b00110000 };
 
+// the setup function runs once when you press reset or power the board
 void setup() {
+  // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
@@ -118,7 +124,9 @@ void setup() {
   testanimate(logo_bmp, LOGO_WIDTH, LOGO_HEIGHT); // Animate bitmaps
 }
 
+// the loop function runs over and over again forever
 void loop() {
+  // empty
 }
 
 void testdrawline() {

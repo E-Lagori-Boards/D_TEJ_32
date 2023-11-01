@@ -3,10 +3,13 @@
   @brief Simple DC relay application
   @detail GREEN LED on the relay module will ON/OFF when the Relay is ON/OFF
 
-   Reference aries board: https://vegaprocessors.in/blog/one-channel-relay-module-with-aries-v2-board/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-one-channel-relay-module-with-vega-aries-boards/
    
    *** DC RELAY ***
-   Connections:
+  Connections:
    Relay     Aries Board
    VCC      -   3.3V
    GND      -   GND
@@ -18,14 +21,15 @@
 
 char mode = 0xff;
 
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // put your setup code here, to run once:
+  // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
-  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT); // initialize digital pin 0 as an output.
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  
   if(mode){
     Serial.println("Relay ON");
     digitalWrite(RELAY_PIN, HIGH);  //// let's turn ON the relay

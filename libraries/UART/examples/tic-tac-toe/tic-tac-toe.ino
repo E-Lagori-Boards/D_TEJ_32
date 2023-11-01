@@ -3,24 +3,25 @@
   @brief play tic-tac-toe on serial monitor
   @detail play tic-tac-toe game on serial monitor
 
-   Refrence ARIES board: https://vegaprocessors.in/devboards/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/play-tic-tac-toe-on-serial-monitor-using-vega-aries-board/
    
- *  It only requires an Arduino (tested  with Nano and Uno, but it 
- *  should work with (almost?) any Arduino and other  clones
- *  
- *  To use it, you need to connect the ARIES to USB and callthe 
- *  Serial monitor from inside Arduino IDE: Menu tools -> Serial monitor
- *  (or pressing Ctrl + Shift + M)
- *  
- *  Move using the 1...9 keys (plus Enter) from inside the Serial Monitor:
- *  
- *   1 | 2 | 3
- *  ---+---+---
- *   4 | 5 | 6
- *  ---+---+---
- *   7 | 8 | 9
+ 
+  *  To use it, you need to connect the ARIES to USB and callthe 
+  *  Serial monitor from inside Arduino IDE: Menu tools -> Serial monitor
+  *  (or pressing Ctrl + Shift + M)
+  *  
+  *  Move using the 1...9 keys (plus Enter) from inside the Serial Monitor:
+  *  
+  *   1 | 2 | 3
+  *  ---+---+---
+  *   4 | 5 | 6
+  *  ---+---+---
+  *   7 | 8 | 9
 
- * by - Giovanni Verrua
+  * by - Giovanni Verrua
 */
 
 #include <esp8266.h>
@@ -267,16 +268,16 @@ String  charBoard(int x) {
 }
 
 
-//--------------------------------------------------------------------------------------------------------------
+// the setup function runs once when you press reset or power the board
 void  setup() {
-  delay(1000);
+  // initialize serial communication at 115200 bits per second:
   mySerial.begin(115200);
-    
+  delay(1000); 
   randomSeed(analogRead(0));  //resetting the random function.
 }
 
 
-//--------------------------------------------------------------------------------------------------------------
+// the loop function runs over and over again forever
 void  loop() {         
   if(gameStatus == 0) {     
     mySerial.println(F("Let's  begin..."));  

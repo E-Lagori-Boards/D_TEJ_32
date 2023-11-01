@@ -3,12 +3,15 @@
   @brief Interfacing 8×8 LED DOT Matrix to ARIES V2 Board
   @detail to display "Hello World" on LED Matrix using Aries Board
 
-   Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
-   *  Library Name : MD_MAX72XX
-   *  Library Version : 3.3.0  
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-vega-aries-boards/
+  
+  Library Name : MD_MAX72XX (by marco_c)
    
-   *** 8×8 LED DOT Matrix(MAX7219) ***
-   Connections:
+  *** 8×8 LED DOT Matrix(MAX7219) ***
+  Connections:
    Dot Matrix     Aries Board
    VCC          -   3.3V
    GND          -   GND
@@ -19,6 +22,7 @@
 
 #include <MD_MAX72xx.h>
 SPIClass SPI(0);
+
 // Define the number of devices we have in the chain and the hardware interface
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
 #define MAX_DEVICES 1
@@ -30,8 +34,7 @@ MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
 // We always wait a bit between updates of the display
 #define  DELAYTIME  100  // in milliseconds
 
-void scrollText(const char *p)
-{
+void scrollText(const char *p) {
   uint8_t charWidth;
   uint8_t cBuf[8];  // this should be ok for all built-in fonts
 
@@ -51,13 +54,14 @@ void scrollText(const char *p)
   }
 }
 
-
-void setup()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize 8x8 LED matrix
   mx.begin();
 }
 
-void loop()
-{
+// the loop function runs over and over again forever
+void loop() {
+  // replace the string to change output on 8x8 LED Matrix
   scrollText("Hello World");
 }

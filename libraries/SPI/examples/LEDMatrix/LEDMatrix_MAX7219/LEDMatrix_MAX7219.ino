@@ -3,14 +3,17 @@
   @brief Interfacing 8×8 LED DOT Matrix to ARIES V2 Board
   @detail This demo to display images, scrolling text, and few more transitions on the 8×8 LED Matrix
 
-   Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
-   *  Library Name : MD_MAX72XX
-   *  Library Version : 3.3.0  
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-vega-aries-boards/  
+
+  Library Name : MD_MAX72XX (by marco_c)
    
-   *** 8×8 LED DOT Matrix(MAX7219) ***
-   Connections:
+  *** 8×8 LED DOT Matrix(MAX7219) ***
+  Connections:
    Dot Matrix     Aries Board
-   VCC          -   5V
+   VCC          -   3.3V
    GND          -   GND
    DIN          -   MOSI0
    CS           -   GPIO-10
@@ -597,8 +600,9 @@ void showCharset(void)
   mx.update(MD_MAX72XX::ON);
 }
 
-void setup()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize 8x8 LED matrix
   mx.begin();
 
 #if  DEBUG
@@ -608,8 +612,8 @@ void setup()
 //  scrollText("MD_MAX72xx Test  ");
 }
 
-void loop()
-{
+// the loop function runs over and over again forever
+void loop() {
 #if 1
   scrollText("VEGA Processors");
   zeroPointSet();

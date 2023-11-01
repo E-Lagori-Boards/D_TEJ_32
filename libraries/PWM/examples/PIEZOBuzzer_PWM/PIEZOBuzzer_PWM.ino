@@ -3,10 +3,13 @@
   @brief Interfacing Piezo Buzzer with ARIES Board using PWM
   @detail varing duty cycle to turn volume of buzzer low-to-high and high-to-low repeatedly
   
-   Reference aries board: https://vegaprocessors.in/blog/buzzer-with-aries-v2-board/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-buzzer-with-aries-v3-0-board/
    
-   *** Piezo Buzzer ***
-   Connections:
+  *** Piezo Buzzer ***
+  Connections:
    Buzzer     Aries Board
    VCC      -   3.3V
    GND      -   GND
@@ -18,13 +21,15 @@
 #define BUZZER 0    // connect INPUT pin to PWM0 of Aries Board
 int i;
 
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // put your setup code here, to run once:
-  PWM.PWMC_Set_Period(BUZZER, 800000);  // setting period
+  // set PWM period
+  PWM.PWMC_Set_Period(BUZZER, 800000);  
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  // put your main code here, to run repeatedly:
+  // changing on-off time rapidly
   for (i = 0; i < 400; i++)
   {
     analogWrite(BUZZER, i*2000);

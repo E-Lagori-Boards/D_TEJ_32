@@ -3,12 +3,14 @@
   @brief ESP8266 Module communicates with the ARIES V2 Board via the UART Protocol
   @detail ESP8266 allows ARIES to connect to a Wi-Fi network and get data from adafruit to ON/OFF the RGB LED on Aries board
 
-   Reference aries board: https://vegaprocessors.in/blog/esp8266-wifi-module-with-thejas-soc/
-   ESP8266 Pinout: https://raw.githubusercontent.com/AchimPieters/ESP8266-12F---Power-Mode/master/ESP8266_01X.jpg
-   Adafruit IO : https://io.adafruit.com/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/guide-to-control-built-in-led-in-vega-aries-boards-from-adafruit-iot-platform-with-using-esp-01-wi-fi-module/
+    Adafruit IO : https://io.adafruit.com/
    
-   *** ESP8266 WiFi Module ***
-   Connections:
+  *** ESP8266 WiFi Module ***
+  Connections:
    ESP8266     Aries Board
    VCC      -   3.3V
    GND      -   GND
@@ -18,25 +20,22 @@
 
 #include <esp8266.h>
 
-ESP8266Class esp8266(1);
+ESP8266Class esp8266(1); // UART-1
 
-char * AP="HIMANSHU";    // Add network name here
-char * PASS= "12345678";     // Add password
-char * HOST="io.adafruit.com";
-int PORT=80;
-char * URL="/api/v2/Himanshu_D/feeds/trial/data/last?x-aio-key=aio_hoUL61X7A3Ll7n7Gry5kwLA3MYOj";  // Add URL of your feeds along with key
+char * AP = "<HOTSPOT-NAME>";         // Add your mobile hotspot name here
+char * PASS = "<HOTSPOT-PASSWORD>";   // Add password
+char * HOST = "io.adafruit.com";
+int PORT = 80;
+char * URL = "/api/v2/<ADAFRUIT-USERNAME>/feeds/<FEED-NAME>/data/last?x-aio-key=<ADAFRUIT-KEY>";  // Add URL of your feeds along with key
 
 int countTrueCommand;
 int countTimeCommand; 
 boolean found = false; 
 boolean ledon = false; 
 int valSensor = 1;
-char atcommand[250]={0,};
-char data[250]={0,};
+char atcommand[250] = {0,};
+char data[250] = {0,};
 
-int getSensorData(){
-  return 100; // Replace with 
-}
 
 void sendCommand(char * command, int maxTime, char readReplay[]) {
   Serial.print(countTrueCommand);
@@ -73,8 +72,7 @@ void sendCommand(char * command, int maxTime, char readReplay[]) {
   found = false;
  }
 
- int checkButtonStatus()
- {
+ int checkButtonStatus() {
     int i=500;
     while(i){
        while(esp8266.available())
@@ -85,13 +83,17 @@ void sendCommand(char * command, int maxTime, char readReplay[]) {
     }
  }
 
-
+// the setup function runs once when you press reset or power the board
 void setup() {
-  delay(2000);
-  countTrueCommand=0;
-  countTimeCommand=0;
+  // initialize both (UART-0 & UART-1) serial communication at 115200 bits per second:
   Serial.begin(115200);
   esp8266.begin(115200);
+  delay(2000);
+  
+  countTrueCommand=0;
+  countTimeCommand=0;
+
+  // start communicating with ESP8266 module using AT commands
   sendCommand("AT",5,"OK");          // the basic command that tests the AT start up. If the AT start up is successful, then the response is OK.
   sendCommand("AT+CWMODE=1",5,"OK");  // to set the WiFi Mode of operation (1 = Station mode i.e ESP connects to the router as a client.)
   memset(atcommand,0,250);
@@ -99,7 +101,10 @@ void setup() {
   sendCommand(atcommand,2,"OK");
   ledon=false;
 }
+
 int timeout=3;
+
+// the loop function runs over and over again forever
 void loop() { 
   sendCommand("AT+CIPMUX=1",3,"OK");  // This AT Command is used to enable or disable multiple TCP Connections. (0: Single connection, 1: Multiple connections)
   memset(atcommand,0,250);

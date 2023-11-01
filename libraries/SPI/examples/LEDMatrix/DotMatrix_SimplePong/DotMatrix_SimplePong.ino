@@ -3,20 +3,22 @@
   @brief Use the MD_MAX72XX library to play Pong 
   @detail Play pong on just one matrix. Use switches for left and right movement.
 
-   Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
-   *  Library Name : MD_MAX72XX
-   *  Library Version : 3.3.0  
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board-for-ping-pong-game/
+
+  Library Name : MD_MAX72XX (by marco_c)
    
-   *** 8×8 LED DOT Matrix(MAX7219) ***
-   Connections:
+  *** 8×8 LED DOT Matrix(MAX7219) ***
+  Connections:
    Dot Matrix     Aries Board
-   VCC          -   5V
+   VCC          -   3.3V
    GND          -   GND
    DIN          -   MOSI0
    CS           -   GPIO-10
    CLK          -   SCLK0
 */
-
 
 #include <MD_MAX72xx.h>
 #include <SPI.h>
@@ -177,8 +179,9 @@ void drawBall(int8_t x, int8_t y, bool bOn = true)
   mx.setPoint(y, x, bOn);
 }
 
-void setup(void)
-{
+// the setup function runs once when you press reset or power the board
+void setup(void) {
+  // initialize 8x8 LED matrix
   mx.begin();
 
   pinMode(LEFT_SWITCH, INPUT_PULLUP);
@@ -193,8 +196,8 @@ void setup(void)
   PRINTS("\n[MD_MAX72XX Simple Pong]");
 }
 
-void loop(void)
-{
+// the loop function runs over and over again forever
+void loop(void) {
   static enum:uint8_t { INIT, WELCOME, PLAY_INIT, WAIT_START, PLAY, END , FINAL_SCORE } state = INIT;
   
   static int8_t ballX, ballY;

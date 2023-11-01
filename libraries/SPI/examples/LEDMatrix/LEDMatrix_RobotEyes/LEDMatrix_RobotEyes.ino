@@ -3,14 +3,17 @@
   @brief Interfacing 8×8 LED DOT Matrix to ARIES V2 Board
   @detail Uses a sequence of bitmaps defined as a font to display animations of eyes to convey emotion. Eyes are coordinated to work together.
 
-   Reference aries board: https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-aries-v2-board/
-   *  Library Name : MD_MAX72XX
-   *  Library Version : 3.3.0  
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/robot-eyes-using-8x8-led-dot-matrix-with-vega-aries-boards/
+  
+  Library Name : MD_MAX72XX (by marco_c)
    
-   *** 8×8 LED DOT Matrix(MAX7219) ***
-   Connections:
+  *** 8×8 LED DOT Matrix(MAX7219) ***
+  Connections:
    Dot Matrix     Aries Board
-   VCC          -   5V
+   VCC          -   3.3V
    GND          -   GND
    DIN          -   MOSI0
    CS           -   GPIO-10
@@ -66,16 +69,17 @@ const sampleItem_t eSeq[] =
   { "ScanH" , MD_RobotEyes::E_SCAN_LR, 1000 },
 };
 
-void setup()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize 8x8 LED matrix
   M.begin();
   E.begin(&M);
   E.setText("RobotEyes");
   do { } while (!E.runAnimation()); // wait for the text to finish
 }
 
-void loop()
-{
+// the loop function runs over and over again forever
+void loop() {
   static uint32_t timeStartDelay;
   static uint8_t index = ARRAY_SIZE(eSeq);
   static enum { S_IDLE, S_TEXT, S_ANIM, S_PAUSE } state = S_IDLE;
