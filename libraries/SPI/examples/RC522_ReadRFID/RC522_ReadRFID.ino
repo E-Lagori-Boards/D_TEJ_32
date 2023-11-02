@@ -1,14 +1,17 @@
 /*
   @file RC522_ReadRFID.ino
-  @brief Interface RC-522 RFID module to Aries v2.0 Board
+  @brief Interface RC-522 RFID module to VEGA ARIES Board
   @detail This demo will read NUID and display it on serial monitor
 
-   Reference aries board: https://vegaprocessors.in/blog/rfid-rc-522-with-aries-v2-0-board/
-   *  Library Name : MFRC522
-   *  Library Version : 1.4.10 
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/guide-to-interface-radio-frequency-identificationrfid-rc-522-module-with-vega-aries-boards/
+
+  Library Name : MFRC522 (by GithubCommunity)
    
-   *** Radio-Frequency Identification(RC-522) ***
-   Connections:
+  *** Radio-Frequency Identification(RC-522) ***
+  Connections:
    RFID     Aries Board
    3.3V  -   3.3V
    GND   -   GND
@@ -33,7 +36,9 @@ MFRC522::MIFARE_Key key;
 // Init array that will store new NUID 
 byte nuidPICC[4];
 
+// the setup function runs once when you press reset or power the board
 void setup() { 
+  // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
   SPI.begin(); // Init SPI bus
   rfid.PCD_Init(); // Init MFRC522 
@@ -47,8 +52,8 @@ void setup() {
   printHex(key.keyByte, MFRC522::MF_KEY_SIZE);
 }
  
+// the loop function runs over and over again forever 
 void loop() {
-
   // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
   if ( ! rfid.PICC_IsNewCardPresent())
     return;

@@ -18,6 +18,7 @@
  *                                         
  * 
  * Note:
+ * Select "Newline" option in Serial Monitor to view the proper output for this program
  * No external connections required for testing this code using ARIES IoT v1, except for ADC voltage testing. If you want to check ADC voltage 
  * in any analog pins then you can connect a Male-Male connecter between any analog pins and VCC(3.3V)/GND after running this code
  * 
@@ -168,10 +169,10 @@ void loop() {
     Serial.println("Show Gestures: " );
     Serial.println("After testing press any key to go to next Test");
     Serial.println("Gesture directions are as follows: " );
-    Serial.println("- UP:    from USB connector towards antenna" );
-    Serial.println("- DOWN:  from antenna towards USB connector" );
-    Serial.println("- LEFT:  from analog pins side towards digital pins side" );
-    Serial.println("- RIGHT: from digital pins side towards analog pins side" );
+    Serial.println("- RIGHT:    from USB connector towards antenna" );
+    Serial.println("- LEFT:  from antenna towards USB connector" );
+    Serial.println("- UP:  from analog pins side towards digital pins side" );
+    Serial.println("- DOWN: from digital pins side towards analog pins side" );
     apdsGestureTest();
     apdsGestureTestflag = true;
     keypress = 0;
@@ -220,6 +221,7 @@ void loop() {
 
 void bmeSetup(){
    while (!Serial);
+   Serial.println();
    Serial.println("ARIES IoT Test START");
    //Serial.println(F("BME680 test")); 
    if (!bme.begin(0x76)) {
@@ -284,6 +286,7 @@ void wifiSetup(){
     Serial.println("Please upgrade the firmware");
   }
 
+  Serial.println("Select 'Newline' option in Serial Monitor to view the proper output for this program");
   // attempt to connect to WiFi network:
   Serial.println("Turn on your Wi-Fi hotspot and give its credentials in arduino_secrets.h before running the program");
   Serial.println(" ");

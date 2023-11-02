@@ -1,16 +1,35 @@
-// This demo does web requests via DHCP and DNS lookup.
-// 2011-07-05 <jc@wippler.nl>
-//
-// License: GPLv2
+/*
+  @file getDHCPandDNS.ino
+  @brief This demo does web requests via DHCP and DNS lookup.
+  @detail This demo does web requests via DHCP and DNS lookup.
+
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** The ENC28J60 Ethernet Module ***
+  Connections:
+  Ethernet Module     Aries Board
+  VCC              -   3.3V
+  GND              -   GND
+  SO               -   MISO-1
+  SI               -   MOSI-1
+  SCK              -   SCLK-1
+  CS               -   GPIO-10
+*/
 
 #include <EtherCard.h>
-
+#include <SPI.h>
+SPIClass SPI(1);
 #define REQUEST_RATE 5000 // milliseconds
 
 // ethernet interface mac address
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
 // remote website name
-const char website[] PROGMEM = "google.com";
+const char website[] PROGMEM = "www.google.com";
 
 byte Ethernet::buffer[700];
 static long timer;
@@ -24,7 +43,8 @@ static void my_result_cb (byte status, word off, word len) {
 }
 
 void setup () {
-  Serial.begin(57600);
+  delay(1000);
+  Serial.begin(115200);
   Serial.println("\n[getDHCPandDNS]");
 
   // Change 'SS' to your Slave Select pin, if you arn't using the default pin

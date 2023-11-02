@@ -3,17 +3,19 @@
  @brief  contains routines for GPIO interface of DIP Switches
  @detail by arranging the DIP switches respective LED will glow and switches status will display on Serial monitor.  
 
- * Reference VEGA ARIES board: https://vegaprocessors.in/devboards/
- * Reference VEGA Processors : https://vegaprocessors.in/
- * 
- * Note: In this demo we are using built-in Dip Switches
-    * GPIO pin-22 - Green LED 
-    * GPIO pin-23 - Blue LED
-    * GPIO pin-24 - Red LED
-    * RGB LED will be in "ON" state for a digital input "0" & in "OFF" state for a digital input "1".
-    * GPIO pin-16 - DIP_SW-1
-    * GPIO pin-17 - DIP_SW-2
-    * ARIES v2 has two built-in Dip Switches.
+ Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/how-to-make-use-of-in-built-dip-switches-on-aries-v2-0-board/
+ 
+ Note: In this demo we are using built-in Dip Switches
+      * GPIO pin-22 - Green LED 
+      * GPIO pin-23 - Blue LED
+      * GPIO pin-24 - Red LED
+      * RGB LED will be in "ON" state for a digital input "0" & in "OFF" state for a digital input "1".
+      * GPIO pin-16 - DIP_SW-1
+      * GPIO pin-17 - DIP_SW-2
+      * ARIES v2 has two built-in Dip Switches.
 */
 
 #define GREEN_LED     22
@@ -22,13 +24,14 @@
 #define DIP_SW1       16
 #define DIP_SW2       17
 
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // the setup function runs once when you press reset or power the board
-  delay(1000);
+  // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
+  delay(1000);
 
-  pinMode(DIP_SW1, INPUT);
-  pinMode(DIP_SW2, INPUT);
+  pinMode(DIP_SW1, INPUT);  // initializing GPIO-16 as INPUT
+  pinMode(DIP_SW2, INPUT);  // initializing GPIO-17 as INPUT
 
   Serial.println("-----------------------------------|");
   Serial.println("| SWITCH-1 | SWITCH-2 | LED STATUS |");  
@@ -40,8 +43,9 @@ void setup() {
   Serial.println("------------------------------------");
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  // the loop function runs over and over again forever
+  // try all the possible combinations of DIP switches
   Serial.println("-----------------------");
   Serial.println("| SWITCH-1 | SWITCH-2 |");  
   Serial.println("-----------------------");

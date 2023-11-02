@@ -3,18 +3,20 @@
  @brief contains routines for I2C TSM1637 interface
  @detail Includes software functions declarations to initialize,configure, write and read TSM1637 over I2C interface
 
- * Reference: https://create.arduino.cc/projecthub/ryanchan/tm1637-digit-display-arduino-quick-tutorial-ca8a93
- * Library Name : Grove 4-Digit Display (by Seeed Studio)
- * 
- * TSM1637 seven segment display
- * 
- * Connections:
- * TSM1637     Aries Board
- * VCC      -   3.3V
- * GND      -   GND
- * DI0      -   GPIO0
- * Clk      -   GPIO1
- * .
+ Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/interfacing-tm1637-four-digit-7-segment-display-with-vega-aries-boards/
+
+ Library Name : Grove 4-Digit Display (by Seeed Studio)
+ 
+ *** TM1637 4 Digit 7-Segment Display ***
+ Connections:
+   TM1637     Aries Board
+   VCC      -   3.3V
+   GND      -   GND
+   CLK      -   GPIO1
+   DIO      -   GPIO0
  **/
  
 #include "TM1637.h"
@@ -24,14 +26,14 @@
 
 TM1637 tm1637(CLK,DIO);
 
-void setup()
-{
+// the setup function runs once when you press reset or power the board
+void setup() {
   tm1637.init();
   tm1637.set(BRIGHT_TYPICAL); // BRIGHT_TYPICAL = 2,BRIGHT_DARKEST = 0,BRIGHTEST = 7;
 }
 
-void loop()
-{
+// the loop function runs over and over again forever
+void loop() {
   int8_t NumTab[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};//0~9,A,b,C,d,E,F
   int8_t ListDisp[4];
   unsigned char i = 0;

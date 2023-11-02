@@ -1,9 +1,30 @@
-// Demo for using persistence flag and readPacketSlice()
-//
-// License: GPLv2
+/*
+  @file persistence.ino
+  @brief Demo for using persistence flag and readPacketSlice()
+  @detail Demo for using persistence flag and readPacketSlice()
+
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** The ENC28J60 Ethernet Module ***
+  Connections:
+  Ethernet Module     Aries Board
+  VCC              -   3.3V
+  GND              -   GND
+  SO               -   MISO-1
+  SI               -   MOSI-1
+  SCK              -   SCLK-1
+  CS               -   GPIO-10
+*/
 
 #include <EtherCard.h>
+#include <SPI.h>
 
+SPIClass SPI(1);
 // ethernet interface mac address, must be unique on the LAN
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
 
@@ -42,7 +63,8 @@ static void my_callback (byte status, word off, word len) {
 }
 
 void setup () {
-    Serial.begin(57600);
+  delay(1000);
+    Serial.begin(115200);
     Serial.println(F("\n[Persistence+readPacketSlice]"));
 
     // Change 'SS' to your Slave Select pin, if you arn't using the default pin

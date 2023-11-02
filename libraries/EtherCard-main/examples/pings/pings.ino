@@ -1,9 +1,29 @@
-// Ping a remote server, also uses DHCP and DNS.
-// 2011-06-12 <jc@wippler.nl>
-//
-// License: GPLv2
+/*
+  @file pings.ino
+  @brief Ping a remote server
+  @detail Ping a remote server, also uses DHCP and DNS.
+
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** The ENC28J60 Ethernet Module ***
+  Connections:
+  Ethernet Module     Aries Board
+  VCC              -   3.3V
+  GND              -   GND
+  SO               -   MISO-1
+  SI               -   MOSI-1
+  SCK              -   SCLK-1
+  CS               -   GPIO-10
+*/
 
 #include <EtherCard.h>
+#include <SPI.h>
+SPIClass SPI(1);
 
 // ethernet interface mac address, must be unique on the LAN
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
@@ -17,7 +37,8 @@ static void gotPinged (byte* ptr) {
 }
 
 void setup () {
-  Serial.begin(57600);
+  delay(1000);
+  Serial.begin(115200);
   Serial.println("\n[pings]");
 
   // Change 'SS' to your Slave Select pin, if you arn't using the default pin

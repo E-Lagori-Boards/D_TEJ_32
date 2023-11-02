@@ -3,7 +3,10 @@
   @brief Continuous beeping sound using Piezo Buzzer
   @detail Setting selected GPIO pin HIGH and LOW continuously (with small delay in between) to create beeping sound
 
-   Reference aries board: https://vegaprocessors.in/blog/buzzer-with-aries-v2-board/
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/
    
    *** Piezoelectric buzzer ***
    Connections:
@@ -15,14 +18,15 @@
 
 #define BUZZER 0 // connect INPUT pin of buzzer to GPIO-0
 
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  pinMode(BUZZER, OUTPUT);
+  // initialize digital pin 0 as an output.
+  pinMode(BUZZER, OUTPUT); 
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  // put your main code here, to run repeatedly:
+  // switching buzzer on and off rapidly
   digitalWrite(BUZZER, HIGH); //turn on the buzzer
   delay(100);
   digitalWrite(BUZZER, LOW);  //turn off the buzzer

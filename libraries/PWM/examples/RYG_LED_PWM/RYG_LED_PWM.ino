@@ -3,10 +3,13 @@
   @brief LED Breathing
   @detail LED Brightness using PWM
 
-   Aries V2 Pinout: https://vegaprocessors.in/files/PINOUT_ARIES%20V2.0_.pdf
+  Useful Links:
+    Official Site: https://vegaprocessors.in/
+    Development Boards: https://vegaprocessors.in/devboards/
+    Blogs : https://vegaprocessors.in/blog/how-to-use-a-ryg-led-with-aries-v2-0-board/
    
-   *** RYG LED Strip ***
-   Connections:
+  *** RYG LED Strip ***
+  Connections:
    LED STRIP     Aries Board
    GND        -   GND
    R          -   PWM0
@@ -22,16 +25,17 @@
 
 int i;
 
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  PWM.PWMC_Set_Period(RED_LED, 800000);  // Setting period to 800000
+  // Set PWM period 
+  PWM.PWMC_Set_Period(RED_LED, 800000);  
   PWM.PWMC_Set_Period(YELLOW_LED, 800000);
   PWM.PWMC_Set_Period(GREEN_LED, 800000);
 }
 
+// the loop function runs over and over again forever
 void loop() {
-  // put your main code here, to run repeatedly:
+  // changing on-off time rapidly 
    for(i = 0; i < 400; i++){
     analogWrite(RED_LED, i*2000);
     analogWrite(YELLOW_LED, i*2000);

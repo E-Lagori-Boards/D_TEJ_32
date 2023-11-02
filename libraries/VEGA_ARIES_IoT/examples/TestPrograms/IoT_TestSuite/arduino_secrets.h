@@ -1,2 +1,2 @@
-#define SECRET_SSID "redmi"       //Replace with your wi-Fi hotspot username
-#define SECRET_PASS "123456789"   //Replace with your wi-Fi hotspot password
+#define SECRET_SSID "VEGA"       //Replace with your wi-Fi hotspot username
+#define SECRET_PASS "CDAC1234"   //Replace with your wi-Fi hotspot password

@@ -1,53 +1,53 @@
 /*
-  SD card test
+  @file CardInfo.ino
+  @brief SD card test
+  @detail This example shows how use the utility libraries on which the'
+          SD library is based in order to get info about your SD card.
+          Very useful for testing a card when you're not sure whether its working or not.
 
-  This example shows how use the utility libraries on which the'
-  SD library is based in order to get info about your SD card.
-  Very useful for testing a card when you're not sure whether its working or not.
-
-  The circuit:
-    SD card attached to SPI bus as follows:
- ** MOSI - pin 11 on Arduino Uno/Duemilanove/Diecimila
- ** MISO - pin 12 on Arduino Uno/Duemilanove/Diecimila
- ** CLK - pin 13 on Arduino Uno/Duemilanove/Diecimila
- ** CS - depends on your SD card shield or module.
- 		Pin 4 used here for consistency with other Arduino examples
-
-
-  created  28 Mar 2011
-  by Limor Fried
-  modified 9 Apr 2012
-  by Tom Igoe
+  Useful links:
+   
+  * About VEGA Processors: https://vegaprocessors.in/
+  * About Development board: https://vegaprocessors.in/devboards/
+  * Blogs : https://vegaprocessors.in/blog/
+  
+   
+  *** Catalex MicroSD Card Adapter v1.0 ***
+  Connections:
+  SD-Card Module     Aries Board
+  VCC             -   5V
+  GND             -   GND
+  MISO            -   MISO-1
+  MOSI            -   MOSI-1
+  SCK             -   SCLK-1
+  CS              -   GPIO-10
 */
+
+
 // include the SD library:
 #include <SPI.h>
 #include <SD.h>
+
+SPIClass SPI(1);
 
 // set up variables using the SD utility library functions:
 Sd2Card card;
 SdVolume volume;
 SdFile root;
 
-// change this to match your SD shield or module;
-// Arduino Ethernet shield: pin 4
-// Adafruit SD shields and modules: pin 10
-// Sparkfun SD shield: pin 8
-// MKRZero SD: SDCARD_SS_PIN
-const int chipSelect = 4;
-
 void setup() {
   // Open serial communications and wait for port to open:
-  Serial.begin(9600);
+  delay(1000);
+  Serial.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-
 
   Serial.print("\nInitializing SD card...");
 
   // we'll use the initialization code from the utility libraries
   // since we're just testing if the card is working!
-  if (!card.init(SPI_HALF_SPEED, chipSelect)) {
+  if (!card.init(SPI_HALF_SPEED, SS)) {
     Serial.println("initialization failed. Things to check:");
     Serial.println("* is a card inserted?");
     Serial.println("* is your wiring correct?");
