@@ -6,7 +6,7 @@
   Useful Links:
     Official Site: https://vegaprocessors.in/
     Development Boards: https://vegaprocessors.in/devboards/
-    Blogs : https://vegaprocessors.in/blog/interfacing-8x8-led-dot-matrix-to-vega-aries-boards/
+    Blogs : https://vegaprocessors.in/blog/8x8-led-matrix-max7219-tutorial-with-scrolling-text/
   
   Library Name : MD_MAX72XX (by marco_c)
    
