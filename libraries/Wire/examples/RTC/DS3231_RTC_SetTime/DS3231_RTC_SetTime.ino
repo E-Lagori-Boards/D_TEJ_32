@@ -44,8 +44,16 @@ tmElements_t tm;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
+  // initialize serial communication at 115200 bits per second:
+  Serial.begin(115200);
+  delay(1000);
+  char timeString[9];
+  char dateString[12];
+  strcpy(timeString, __TIME__);
+  strcpy(dateString, __DATE__);
+  
   // get the date and time the compiler was run
-  if (getDate(__DATE__) && getTime(__TIME__)) {
+  if (getDate(dateString) && getTime(timeString)) {
     parse = true;
     // and configure the RTC with this info
     if (RTC.write(tm)) {
@@ -53,7 +61,6 @@ void setup() {
     }
   }
 
-  Serial.begin(115200);
 }
 
 // the loop function runs over and over again forever
@@ -74,33 +81,48 @@ void loop() {
     Serial.print(__DATE__);
     Serial.println("\"");
   }
+}
+
+bool getTime(char *str) {
+  // get the time by seperating the string:
+  char* time[3];
+  int count = 0;
+  char* token = strtok(str, ":");
+  while (token != NULL) {
+    time[count] = token;
+    count++;
+    token = strtok(NULL, ":");
+  }
   
+  if(count == 3) {
+    tm.Hour = atoi(time[0]);
+    tm.Minute = atoi(time[1]);
+    tm.Second = atoi(time[2]); 
+    return true;
+  }
+  return false;
 }
 
-bool getTime(const char *str)
-{
-  int Hour, Min, Sec;
-
-  if (sscanf(str, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-  tm.Hour = Hour;
-  tm.Minute = Min;
-  tm.Second = Sec;
-  return true;
-}
-
-bool getDate(const char *str)
-{
-  char Month[12];
-  int Day, Year;
+bool getDate(char *str) {
+  // get the date by seperating the string:
+  char* date[3];
   uint8_t monthIndex;
 
-  if (sscanf(str, "%s %d %d", Month, &Day, &Year) != 3) return false;
+  int count = 0;
+  char* token = strtok(str, " ");
+  while (token != NULL) {
+    date[count] = token;
+    count++; 
+    token = strtok(NULL, " ");
+  }
+  if(count != 3) return false;
+  
   for (monthIndex = 0; monthIndex < 12; monthIndex++) {
-    if (strcmp(Month, monthName[monthIndex]) == 0) break;
+    if (strcmp(date[0], monthName[monthIndex]) == 0) break;
   }
   if (monthIndex >= 12) return false;
-  tm.Day = Day;
+  tm.Day = atoi(date[1]);
   tm.Month = monthIndex + 1;
-  tm.Year = CalendarYrToTm(Year);
+  tm.Year = CalendarYrToTm(atoi(date[2]));
   return true;
 }

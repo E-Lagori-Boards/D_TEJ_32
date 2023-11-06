@@ -30,7 +30,7 @@
 
 ESP8266Class Bluetooth(1); // UART-1
 
-#define SIZE 100 // receive buffer size
+#define SIZE 4096 // receive buffer size
 #define PIN 0    // PWM Channel 
 #define PERIOD 1000000
 
